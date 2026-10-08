@@ -33,10 +33,18 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .page{padding:36px 0 10px}
 .page h1{font-size:clamp(38px,6vw,56px)}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:26px;margin-top:-14px;position:relative;z-index:2}
+.stand-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px;margin-top:24px}
+.stand-choice{position:relative;isolation:isolate;display:flex;align-items:flex-end;min-height:190px;padding:22px;border:1px solid var(--line);border-radius:12px;overflow:hidden;color:var(--ink);text-decoration:none;background:var(--card);transition:border-color .2s,transform .2s}
+.stand-choice:hover{border-color:var(--green);transform:translateY(-2px)}
+.stand-choice:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(0deg,rgba(5,17,10,.88),rgba(5,17,10,.08) 90%)}
+.stand-choice>.bg{position:absolute;inset:0;width:100%;height:100%;z-index:-1;object-fit:cover;filter:brightness(.68) saturate(.82)}
+.stand-choice span{position:relative;z-index:1;font:700 22px/1.2 'Manrope',system-ui,sans-serif;letter-spacing:-.02em}
+.stand-choice b{margin-left:auto;font-size:22px}
 .tile{position:relative;border-radius:14px;overflow:hidden;min-height:400px;border:1px solid var(--line);padding:26px 28px;display:flex;flex-direction:column}
 .tile.live{border:2px solid var(--green);box-shadow:0 0 34px rgba(31,163,90,.28)}
 .tile.open{border:2px solid var(--green);box-shadow:0 0 34px rgba(31,163,90,.28)}
 .tile.soon{border-color:#555d58}
+.tile.tournament{border-color:#546c70;box-shadow:0 0 30px rgba(81,123,133,.18)}
 .tile>.bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .tile>img.bg{object-fit:cover;object-position:center;filter:brightness(.7) saturate(.88)}
 .tile.soon>img.bg{filter:grayscale(1) brightness(.65)}
@@ -56,6 +64,8 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .tile p{max-width:34ch;margin:0 0 22px}
 .btn{margin-top:auto;align-self:flex-start;display:inline-flex;gap:12px;padding:14px 26px;border-radius:99px;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:#fff;background:#0f5a32;border:1px solid var(--green)}
 .btn.off{background:rgba(120,125,122,.55);border-color:#999;color:#e8e8e8;cursor:default}
+.back-to-stand{display:inline-flex;align-items:center;gap:9px;margin:0 0 18px;padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font-size:14px;font-weight:600;text-decoration:none;transition:border-color .2s,background .2s}
+.back-to-stand:hover{border-color:var(--green);background:#123523}
 .sec{display:flex;align-items:center;gap:16px;margin:46px 0 18px}
 .sec h3{margin:0;font:700 20px 'Manrope',system-ui,sans-serif;letter-spacing:.01em;text-transform:uppercase}
 .sec small{display:block;color:var(--mute);font-size:13px}
@@ -152,17 +162,16 @@ a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 /* ===== GEGEVENS: pas hier aan =====
    status: "live" | "soon" | "old"   p = punten, t = totaal aantal slagen */
 const COMPETITIES=[
- {id:"2026",naam:"2026 Par 3 Competitie",status:"live",rondes:7,tekst:"De 2026 Par 3 Competitie is in volle gang! Wie pakt de meeste punten en gaat er met de winst vandoor?",
+ {id:"2026",naam:"2026 Par 3 Competitie",status:"live",scoring:"points",rondes:7,tekst:"De 2026 Par 3 Competitie is in volle gang! Wie pakt de meeste punten en gaat er met de winst vandoor?",csv:"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6omzKj2cV_Xmt7_iY9FQaZHFEWjZOMHNfwiYu8ZkOERmiNdChe3HRHHoJk1SvQEfRAm4wTcAIW-d_/pub?output=csv",scoreColumns:[1,3,5],roundColumn:0,
   spelers:[{n:"Arend",p:4,t:238},{n:"Michael",p:2,t:272},{n:"Guus",p:1,t:265}]},
- {id:"platte-piet-cup",naam:"Platte Piet Cup",status:"open",holes:9,baan:"Grote baan Heemskerk",tekst:"Schrijf je nu in voor de Platte Piet Cup en laat zien wie de baas is. 9 holes stroke play, dus elke slag telt.",spelers:[]},
+ {id:"platte-piet-cup",naam:"Platte Piet Cup",status:"open",scoring:"stroke-play",holes:9,baan:"Grote baan Heemskerk",tekst:"Schrijf je nu in voor de Platte Piet Cup en laat zien wie de baas is. 9 holes stroke play, dus elke slag telt.",csv:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTG5aboxJ56CFGKBDSD5x_CDBok-yi2wtu2r4rHbce6_hiPN_8kHAWYBSNQ6gWnmi59I_p539-yjbm-/pub?output=csv",scoreColumns:[0,2,4,6],roundColumn:null,spelers:[]},
  {id:"2027",naam:"2027 Par 3 Competitie",status:"soon",rondes:7,tekst:"De 2027 editie staat alweer gepland. Zorg dat je erbij bent!",spelers:[{n:"",p:0,t:0},{n:"",p:0,t:0},{n:"",p:0,t:0}]},
 ];
-const SCORES_CSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6omzKj2cV_Xmt7_iY9FQaZHFEWjZOMHNfwiYu8ZkOERmiNdChe3HRHHoJk1SvQEfRAm4wTcAIW-d_/pub?output=csv";
 /* ================================== */
 const $=s=>document.querySelector(s), f1=n=>n.toFixed(1).replace(".",","), escapeHtml=s=>String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const live=()=>COMPETITIES.find(c=>c.status==="live");
-const sorted=c=>[...c.spelers].sort((a,b)=>b.p-a.p||a.t-b.t);
-let scoresError="";
+const sorted=c=>[...c.spelers].sort(c.scoring==="stroke-play"?(a,b)=>a.t-b.t||b.p-a.p:(a,b)=>b.p-a.p||a.t-b.t);
+let scoresErrors=[];
 
 function parseCsv(text){
  const rows=[];let row=[],field="",quoted=false;
@@ -179,17 +188,18 @@ function parseCsv(text){
  return rows;
 }
 
-async function loadScores(){
+async function loadScores(competition){
  try{
-  const response=await fetch(SCORES_CSV,{cache:"no-store"});
+  const response=await fetch(competition.csv,{cache:"no-store"});
   if(!response.ok)throw new Error(`Google Sheets gaf HTTP ${response.status} terug`);
   const rows=parseCsv(await response.text());
-  const columns=[1,3,5].map(i=>({name:rows[0]?.[i]?.trim(),strokes:i,points:i+1}));
-  if(columns.some(c=>!c.name)||!rows.some(r=>Number(r[0])===1))throw new Error("De verwachte scorekolommen zijn niet gevonden");
+  const columns=competition.scoreColumns.map(i=>({name:rows[0]?.[i]?.trim(),strokes:i,points:i+1}));
+  if(columns.some(c=>!c.name)||!rows[1]?.some(cell=>/slagen/i.test(cell)))throw new Error("De speler- en scorekolommen zijn niet gevonden");
   const players=columns.map(c=>({n:c.name,p:0,t:0}));
   const roundScores=[];
-  for(const row of rows.slice(2)){
-   const roundNumber=Number(row[0]);
+  for(let rowIndex=2;rowIndex<rows.length;rowIndex++){
+   const row=rows[rowIndex];
+   const roundNumber=competition.roundColumn===null?rowIndex-1:Number(row[competition.roundColumn]);
    if(!Number.isInteger(roundNumber)||roundNumber<1)continue;
    let played=false;
    const scores=columns.map(()=>({strokes:null,points:null}));
@@ -206,19 +216,18 @@ async function loadScores(){
    if(played)roundScores.push({number:roundNumber,scores});
   }
   if(!roundScores.length)throw new Error("Er zijn geen gespeelde rondes gevonden in de spreadsheet");
-  const competition=live();
-  if(!competition)throw new Error("Er is geen actieve competitie gevonden");
   competition.spelers=players;
   competition.rondes=roundScores.length;
   competition.rondeScores=roundScores;
-  scoresError="";
+  competition.scoresError="";
  }catch(error){
-  scoresError=error instanceof Error?error.message:"Onbekende fout";
+  competition.scoresError=error instanceof Error?error.message:"Onbekende fout";
  }
 }
 
 function scoresNotice(){
- return scoresError?`<p class="data-notice" role="status">De Google Sheet kon niet worden bijgewerkt (${scoresError}). De getoonde stand kan verouderd zijn.</p>`:"";
+ scoresErrors=COMPETITIES.filter(c=>c.scoresError);
+ return scoresErrors.map(c=>`<p class="data-notice" role="status">De Google Sheet voor ${escapeHtml(c.naam)} kon niet worden bijgewerkt (${escapeHtml(c.scoresError)}). De getoonde stand kan verouderd zijn.</p>`).join("");
 }
 
 function closeup(id){
@@ -239,9 +248,30 @@ function closeup(id){
 function tile(c){
  const L=c.status==="live", S=c.status==="soon", O=c.status==="old";
  const pills=L?`<span class="pill l"><span class="dot"></span>Live</span><span class="pill w">Huidige competitie</span>`:c.status==="open"?`<span class="pill l">Inschrijving geopend</span>`:S?`<span class="pill o">Komt eraan</span><span class="pill w">Inschrijving opent binnenkort</span>`:`<span class="pill o">Archief</span>`;
- const btn=c.status==="open"?`<span class="btn off">Inschrijven bij Arend →</span>`:S?`<span class="btn off">Inschrijven binnenkort →</span>`:`<a class="btn" href="#/stand/${c.id}">Bekijk stand →</a>`;
+ const btn=c.status==="open"?`<a class="btn off" href="#/stand/${c.id}">Inschrijven bij Arend →</a>`:S?`<span class="btn off">Inschrijven binnenkort →</span>`:`<a class="btn" href="#/stand/${c.id}">Bekijk stand →</a>`;
  const meta=c.status==="open"?`${c.holes} holes &nbsp;·&nbsp; ${c.baan}`:`${c.rondes} rondes &nbsp;·&nbsp; ${c.spelers.length} spelers`;
  return `<div class="tile ${c.status}">${closeup(c.id)}<div class="row">${pills}</div><h2>${c.naam}</h2><div class="meta">${meta}</div><p>${c.tekst}</p>${btn}</div>`;
+}
+
+function mysteryCourse(){
+ return `<svg class="bg" viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+<linearGradient id="mystery-sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#101b32"/><stop offset=".58" stop-color="#43566a"/><stop offset="1" stop-color="#c78d65"/></linearGradient>
+<linearGradient id="mystery-green" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#73935c"/><stop offset="1" stop-color="#10291e"/></linearGradient>
+<radialGradient id="mystery-glow"><stop stop-color="#e6bd81" stop-opacity=".75"/><stop offset="1" stop-color="#e6bd81" stop-opacity="0"/></radialGradient>
+<filter id="mystery-blur"><feGaussianBlur stdDeviation="15"/></filter></defs>
+<rect width="600" height="420" fill="url(#mystery-sky)"/><circle cx="430" cy="176" r="105" fill="url(#mystery-glow)"/>
+<path d="M0 220Q95 158 190 211T390 195T600 207V310H0Z" fill="#263b37"/><path d="M0 258Q108 211 223 259T440 240T600 248V340H0Z" fill="#324d3c"/>
+<path d="M0 420V323Q100 276 210 308Q300 336 397 286Q490 239 600 302V420Z" fill="url(#mystery-green)"/>
+<path d="M68 420Q157 338 275 330Q405 319 535 420Z" fill="#8ca06b" opacity=".28"/>
+<path d="M301 334V205" stroke="#e5dfca" stroke-width="4"/><path d="M305 207L365 222L305 241Z" fill="#d9a441"/>
+<circle cx="301" cy="180" r="42" fill="#0c1b23" fill-opacity=".58" stroke="#d9a441" stroke-opacity=".8" stroke-width="2"/>
+<text x="301" y="195" text-anchor="middle" fill="#f4ddb0" font-family="Manrope, sans-serif" font-size="48" font-weight="800">?</text>
+<g fill="#111f1a" opacity=".78" filter="url(#mystery-blur)"><circle cx="74" cy="211" r="29"/><circle cx="117" cy="205" r="24"/><circle cx="500" cy="211" r="34"/><circle cx="544" cy="210" r="26"/></g>
+<path d="M0 380Q120 351 231 380T465 378T600 374" fill="none" stroke="#d3c89d" stroke-opacity=".22" stroke-width="3"/></svg>`;
+}
+
+function tournamentTile(){
+ return `<article class="tile tournament">${mysteryCourse()}<div class="row"><span class="pill o">Binnenkort</span><span class="pill w">Locatie geheim</span></div><h2>Golf vakantie</h2><div class="meta">Georganiseerd door Guus &amp; Michael</div><p>Na het succes van Five Nations en de golfbanen van Durbuy komt er een nieuwe editie aan. Waarheen? Dat blijft nog even een mysterie. Interesse? Stuur Guus of Michael een bericht!</p></article>`;
 }
 
 function podium(c){
@@ -252,68 +282,76 @@ function podium(c){
 function pointsChart(c){
  const playedRounds=c.rondeScores||[];
  if(!playedRounds.length)return "";
+ const isStrokePlay=c.scoring==="stroke-play";
  const rounds=[{number:0,scores:c.spelers.map(()=>({points:0}))},...playedRounds];
  const colors=["#55d98a","#efbd55","#7dbbe8"],width=720,height=290,left=48,right=18,top=18,bottom=38;
  const plotWidth=width-left-right,plotHeight=height-top-bottom;
  const totals=c.spelers.map(()=>0);
- const series=c.spelers.map((player,index)=>({name:player.n,color:colors[index%colors.length],values:rounds.map(round=>{totals[index]+=round.scores[index]?.points||0;return totals[index]})}));
+ const series=c.spelers.map((player,index)=>({name:player.n,color:colors[index%colors.length],values:rounds.map(round=>{const points=round.scores[index]?.points||0;if(!isStrokePlay)totals[index]+=points;return isStrokePlay?points:totals[index]})}));
  const maximum=Math.max(1,...series.flatMap(item=>item.values));
  const step=Math.max(1,Math.ceil(maximum/5)),yMax=Math.ceil(maximum/step)*step;
  const x=i=>left+(rounds.length===1?plotWidth/2:i*plotWidth/(rounds.length-1));
  const y=value=>top+plotHeight-(value/yMax)*plotHeight;
  const grid=Array.from({length:yMax/step+1},(_,i)=>{const value=i*step,py=y(value);return `<line class="chart-grid" x1="${left}" y1="${py}" x2="${width-right}" y2="${py}"/><text class="chart-axis-label" x="${left-10}" y="${py+4}" text-anchor="end">${value}</text>`}).join("");
  const labels=rounds.map((round,i)=>`<text class="chart-axis-label" x="${x(i)}" y="${height-10}" text-anchor="middle">${round.number}</text>`).join("");
- const lines=series.map(item=>`<polyline class="chart-line" stroke="${item.color}" points="${item.values.map((value,i)=>`${x(i)},${y(value)}`).join(" ")}"/>${item.values.map((value,i)=>`<circle class="chart-point" cx="${x(i)}" cy="${y(value)}" r="5" fill="${item.color}"><title>Ronde ${rounds[i].number}: ${escapeHtml(item.name)}, ${value} punten totaal</title></circle>`).join("")}`).join("");
+ const lines=series.map(item=>`<polyline class="chart-line" stroke="${item.color}" points="${item.values.map((value,i)=>`${x(i)},${y(value)}`).join(" ")}"/>${item.values.map((value,i)=>`<circle class="chart-point" cx="${x(i)}" cy="${y(value)}" r="5" fill="${item.color}"><title>Ronde ${rounds[i].number}: ${escapeHtml(item.name)}, ${value} punten${isStrokePlay?" in deze ronde":" totaal"}</title></circle>`).join("")}`).join("");
  const legend=series.map(item=>`<span><i style="background:${item.color}"></i>${escapeHtml(item.name)}</span>`).join("");
- return `<div class="chart" role="group" aria-label="Grafiek van het totaal aantal punten per ronde"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Opgetelde punten per speler na elke speelronde">${grid}${labels}${lines}</svg><div class="chart-legend">${legend}</div></div>`;
+ const valueDescription=isStrokePlay?"Punten per speler per ronde":"Opgetelde punten per speler na elke speelronde";
+ return `<div class="chart" role="group" aria-label="${valueDescription}"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${valueDescription}">${grid}${labels}${lines}</svg><div class="chart-legend">${legend}</div></div>`;
 }
 
 function home(){
  const c=live();
  return `<div class="hero"><img class="hero-photo" src="golf-club-pete-cover.jpg" alt=""><div class="wrap"><small>Welkom bij</small><h1>Golf Club Pete</h1><p></p></div></div>
- <div class="wrap"><div class="tiles">${COMPETITIES.filter(x=>x.status!=="old").map(tile).join("")}</div>
+ <div class="wrap"><div class="tiles">${COMPETITIES.filter(x=>x.status!=="old").map(tile).join("")}${tournamentTile()}</div>
  ${c?`<div class="sec"><div><h3>Huidige stand</h3><small>Gebaseerd op ${c.rondes} gespeelde rondes</small></div><hr><a href="#/stand/${c.id}">Bekijk volledige stand →</a></div>${podium(c)}`:""}</div>`;
 }
 function competities(){return `<div class="wrap page"><h1>Competities</h1><p style="color:var(--mute)">Lopende, aankomende en afgelopen competities. Oude standen blijven altijd beschikbaar.</p><div class="tiles" style="margin-top:20px">${COMPETITIES.map(tile).join("")}</div></div>`}
 function cupIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5v2a4 4 0 0 0 4 4m7-6h3v2a4 4 0 0 1-4 4m-3 1v4m-4 3h8m-6-3h4"/></svg>'}
 function flameIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3-2-5.4-4.6-8.1.1 2.3-.7 3.8-1.7 4.8C12.4 7.2 10 3.6 7 2 7.6 6.6 5 8.9 5 14a7 7 0 0 0 7 8Z"/><path d="M12 22a3.5 3.5 0 0 0 3.5-3.5c0-1.5-.9-2.7-2.1-4-.1 1.2-.6 2-1.4 2.5-.2-1.7-1-2.8-2-3.5.2 2.2-1.5 3-1.5 5A3.5 3.5 0 0 0 12 22Z"/></svg>'}
+function standChoices(){
+ const competitions=COMPETITIES.filter(c=>c.csv);
+ return `<div class="wrap page"><h1>Stand</h1><p style="color:var(--mute)">Kies een competitie</p><div class="stand-choices">${competitions.map(c=>`<a class="stand-choice" href="#/stand/${c.id}">${closeup(c.id)}<span>${escapeHtml(c.naam)}</span><b aria-hidden="true">→</b></a>`).join("")}</div></div>`;
+}
 function stand(id){
- const c=COMPETITIES.find(x=>x.id===id)||live(); if(!c||c.status==="soon")return competities();
+ if(!id)return standChoices();
+ const c=COMPETITIES.find(x=>x.id===id&&x.csv); if(!c)return standChoices();
  const rounds=c.rondeScores||[];
  const bestStrokes=c.spelers.map((_,i)=>Math.min(...rounds.map(round=>round.scores[i]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity));
  const ranked=sorted(c), medals=["gold","silver","bronze"];
  const roundRows=rounds.map(round=>`<tr><th scope="row">${round.number}</th>${round.scores.map((score,i)=>`<td${score.strokes===bestStrokes[i]?` class="best-round" title="Laagste ronde van ${escapeHtml(c.spelers[i].n)}"`:""}>${score.strokes??"–"}${score.strokes===bestStrokes[i]?flameIcon():""}</td>${score.points>0?`<td class="round-point" aria-label="${score.points} ${score.points===1?"punt":"punten"} gescoord"><span>${score.points}</span>${cupIcon()}</td>`:`<td>${score.points??"–"}</td>`}`).join("")}</tr>`).join("");
  const totalCells=c.spelers.map((s,i)=>{const place=ranked.indexOf(s);const medal=medals[place];return `<td>${s.t}</td><td class="total-points">${s.p}${medal?`<span class="place-cup ${medal}" role="img" aria-label="${place+1}e plaats">${cupIcon()}</span>`:""}</td>`}).join("");
- return `<div class="wrap page"><h1>${c.naam}</h1><p style="color:var(--mute)">Gebaseerd op ${c.rondes} gespeelde rondes. Per ronde levert de beste score een punt op.</p>
- <div class="scroll"><table><tr><th>#</th><th>Speler</th><th>Punten</th><th>Totaal slagen</th><th>Gemiddeld aantal slagen</th></tr>${sorted(c).map((s,i)=>`<tr class="${i?"":"first"}"><td>${i+1}</td><td>${escapeHtml(s.n)}</td><td>${s.p}</td><td>${s.t}</td><td>${f1(s.t/c.rondes)}</td></tr>`).join("")}</table></div>
+ const summary=c.scoring==="stroke-play"?"Stroke play: de speler met het laagste totaal aantal slagen wint.":"Per ronde levert de beste score een punt op.";
+ return `<div class="wrap page"><a class="back-to-stand" href="#/stand"><span aria-hidden="true">←</span> Andere competitie kiezen</a><h1>${c.naam}</h1><p style="color:var(--mute)">Gebaseerd op ${c.rondes} gespeelde rondes. ${summary}</p>
+ <div class="scroll"><table><tr><th>#</th><th>Speler</th><th>Punten</th><th>Totaal slagen</th><th>Gemiddeld aantal slagen</th></tr>${sorted(c).map((s,i)=>`<tr class="${i?"":"first"}"><td>${i+1}</td><td><a href="#/speler/${encodeURIComponent(s.n)}">${escapeHtml(s.n)}</a></td><td>${s.p}</td><td>${s.t}</td><td>${f1(s.t/c.rondes)}</td></tr>`).join("")}</table></div>
  <div class="sec"><div><h3>Speelrondes</h3><small>Slagen en punten per speler per ronde</small></div><hr></div>
  <div class="scroll"><table class="round-table"><thead><tr><th rowspan="2" scope="col">Ronde</th>${c.spelers.map(s=>`<th colspan="2" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map(()=>'<th scope="col">Slagen</th><th scope="col">Punten</th>').join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row">Totaal</th>${totalCells}</tr></tfoot></table></div>
- <div class="sec"><div><h3>Puntenverloop</h3><small>Opgetelde punten per ronde</small></div><hr></div>
+ <div class="sec"><div><h3>${c.scoring==="stroke-play"?"Punten per ronde":"Puntenverloop"}</h3><small>${c.scoring==="stroke-play"?"Punten per speler per speelronde":"Opgetelde punten per ronde"}</small></div><hr></div>
  ${pointsChart(c)}</div>`;
 }
 function spelers(){
- const c=live(); if(!c)return `<div class="wrap page"><h1>Spelers</h1><div class="empty">Nog geen spelers.</div></div>`;
- const max=Math.max(...c.spelers.map(s=>s.t/c.rondes));
- return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Statistieken van ${c.naam}. Selecteer een speler om alle wedstrijdscores te bekijken.</p><div class="cards">`+sorted(c).map(s=>{const g=s.t/c.rondes;return `<a class="sc" href="#/speler/${encodeURIComponent(s.n)}" aria-label="Bekijk de scores van ${escapeHtml(s.n)}"><h4>${escapeHtml(s.n)}</h4><dl><dt>Punten</dt><dd>${s.p}</dd><dt>Rondes gespeeld</dt><dd>${c.rondes}</dd><dt>Gemiddeld aantal slagen</dt><dd>${f1(g)}</dd><dt>Totaal slagen</dt><dd>${s.t}</dd></dl><div class="bar" title="Lager gemiddelde is beter"><i style="width:${(1-(g-25)/(max+10-25))*100}%"></i></div><span class="player-link">Bekijk scoregeschiedenis →</span></a>`}).join("")+`</div></div>`;
+ const competitions=COMPETITIES.filter(c=>c.rondeScores?.length);
+ if(!competitions.length)return `<div class="wrap page"><h1>Spelers</h1><div class="empty">Er zijn nog geen spelers.</div></div>`;
+ return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Selecteer een speler om alle wedstrijdscores en competities te bekijken.</p>`+competitions.map(c=>{const max=Math.max(...c.spelers.map(s=>s.t/c.rondes));return `<div class="sec"><div><h3>${escapeHtml(c.naam)}</h3></div><hr></div><div class="cards">`+sorted(c).map(s=>{const g=s.t/c.rondes;return `<a class="sc" href="#/speler/${encodeURIComponent(s.n)}" aria-label="Bekijk de scores van ${escapeHtml(s.n)}"><h4>${escapeHtml(s.n)}</h4><dl><dt>Punten</dt><dd>${s.p}</dd><dt>Rondes gespeeld</dt><dd>${c.rondes}</dd><dt>Gemiddeld aantal slagen</dt><dd>${f1(g)}</dd><dt>Totaal slagen</dt><dd>${s.t}</dd></dl><div class="bar" title="Lager gemiddelde is beter"><i style="width:${(1-(g-25)/(max+10-25))*100}%"></i></div><span class="player-link">Bekijk scoregeschiedenis →</span></a>`}).join("")+`</div>`}).join("")+`</div>`;
 }
 function speler(id){
- const playerName=live()?.spelers.find(s=>encodeURIComponent(s.n)===id)?.n;
+ const playerName=COMPETITIES.flatMap(c=>c.spelers).find(s=>encodeURIComponent(s.n)===id)?.n;
  if(!playerName)return `<div class="wrap page"><h1>Speler niet gevonden</h1><div class="empty">Deze speler staat niet in de huidige competitie.</div><p><a href="#/spelers">← Terug naar spelers</a></p></div>`;
  const competitions=COMPETITIES.map(c=>({competition:c,index:c.spelers.findIndex(s=>s.n===playerName)})).filter(({competition,index})=>index>=0&&(competition.rondeScores||[]).some(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null));
  const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const strokes=round.scores[index]?.strokes;const best=strokes===bestStrokes;return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${strokes??"–"}${best?flameIcon():""}</td><td>${round.scores[index]?.points??"–"}</td></tr>`})}).join("");
  return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><h1>${escapeHtml(playerName)}</h1><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>Punten</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
 }
-function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><div class="empty">Er zijn nog geen toernooien. Losse toernooien komen hier te staan.</div></div>`}
+function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><p style="color:var(--mute)">Binnenkort meer nieuws over het volgende golftoernooi.</p><div class="tiles" style="margin-top:20px">${tournamentTile()}</div></div>`}
 
 const NAV=[["","Home"],["competities","Competities"],["stand","Stand"],["spelers","Spelers"],["toernooien","Toernooien"]];
 function route(){
  const [,p="",id]=(location.hash||"#/").split("/");
  $("#nav").innerHTML=NAV.map(([k,t])=>`<a href="#/${k}" class="${k===p?"on":""}">${t}</a>`).join("");
  $("#app").innerHTML=({"":home,competities,stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
- if(scoresError)$("#app").insertAdjacentHTML("afterbegin",`<div class="wrap">${scoresNotice()}</div>`);
+ const notice=scoresNotice();if(notice)$("#app").insertAdjacentHTML("afterbegin",`<div class="wrap">${notice}</div>`);
  window.scrollTo(0,0);
 }
-addEventListener("hashchange",route);route();loadScores().then(route);
+addEventListener("hashchange",route);route();Promise.all(COMPETITIES.filter(c=>c.csv).map(loadScores)).then(route);
 </script>
 </body>
 </html>
