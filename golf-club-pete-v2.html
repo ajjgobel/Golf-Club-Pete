@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Golf Club Pete</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#06130c;--card:#0d281b;--line:#1f4a34;--ink:#eef3ec;--mute:#9db3a5;--green:#1fa35a;--gold:#d9a441;--silver:#c3cbd1;--bronze:#c9743a;color-scheme:dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:16px/1.5 'Manrope',system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(6,19,12,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:28px;height:78px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);flex:none}
+.brand img{width:62px;height:62px;object-fit:contain}
+nav{display:flex;gap:26px;overflow-x:auto;flex:1;scrollbar-width:none}
+nav a{color:var(--ink);text-decoration:none;font-size:14px;letter-spacing:.07em;text-transform:uppercase;padding:8px 0;border-bottom:2px solid transparent;white-space:nowrap}
+nav a.on{border-color:var(--green)}
+.tag{font-size:13px;color:var(--mute);line-height:1.3;display:flex;gap:10px;align-items:center;flex:none}
+.tag svg{width:34px;height:34px}
+@media(max-width:980px){.tag{display:none}}
+@media(max-width:640px){header .wrap{gap:14px}.brand img{width:46px;height:46px}}
+.hero{position:relative;min-height:340px;overflow:hidden}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 54%}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,19,12,.72),rgba(6,19,12,.24) 60%,rgba(6,19,12,.08)),linear-gradient(0deg,var(--bg),transparent 45%)}
+.hero .wrap{position:relative;z-index:1;padding-top:44px;padding-bottom:50px}
+.hero small{display:block;font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spacing:-.045em;margin:8px 0 10px}
+.hero p{font-size:18px;font-weight:500;margin:0}
+.page{padding:36px 0 10px}
+.page h1{font-size:clamp(38px,6vw,56px)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:26px;margin-top:-14px;position:relative;z-index:2}
+.tile{position:relative;border-radius:14px;overflow:hidden;min-height:400px;border:1px solid var(--line);padding:26px 28px;display:flex;flex-direction:column}
+.tile.live{border:2px solid var(--green);box-shadow:0 0 34px rgba(31,163,90,.28)}
+.tile.soon{border-color:#555d58}
+.tile>.bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.tile>img.bg{object-fit:cover;object-position:center;filter:brightness(.7) saturate(.88)}
+.tile.soon>img.bg{filter:grayscale(1) brightness(.65)}
+.tile:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,rgba(5,17,10,.48),rgba(5,17,10,.08) 95%),linear-gradient(0deg,rgba(5,17,10,.42),transparent 62%);pointer-events:none}
+.tile.soon>svg.bg{filter:grayscale(1)}
+.tile>*:not(.bg){position:relative;z-index:1}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:99px;padding:6px 16px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.pill.l{background:rgba(14,90,50,.85);border:1px solid var(--green)}
+.pill.w{background:rgba(255,255,255,.88);color:#1b2a22}
+.pill.o{border:1px solid rgba(255,255,255,.7);background:rgba(0,0,0,.25)}
+.dot{width:10px;height:10px;border-radius:50%;background:#fff;animation:p 1.8s infinite}
+@keyframes p{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7)}70%,100%{box-shadow:0 0 0 9px transparent}}
+@media(prefers-reduced-motion:reduce){.dot{animation:none}}
+.tile h2{font:700 clamp(32px,5vw,42px)/1.12 'Manrope',system-ui,sans-serif;letter-spacing:-.035em;margin:26px 0 12px;max-width:14ch}
+.meta{font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+.tile p{max-width:34ch;margin:0 0 22px}
+.btn{margin-top:auto;align-self:flex-start;display:inline-flex;gap:12px;padding:14px 26px;border-radius:99px;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:#fff;background:#0f5a32;border:1px solid var(--green)}
+.btn.off{background:rgba(120,125,122,.55);border-color:#999;color:#e8e8e8;cursor:default}
+.sec{display:flex;align-items:center;gap:16px;margin:46px 0 18px}
+.sec h3{margin:0;font:700 20px 'Manrope',system-ui,sans-serif;letter-spacing:.01em;text-transform:uppercase}
+.sec small{display:block;color:var(--mute);font-size:13px}
+.sec hr{flex:1;border:0;border-top:1px solid var(--line)}
+.sec a{color:var(--ink);font-size:14px;text-decoration:none}
+.podium{display:grid;gap:10px}
+.pc{display:grid;grid-template-columns:56px minmax(0,1fr) repeat(3,minmax(110px,auto));align-items:center;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 20px}
+.pc.r1{border-color:#6b5524;background:linear-gradient(90deg,rgba(217,164,65,.1),var(--card) 34%)}
+.pc.r3{border-color:#6b4023}
+.medal{width:42px;height:42px;display:grid;place-items:center;flex:none}
+.medal svg{width:34px;height:34px}
+.medal.gold{color:#d9a441}.medal.silver{color:#c3cbd1}.medal.bronze{color:#c9743a}
+.pc .who{min-width:0}.pc .who b{font:700 18px 'Manrope',system-ui,sans-serif;display:block}.pc .who span{color:var(--mute);font-size:13px}
+.pc .num{border-left:1px solid var(--line);padding-left:18px;text-align:left}
+.pc .num small{display:block;font-size:11px;color:var(--mute);letter-spacing:.05em;text-transform:uppercase}.pc .num b{font-weight:500;font-size:18px}
+@media(max-width:760px){.pc{grid-template-columns:44px minmax(0,1fr) minmax(0,1fr);gap:10px 12px;padding:14px}.medal{grid-row:1 / span 3;width:38px;height:38px}.medal svg{width:32px;height:32px}.pc .who{grid-column:2 / 4;grid-row:1}.pc .num{padding-left:10px}.pc .num:nth-child(3){grid-column:2;grid-row:2}.pc .num:nth-child(4){grid-column:3;grid-row:2}.pc .num:nth-child(5){grid-column:2 / 4;grid-row:3}}
+.scroll{overflow-x:auto}
+.round-table{min-width:720px;table-layout:fixed}
+.round-table{border:0;background:transparent}
+.round-table th,.round-table td{text-align:center;padding:10px 8px}
+.round-table thead tr:first-child th{background:transparent;color:var(--ink);font-size:14px;border-bottom:0}
+.round-table thead tr:first-child th:not(:first-child){text-align:center}
+.round-table thead tr:nth-child(2) th{padding-top:4px;padding-bottom:12px;color:var(--mute);font-size:10px;border-bottom:1px solid var(--line)}
+.round-table thead th:first-child,.round-table tbody th{text-align:left;width:76px}
+.round-table thead tr:first-child th:first-child{border-bottom:1px solid var(--line)}
+.round-table thead tr:first-child th:not(:first-child){border-left:1px solid var(--line)}
+.round-table thead tr:nth-child(2) th{border-left:1px solid rgba(31,74,52,.65)}
+.round-table thead tr:nth-child(2) th:nth-child(2n){border-left:1px solid var(--line)}
+.round-table tbody th{color:var(--mute);font-weight:500}
+.round-table tbody tr:hover{background:rgba(255,255,255,.025)}
+.round-table tbody th,.round-table tbody td{border-bottom:1px solid rgba(31,74,52,.65);border-right:1px solid rgba(31,74,52,.5)}
+.round-table tbody td:nth-child(2n){border-left:1px solid var(--line)}
+.round-table tbody th{border-left:0}
+.round-table tfoot th,.round-table tfoot td{border-top:1px solid var(--green);border-bottom:0;font-weight:700;background:transparent}
+.round-table tfoot th{text-align:left;color:var(--ink)}
+.round-table tfoot td{border-right:1px solid rgba(31,74,52,.5)}
+.round-table tfoot td:nth-child(2n){border-left:1px solid var(--line)}
+.round-table tfoot td:last-child{border-right:0}
+.round-table tfoot td:nth-child(2n){color:var(--gold)}
+.round-table .total-points{white-space:nowrap}
+.round-table .place-cup{display:inline-flex;vertical-align:middle;margin-left:5px}
+.round-table .place-cup svg{width:18px;height:18px}
+.round-table .place-cup.gold{color:#d9a441}.round-table .place-cup.silver{color:#c3cbd1}.round-table .place-cup.bronze{color:#c9743a}
+.round-table td.best-round{color:var(--ink);font-weight:700;white-space:nowrap}
+.round-table .best-round svg{width:15px;height:15px;vertical-align:-3px;margin-left:4px;color:#ef4444}
+.round-table td.round-point{color:var(--gold);font-weight:700;background:transparent}
+.round-point svg{width:16px;height:16px;vertical-align:-3px;margin-left:4px}
+.chart{background:transparent;border:0;border-top:1px solid rgba(31,74,52,.65);border-bottom:1px solid rgba(31,74,52,.65);border-radius:0;padding:16px 8px;margin:0 0 22px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart-grid{stroke:var(--line);stroke-width:1}
+.chart-axis-label{fill:var(--mute);font:12px 'Manrope',system-ui,sans-serif}
+.chart-line{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.chart-point{stroke:var(--card);stroke-width:2}
+.chart-legend{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:10px}
+.chart-legend span{display:inline-flex;align-items:center;gap:8px;color:var(--mute);font-size:14px}
+.chart-legend i{width:10px;height:10px;border-radius:50%}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line)}
+th,td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--mute);font-weight:500;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+th:nth-child(-n+2),td:nth-child(-n+2){text-align:left}
+tr.first td{color:var(--gold);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.sc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px}
+.sc h4{font:700 24px 'Manrope',system-ui,sans-serif;letter-spacing:-.02em;margin:0 0 12px}
+.sc dl{display:grid;grid-template-columns:1fr auto;gap:8px;margin:0}.sc dt{color:var(--mute)}.sc dd{margin:0;font-weight:600;text-align:right}
+.bar{height:6px;border-radius:9px;background:var(--line);margin-top:16px}.bar i{display:block;height:100%;border-radius:9px;background:var(--green)}
+.empty{border:1px dashed var(--line);border-radius:12px;padding:40px;color:var(--mute);text-align:center}
+.data-notice{margin:18px auto;padding:12px 16px;border:1px solid #8d6326;border-radius:8px;background:rgba(141,99,38,.15);color:#f0d39e}
+footer{margin:56px auto 30px;text-align:center;color:var(--mute);font:500 13px 'Manrope',system-ui,sans-serif;letter-spacing:.03em;display:flex;align-items:center;gap:20px}
+footer hr{flex:1;border:0;border-top:1px solid var(--line)}
+a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+ <a class="brand" href="#/" aria-label="Golf Club Pete"><img src="golf-club-pete-logo.png" alt="Golf Club Pete logo"></a>
+ <nav id="nav"></nav>
+ <div class="tag" style="display:none"></div>
+</div></header>
+<main id="app"></main>
+<div class="wrap"><footer><hr><span>Golf Club Pete &nbsp;·&nbsp; Est. 2026</span><hr></footer></div>
+
+<script>
+/* ===== GEGEVENS: pas hier aan =====
+   status: "live" | "soon" | "old"   p = punten, t = totaal aantal slagen */
+const COMPETITIES=[
+ {id:"2026",naam:"2026 Par 3 Competitie",status:"live",rondes:7,tekst:"De 2026 Par 3 Competitie is in volle gang! Wie pakt de meeste punten en gaat er met de winst vandoor?",
+  spelers:[{n:"Arend",p:4,t:238},{n:"Michael",p:2,t:272},{n:"Guus",p:1,t:265}]},
+ {id:"2027",naam:"2027 Par 3 Competitie",status:"soon",rondes:7,tekst:"De 2027 editie staat alweer gepland. Zorg dat je erbij bent!",spelers:[{n:"",p:0,t:0},{n:"",p:0,t:0},{n:"",p:0,t:0}]},
+];
+const SCORES_CSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6omzKj2cV_Xmt7_iY9FQaZHFEWjZOMHNfwiYu8ZkOERmiNdChe3HRHHoJk1SvQEfRAm4wTcAIW-d_/pub?output=csv";
+/* ================================== */
+const $=s=>document.querySelector(s), f1=n=>n.toFixed(1).replace(".",","), escapeHtml=s=>String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+const live=()=>COMPETITIES.find(c=>c.status==="live");
+const sorted=c=>[...c.spelers].sort((a,b)=>b.p-a.p||a.t-b.t);
+let scoresError="";
+
+function parseCsv(text){
+ const rows=[];let row=[],field="",quoted=false;
+ for(let i=0;i<text.length;i++){
+  const ch=text[i];
+  if(ch==='"'){if(quoted&&text[i+1]==='"'){field+='"';i++}else quoted=!quoted}
+  else if(ch===","&&!quoted){row.push(field.trim());field=""}
+  else if((ch==="\n"||ch==="\r")&&!quoted){
+   if(ch==="\r"&&text[i+1]==="\n")i++;
+   row.push(field.trim());rows.push(row);row=[];field="";
+  }else field+=ch;
+ }
+ if(field||row.length){row.push(field.trim());rows.push(row)}
+ return rows;
+}
+
+async function loadScores(){
+ try{
+  const response=await fetch(SCORES_CSV,{cache:"no-store"});
+  if(!response.ok)throw new Error(`Google Sheets gaf HTTP ${response.status} terug`);
+  const rows=parseCsv(await response.text());
+  const columns=[1,3,5].map(i=>({name:rows[0]?.[i]?.trim(),strokes:i,points:i+1}));
+  if(columns.some(c=>!c.name)||!rows.some(r=>Number(r[0])===1))throw new Error("De verwachte scorekolommen zijn niet gevonden");
+  const players=columns.map(c=>({n:c.name,p:0,t:0}));
+  const roundScores=[];
+  for(const row of rows.slice(2)){
+   const roundNumber=Number(row[0]);
+   if(!Number.isInteger(roundNumber)||roundNumber<1)continue;
+   let played=false;
+   const scores=columns.map(()=>({strokes:null,points:null}));
+   columns.forEach((column,i)=>{
+    const strokesText=row[column.strokes]?.trim(),pointsText=row[column.points]?.trim();
+    const strokes=strokesText?Number(strokesText):NaN,points=pointsText?Number(pointsText):NaN;
+    if(Number.isFinite(strokes)&&strokes>0){
+     players[i].t+=strokes;
+     if(Number.isFinite(points)){players[i].p+=points;scores[i].points=points}
+     scores[i].strokes=strokes;
+     played=true;
+    }
+   });
+   if(played)roundScores.push({number:roundNumber,scores});
+  }
+  if(!roundScores.length)throw new Error("Er zijn geen gespeelde rondes gevonden in de spreadsheet");
+  const competition=live();
+  if(!competition)throw new Error("Er is geen actieve competitie gevonden");
+  competition.spelers=players;
+  competition.rondes=roundScores.length;
+  competition.rondeScores=roundScores;
+  scoresError="";
+ }catch(error){
+  scoresError=error instanceof Error?error.message:"Onbekende fout";
+ }
+}
+
+function scoresNotice(){
+ return scoresError?`<p class="data-notice" role="status">De Google Sheet kon niet worden bijgewerkt (${scoresError}). De getoonde stand kan verouderd zijn.</p>`:"";
+}
+
+function closeup(id){
+ if(id==="2026"||id==="2027")return '<img class="bg" src="heemskerkse-par3-golfbaan.jpg" alt="">';
+ return `<svg class="bg" viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+<linearGradient id="a${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c3a3a"/><stop offset=".5" stop-color="#d79a4e"/></linearGradient>
+<linearGradient id="g${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f7a24"/><stop offset="1" stop-color="#0c3015"/></linearGradient>
+<radialGradient id="b${id}" cx=".35" cy=".3"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#cdd8e4"/><stop offset="1" stop-color="#7f93a8"/></radialGradient>
+<pattern id="d${id}" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="2" fill="#6c7f94" opacity=".35"/></pattern>
+<filter id="f${id}"><feGaussianBlur stdDeviation="7"/></filter>
+<linearGradient id="o${id}" x1="0" x2="1"><stop offset="0" stop-color="#05110a" stop-opacity=".85"/><stop offset=".65" stop-color="#05110a" stop-opacity="0"/></linearGradient></defs>
+<rect width="600" height="420" fill="url(#a${id})"/><g filter="url(#f${id})" fill="#183a1c"><circle cx="150" cy="170" r="50"/><circle cx="330" cy="150" r="40"/><circle cx="480" cy="165" r="55"/><rect x="0" y="170" width="600" height="60"/></g>
+<rect y="215" width="600" height="205" fill="url(#g${id})"/><ellipse cx="330" cy="345" rx="190" ry="40" fill="#07150a"/><ellipse cx="330" cy="352" rx="150" ry="26" fill="#d8d8cc" opacity=".55"/><ellipse cx="330" cy="342" rx="160" ry="28" fill="#030a05"/>
+<ellipse cx="458" cy="300" rx="52" ry="9" fill="#000" opacity=".4"/><circle cx="458" cy="255" r="48" fill="url(#b${id})"/><circle cx="458" cy="255" r="48" fill="url(#d${id})"/>
+<rect width="600" height="420" fill="url(#o${id})"/></svg>`}
+
+function tile(c){
+ const L=c.status==="live", S=c.status==="soon", O=c.status==="old";
+ const pills=L?`<span class="pill l"><span class="dot"></span>Live</span><span class="pill w">Huidige competitie</span>`:S?`<span class="pill o">Komt eraan</span><span class="pill w">Inschrijving opent binnenkort</span>`:`<span class="pill o">Archief</span>`;
+ const btn=S?`<span class="btn off">Inschrijven binnenkort →</span>`:`<a class="btn" href="#/stand/${c.id}">Bekijk stand →</a>`;
+ return `<div class="tile ${c.status}">${closeup(c.id)}<div class="row">${pills}</div><h2>${c.naam}</h2><div class="meta">${c.rondes} rondes &nbsp;·&nbsp; ${c.spelers.length} spelers</div><p>${c.tekst}</p>${btn}</div>`;
+}
+
+function podium(c){
+ const medals=[["gold","gouden"],["silver","zilveren"],["bronze","bronzen"]];
+ return `<div class="podium">`+sorted(c).map((s,i)=>{const [metal,color]=medals[i]||medals[2];const playerIndex=c.spelers.indexOf(s);const lowest=(c.rondeScores||[]).map(round=>round.scores[playerIndex]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0);const lowestRound=lowest.length?Math.min(...lowest):"–";return `<div class="pc r${i+1}"><div class="medal ${metal}" role="img" aria-label="${i+1}e plaats, ${color} beker"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 4h16v7a8 8 0 0 1-16 0V4Z" fill="currentColor"/><path d="M8 7H4v3a7 7 0 0 0 6 6.8M24 7h4v3a7 7 0 0 1-6 6.8M16 19v5m-6 4h12m-10-4h8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="who"><b>${escapeHtml(s.n)}</b><span>${s.p} ${s.p===1?"punt":"punten"}</span></div><div class="num"><small>Totaal slagen</small><b>${s.t}</b></div><div class="num"><small>Gem. slagen</small><b>${f1(s.t/c.rondes)}</b></div><div class="num"><small>Laagste ronde</small><b>${lowestRound}</b></div></div>`}).join("")+`</div>`;
+}
+
+function pointsChart(c){
+ const playedRounds=c.rondeScores||[];
+ if(!playedRounds.length)return "";
+ const rounds=[{number:0,scores:c.spelers.map(()=>({points:0}))},...playedRounds];
+ const colors=["#55d98a","#efbd55","#7dbbe8"],width=720,height=290,left=48,right=18,top=18,bottom=38;
+ const plotWidth=width-left-right,plotHeight=height-top-bottom;
+ const totals=c.spelers.map(()=>0);
+ const series=c.spelers.map((player,index)=>({name:player.n,color:colors[index%colors.length],values:rounds.map(round=>{totals[index]+=round.scores[index]?.points||0;return totals[index]})}));
+ const maximum=Math.max(1,...series.flatMap(item=>item.values));
+ const step=Math.max(1,Math.ceil(maximum/5)),yMax=Math.ceil(maximum/step)*step;
+ const x=i=>left+(rounds.length===1?plotWidth/2:i*plotWidth/(rounds.length-1));
+ const y=value=>top+plotHeight-(value/yMax)*plotHeight;
+ const grid=Array.from({length:yMax/step+1},(_,i)=>{const value=i*step,py=y(value);return `<line class="chart-grid" x1="${left}" y1="${py}" x2="${width-right}" y2="${py}"/><text class="chart-axis-label" x="${left-10}" y="${py+4}" text-anchor="end">${value}</text>`}).join("");
+ const labels=rounds.map((round,i)=>`<text class="chart-axis-label" x="${x(i)}" y="${height-10}" text-anchor="middle">${round.number}</text>`).join("");
+ const lines=series.map(item=>`<polyline class="chart-line" stroke="${item.color}" points="${item.values.map((value,i)=>`${x(i)},${y(value)}`).join(" ")}"/>${item.values.map((value,i)=>`<circle class="chart-point" cx="${x(i)}" cy="${y(value)}" r="5" fill="${item.color}"><title>Ronde ${rounds[i].number}: ${escapeHtml(item.name)}, ${value} punten totaal</title></circle>`).join("")}`).join("");
+ const legend=series.map(item=>`<span><i style="background:${item.color}"></i>${escapeHtml(item.name)}</span>`).join("");
+ return `<div class="chart" role="group" aria-label="Grafiek van het totaal aantal punten per ronde"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Opgetelde punten per speler na elke speelronde">${grid}${labels}${lines}</svg><div class="chart-legend">${legend}</div></div>`;
+}
+
+function home(){
+ const c=live();
+ return `<div class="hero"><img class="hero-photo" src="golf-club-pete-cover.jpg" alt=""><div class="wrap"><small>Welkom bij</small><h1>Golf Club Pete</h1><p></p></div></div>
+ <div class="wrap"><div class="tiles">${COMPETITIES.filter(x=>x.status!=="old").map(tile).join("")}</div>
+ ${c?`<div class="sec"><div><h3>Huidige stand</h3><small>Gebaseerd op ${c.rondes} gespeelde rondes</small></div><hr><a href="#/stand/${c.id}">Bekijk volledige stand →</a></div>${podium(c)}`:""}</div>`;
+}
+function competities(){return `<div class="wrap page"><h1>Competities</h1><p style="color:var(--mute)">Lopende, aankomende en afgelopen competities. Oude standen blijven altijd beschikbaar.</p><div class="tiles" style="margin-top:20px">${COMPETITIES.map(tile).join("")}</div></div>`}
+function cupIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5v2a4 4 0 0 0 4 4m7-6h3v2a4 4 0 0 1-4 4m-3 1v4m-4 3h8m-6-3h4"/></svg>'}
+function flameIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3-2-5.4-4.6-8.1.1 2.3-.7 3.8-1.7 4.8C12.4 7.2 10 3.6 7 2 7.6 6.6 5 8.9 5 14a7 7 0 0 0 7 8Z"/><path d="M12 22a3.5 3.5 0 0 0 3.5-3.5c0-1.5-.9-2.7-2.1-4-.1 1.2-.6 2-1.4 2.5-.2-1.7-1-2.8-2-3.5.2 2.2-1.5 3-1.5 5A3.5 3.5 0 0 0 12 22Z"/></svg>'}
+function stand(id){
+ const c=COMPETITIES.find(x=>x.id===id)||live(); if(!c||c.status==="soon")return competities();
+ const rounds=c.rondeScores||[];
+ const bestStrokes=c.spelers.map((_,i)=>Math.min(...rounds.map(round=>round.scores[i]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity));
+ const ranked=sorted(c), medals=["gold","silver","bronze"];
+ const roundRows=rounds.map(round=>`<tr><th scope="row">${round.number}</th>${round.scores.map((score,i)=>`<td${score.strokes===bestStrokes[i]?` class="best-round" title="Laagste ronde van ${escapeHtml(c.spelers[i].n)}"`:""}>${score.strokes??"–"}${score.strokes===bestStrokes[i]?flameIcon():""}</td>${score.points>0?`<td class="round-point" aria-label="${score.points} ${score.points===1?"punt":"punten"} gescoord"><span>${score.points}</span>${cupIcon()}</td>`:`<td>${score.points??"–"}</td>`}`).join("")}</tr>`).join("");
+ const totalCells=c.spelers.map((s,i)=>{const place=ranked.indexOf(s);const medal=medals[place];return `<td>${s.t}</td><td class="total-points">${s.p}${medal?`<span class="place-cup ${medal}" role="img" aria-label="${place+1}e plaats">${cupIcon()}</span>`:""}</td>`}).join("");
+ return `<div class="wrap page"><h1>${c.naam}</h1><p style="color:var(--mute)">Gebaseerd op ${c.rondes} gespeelde rondes. Per ronde levert de beste score een punt op.</p>
+ <div class="scroll"><table><tr><th>#</th><th>Speler</th><th>Punten</th><th>Totaal slagen</th><th>Gemiddeld aantal slagen</th></tr>${sorted(c).map((s,i)=>`<tr class="${i?"":"first"}"><td>${i+1}</td><td>${escapeHtml(s.n)}</td><td>${s.p}</td><td>${s.t}</td><td>${f1(s.t/c.rondes)}</td></tr>`).join("")}</table></div>
+ <div class="sec"><div><h3>Speelrondes</h3><small>Slagen en punten per speler per ronde</small></div><hr></div>
+ <div class="scroll"><table class="round-table"><thead><tr><th rowspan="2" scope="col">Ronde</th>${c.spelers.map(s=>`<th colspan="2" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map(()=>'<th scope="col">Slagen</th><th scope="col">Punten</th>').join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row">Totaal</th>${totalCells}</tr></tfoot></table></div>
+ <div class="sec"><div><h3>Puntenverloop</h3><small>Opgetelde punten per ronde</small></div><hr></div>
+ ${pointsChart(c)}</div>`;
+}
+function spelers(){
+ const c=live(); if(!c)return `<div class="wrap page"><h1>Spelers</h1><div class="empty">Nog geen spelers.</div></div>`;
+ const max=Math.max(...c.spelers.map(s=>s.t/c.rondes));
+ return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Statistieken van ${c.naam}.</p><div class="cards">`+sorted(c).map(s=>{const g=s.t/c.rondes;return `<div class="sc"><h4>${escapeHtml(s.n)}</h4><dl><dt>Punten</dt><dd>${s.p}</dd><dt>Rondes gespeeld</dt><dd>${c.rondes}</dd><dt>Gemiddeld aantal slagen</dt><dd>${f1(g)}</dd><dt>Totaal slagen</dt><dd>${s.t}</dd></dl><div class="bar" title="Lager gemiddelde is beter"><i style="width:${(1-(g-25)/(max+10-25))*100}%"></i></div></div>`}).join("")+`</div></div>`;
+}
+function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><div class="empty">Er zijn nog geen toernooien. Losse toernooien komen hier te staan.</div></div>`}
+
+const NAV=[["","Home"],["competities","Competities"],["stand","Stand"],["spelers","Spelers"],["toernooien","Toernooien"]];
+function route(){
+ const [,p="",id]=(location.hash||"#/").split("/");
+ $("#nav").innerHTML=NAV.map(([k,t])=>`<a href="#/${k}" class="${k===p?"on":""}">${t}</a>`).join("");
+ $("#app").innerHTML=({"":home,competities,stand:()=>stand(id),spelers,toernooien}[p]||home)();
+ if(scoresError)$("#app").insertAdjacentHTML("afterbegin",`<div class="wrap">${scoresNotice()}</div>`);
+ window.scrollTo(0,0);
+}
+addEventListener("hashchange",route);route();loadScores().then(route);
+</script>
+</body>
+</html>
