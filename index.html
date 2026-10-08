@@ -35,6 +35,7 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:26px;margin-top:-14px;position:relative;z-index:2}
 .tile{position:relative;border-radius:14px;overflow:hidden;min-height:400px;border:1px solid var(--line);padding:26px 28px;display:flex;flex-direction:column}
 .tile.live{border:2px solid var(--green);box-shadow:0 0 34px rgba(31,163,90,.28)}
+.tile.open{border:2px solid var(--green);box-shadow:0 0 34px rgba(31,163,90,.28)}
 .tile.soon{border-color:#555d58}
 .tile>.bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .tile>img.bg{object-fit:cover;object-position:center;filter:brightness(.7) saturate(.88)}
@@ -99,7 +100,7 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .round-table .place-cup svg{width:18px;height:18px}
 .round-table .place-cup.gold{color:#d9a441}.round-table .place-cup.silver{color:#c3cbd1}.round-table .place-cup.bronze{color:#c9743a}
 .round-table td.best-round{color:var(--ink);font-weight:700;white-space:nowrap}
-.round-table .best-round svg{width:15px;height:15px;vertical-align:-3px;margin-left:4px;color:#ef4444}
+.round-table .best-round svg,.player-scores .best-round svg{width:15px;height:15px;vertical-align:-3px;margin-left:4px;color:#ef4444}
 .round-table td.round-point{color:var(--gold);font-weight:700;background:transparent}
 .round-point svg{width:16px;height:16px;vertical-align:-3px;margin-left:4px}
 .chart{background:transparent;border:0;border-top:1px solid rgba(31,74,52,.65);border-bottom:1px solid rgba(31,74,52,.65);border-radius:0;padding:16px 8px;margin:0 0 22px}
@@ -113,13 +114,23 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .chart-legend i{width:10px;height:10px;border-radius:50%}
 table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line)}
 th,td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.player-scores table{table-layout:fixed}
+.player-scores th,.player-scores td{white-space:normal;overflow-wrap:anywhere}
+.player-scores th:nth-child(1),.player-scores td:nth-child(1){width:40%}
+.player-scores th:nth-child(2),.player-scores td:nth-child(2){width:16%}
+.player-scores th:nth-child(3),.player-scores td:nth-child(3){width:25%}
+.player-scores th:nth-child(4),.player-scores td:nth-child(4){width:19%}
+@media(max-width:480px){.player-scores th,.player-scores td{padding:8px 5px;font-size:12px}.player-scores th{font-size:10px;letter-spacing:.03em}.player-scores .best-round svg{width:13px;height:13px;margin-left:2px}}
 th{color:var(--mute);font-weight:500;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
 th:nth-child(-n+2),td:nth-child(-n+2){text-align:left}
 tr.first td{color:var(--gold);font-weight:600}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
 .sc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px}
+a.sc{display:block;color:var(--ink);text-decoration:none;transition:border-color .2s,transform .2s}
+a.sc:hover{border-color:var(--green);transform:translateY(-2px)}
 .sc h4{font:700 24px 'Manrope',system-ui,sans-serif;letter-spacing:-.02em;margin:0 0 12px}
 .sc dl{display:grid;grid-template-columns:1fr auto;gap:8px;margin:0}.sc dt{color:var(--mute)}.sc dd{margin:0;font-weight:600;text-align:right}
+.player-link{display:inline-block;margin-top:16px;color:var(--mute);font-size:13px}
 .bar{height:6px;border-radius:9px;background:var(--line);margin-top:16px}.bar i{display:block;height:100%;border-radius:9px;background:var(--green)}
 .empty{border:1px dashed var(--line);border-radius:12px;padding:40px;color:var(--mute);text-align:center}
 .data-notice{margin:18px auto;padding:12px 16px;border:1px solid #8d6326;border-radius:8px;background:rgba(141,99,38,.15);color:#f0d39e}
@@ -143,6 +154,7 @@ a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 const COMPETITIES=[
  {id:"2026",naam:"2026 Par 3 Competitie",status:"live",rondes:7,tekst:"De 2026 Par 3 Competitie is in volle gang! Wie pakt de meeste punten en gaat er met de winst vandoor?",
   spelers:[{n:"Arend",p:4,t:238},{n:"Michael",p:2,t:272},{n:"Guus",p:1,t:265}]},
+ {id:"platte-piet-cup",naam:"Platte Piet Cup",status:"open",holes:9,baan:"Grote baan Heemskerk",tekst:"Schrijf je nu in voor de Platte Piet Cup en laat zien wie de baas is. 9 holes stroke play, dus elke slag telt.",spelers:[]},
  {id:"2027",naam:"2027 Par 3 Competitie",status:"soon",rondes:7,tekst:"De 2027 editie staat alweer gepland. Zorg dat je erbij bent!",spelers:[{n:"",p:0,t:0},{n:"",p:0,t:0},{n:"",p:0,t:0}]},
 ];
 const SCORES_CSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6omzKj2cV_Xmt7_iY9FQaZHFEWjZOMHNfwiYu8ZkOERmiNdChe3HRHHoJk1SvQEfRAm4wTcAIW-d_/pub?output=csv";
@@ -210,6 +222,7 @@ function scoresNotice(){
 }
 
 function closeup(id){
+ if(id==="platte-piet-cup")return '<img class="bg" src="golf-club-pete-logo.png" alt="Golf Club Pete-logo voor de Platte Piet Cup">';
  if(id==="2026"||id==="2027")return '<img class="bg" src="heemskerkse-par3-golfbaan.jpg" alt="">';
  return `<svg class="bg" viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
 <linearGradient id="a${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c3a3a"/><stop offset=".5" stop-color="#d79a4e"/></linearGradient>
@@ -225,9 +238,10 @@ function closeup(id){
 
 function tile(c){
  const L=c.status==="live", S=c.status==="soon", O=c.status==="old";
- const pills=L?`<span class="pill l"><span class="dot"></span>Live</span><span class="pill w">Huidige competitie</span>`:S?`<span class="pill o">Komt eraan</span><span class="pill w">Inschrijving opent binnenkort</span>`:`<span class="pill o">Archief</span>`;
- const btn=S?`<span class="btn off">Inschrijven binnenkort →</span>`:`<a class="btn" href="#/stand/${c.id}">Bekijk stand →</a>`;
- return `<div class="tile ${c.status}">${closeup(c.id)}<div class="row">${pills}</div><h2>${c.naam}</h2><div class="meta">${c.rondes} rondes &nbsp;·&nbsp; ${c.spelers.length} spelers</div><p>${c.tekst}</p>${btn}</div>`;
+ const pills=L?`<span class="pill l"><span class="dot"></span>Live</span><span class="pill w">Huidige competitie</span>`:c.status==="open"?`<span class="pill l">Inschrijving geopend</span>`:S?`<span class="pill o">Komt eraan</span><span class="pill w">Inschrijving opent binnenkort</span>`:`<span class="pill o">Archief</span>`;
+ const btn=c.status==="open"?`<span class="btn off">Inschrijven bij Arend →</span>`:S?`<span class="btn off">Inschrijven binnenkort →</span>`:`<a class="btn" href="#/stand/${c.id}">Bekijk stand →</a>`;
+ const meta=c.status==="open"?`${c.holes} holes &nbsp;·&nbsp; ${c.baan}`:`${c.rondes} rondes &nbsp;·&nbsp; ${c.spelers.length} spelers`;
+ return `<div class="tile ${c.status}">${closeup(c.id)}<div class="row">${pills}</div><h2>${c.naam}</h2><div class="meta">${meta}</div><p>${c.tekst}</p>${btn}</div>`;
 }
 
 function podium(c){
@@ -280,7 +294,14 @@ function stand(id){
 function spelers(){
  const c=live(); if(!c)return `<div class="wrap page"><h1>Spelers</h1><div class="empty">Nog geen spelers.</div></div>`;
  const max=Math.max(...c.spelers.map(s=>s.t/c.rondes));
- return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Statistieken van ${c.naam}.</p><div class="cards">`+sorted(c).map(s=>{const g=s.t/c.rondes;return `<div class="sc"><h4>${escapeHtml(s.n)}</h4><dl><dt>Punten</dt><dd>${s.p}</dd><dt>Rondes gespeeld</dt><dd>${c.rondes}</dd><dt>Gemiddeld aantal slagen</dt><dd>${f1(g)}</dd><dt>Totaal slagen</dt><dd>${s.t}</dd></dl><div class="bar" title="Lager gemiddelde is beter"><i style="width:${(1-(g-25)/(max+10-25))*100}%"></i></div></div>`}).join("")+`</div></div>`;
+ return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Statistieken van ${c.naam}. Selecteer een speler om alle wedstrijdscores te bekijken.</p><div class="cards">`+sorted(c).map(s=>{const g=s.t/c.rondes;return `<a class="sc" href="#/speler/${encodeURIComponent(s.n)}" aria-label="Bekijk de scores van ${escapeHtml(s.n)}"><h4>${escapeHtml(s.n)}</h4><dl><dt>Punten</dt><dd>${s.p}</dd><dt>Rondes gespeeld</dt><dd>${c.rondes}</dd><dt>Gemiddeld aantal slagen</dt><dd>${f1(g)}</dd><dt>Totaal slagen</dt><dd>${s.t}</dd></dl><div class="bar" title="Lager gemiddelde is beter"><i style="width:${(1-(g-25)/(max+10-25))*100}%"></i></div><span class="player-link">Bekijk scoregeschiedenis →</span></a>`}).join("")+`</div></div>`;
+}
+function speler(id){
+ const playerName=live()?.spelers.find(s=>encodeURIComponent(s.n)===id)?.n;
+ if(!playerName)return `<div class="wrap page"><h1>Speler niet gevonden</h1><div class="empty">Deze speler staat niet in de huidige competitie.</div><p><a href="#/spelers">← Terug naar spelers</a></p></div>`;
+ const competitions=COMPETITIES.map(c=>({competition:c,index:c.spelers.findIndex(s=>s.n===playerName)})).filter(({competition,index})=>index>=0&&(competition.rondeScores||[]).some(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null));
+ const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const strokes=round.scores[index]?.strokes;const best=strokes===bestStrokes;return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${strokes??"–"}${best?flameIcon():""}</td><td>${round.scores[index]?.points??"–"}</td></tr>`})}).join("");
+ return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><h1>${escapeHtml(playerName)}</h1><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>Punten</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
 }
 function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><div class="empty">Er zijn nog geen toernooien. Losse toernooien komen hier te staan.</div></div>`}
 
@@ -288,7 +309,7 @@ const NAV=[["","Home"],["competities","Competities"],["stand","Stand"],["spelers
 function route(){
  const [,p="",id]=(location.hash||"#/").split("/");
  $("#nav").innerHTML=NAV.map(([k,t])=>`<a href="#/${k}" class="${k===p?"on":""}">${t}</a>`).join("");
- $("#app").innerHTML=({"":home,competities,stand:()=>stand(id),spelers,toernooien}[p]||home)();
+ $("#app").innerHTML=({"":home,competities,stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
  if(scoresError)$("#app").insertAdjacentHTML("afterbegin",`<div class="wrap">${scoresNotice()}</div>`);
  window.scrollTo(0,0);
 }
