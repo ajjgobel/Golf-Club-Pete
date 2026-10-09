@@ -179,7 +179,9 @@ a.sc:hover{border-color:var(--green);transform:translateY(-2px)}
 .planning-rsvp button[data-response="nee"]{background:transparent;border-color:var(--line)}
 .planning-rsvp button:disabled{opacity:.55;cursor:wait}
 .planning-counts{font-size:14px;color:var(--mute)}
-.planning-attendees{max-width:260px;color:var(--mute);font-size:13px}
+.planning-attendees{display:flex;flex-wrap:wrap;gap:7px;max-width:360px;color:var(--mute);font-size:13px}
+.planning-attendee{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border:1px solid var(--line);border-radius:99px;background:rgba(31,163,90,.08)}
+.planning-attendee-icon{font-size:16px;line-height:1}
 .planning-message{grid-column:1/-1;min-height:1.5em;margin:0;color:var(--gold);font-size:14px}
 .planning-empty{margin-top:24px}
 @media(max-width:640px){.planning-event{grid-template-columns:1fr;padding:18px}.planning-actions{flex-direction:row;align-items:center;flex-wrap:wrap}.planning-rsvp{grid-template-columns:1fr 1fr}.planning-rsvp label{grid-column:1/-1}.planning-rsvp button{width:100%}}
@@ -196,7 +198,7 @@ a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 </div></header>
 <main id="app"></main>
 <iframe id="planning-rsvp-frame" name="planning-rsvp-frame" title="Reactie op wedstrijd opslaan" hidden></iframe>
-<div class="wrap"><footer><hr><span>Golf Club Pete &nbsp;·&nbsp; Est. 2026</span><hr></footer></div>
+<div class="wrap"><footer><hr><span>Golf Club Pete &nbsp;·&nbsp; Est. 2018</span><hr></footer></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
@@ -458,11 +460,42 @@ function loadPlayerProfiles(){
   });
  }catch(error){playerProfilesError=error.message||"Firebase kan niet worden gestart.";playerProfilesLoaded=true;route()}
 }
+function availableClaimNames(){
+ const usedNames=new Set(playerProfiles
+  .filter(profile=>profile.uid&&profile.uid!==currentUser?.uid)
+  .map(profile=>String(profile.scoreName||profile.name||"").trim().toLocaleLowerCase("nl-NL")));
+ const players=new Map();
+ [...playerProfiles.map(profile=>profile.scoreName||profile.name),...COMPETITIES.flatMap(competition=>(competition.spelers||[]).map(player=>player.n))]
+  .map(name=>String(name||"").trim())
+  .filter(name=>name&&!usedNames.has(name.toLocaleLowerCase("nl-NL")))
+  .forEach(name=>players.set(name.toLocaleLowerCase("nl-NL"),name));
+ return [...players.values()].map(scoreName=>{
+  const profile=playerProfileFor(scoreName);
+  const normalized=scoreName.toLocaleLowerCase("nl-NL");
+  const playedMatches=COMPETITIES.reduce((total,competition)=>{
+   const playerIndex=(competition.spelers||[]).findIndex(player=>String(player.n||"").trim().toLocaleLowerCase("nl-NL")===normalized);
+   if(playerIndex<0)return total;
+   return total+(competition.rondeScores||[]).filter(round=>{
+    const score=round.scores?.[playerIndex];
+    return score&&(score.strokes!==null&&score.strokes!==undefined||score.points!==null&&score.points!==undefined);
+   }).length;
+  },0);
+  const handicap=profile.handicap===null||profile.handicap===undefined||profile.handicap===""
+   ?"HCP niet ingevuld"
+   :`HCP ${Number(profile.handicap).toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
+  const matchesLabel=`${playedMatches} ${playedMatches===1?"wedstrijd":"wedstrijden"}`;
+  return {scoreName,label:`${profile.name||scoreName} - ${handicap} - ${matchesLabel}`};
+ }).sort((first,second)=>first.label.localeCompare(second.label,"nl"));
+}
 function profileAccountPanel(){
  if(!firebaseConfigured())return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p>Google-login wordt actief zodra Firebase is ingesteld. Tot die tijd beheer je profielen in het tabblad Spelers van de Google Sheet.</p></section>`;
  if(!firebaseAuth)return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p role="alert">${escapeHtml(playerProfilesError||"Firebase is nog niet beschikbaar.")}</p></section>`;
  if(!currentUser)return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p>Log in met Google om je golf-icoon en handicap te beheren. De koppeling aan wedstrijdscores wordt eerst door de beheerder goedgekeurd.</p><button class="account-button" type="button" data-account-action="sign-in">Inloggen met Google</button>${accountMessage?`<p class="account-message" role="status">${escapeHtml(accountMessage)}</p>`:""}</section>`;
- if(myClaimRequest?.status!=="approved")return `<section class="account-panel"><div class="account-user"><div><h2>Spelersprofiel aanvragen</h2><p>Ingelogd als ${escapeHtml(currentUser.email||"Google-account")}. Je naam in de competitie wordt door de beheerder goedgekeurd.</p></div><button class="account-button" type="button" data-account-action="sign-out">Uitloggen</button></div><form class="account-form" data-account-form="claim"><label>Voornaam zoals in de scorelijsten<input name="requestedName" type="text" maxlength="80" value="${escapeHtml(myClaimRequest?.requestedName||"")}" required></label><button type="submit">Profiel aanvragen</button></form><p class="account-message" role="status">${escapeHtml(accountMessage|| (myClaimRequest?.status==="pending"?"Je aanvraag wacht op goedkeuring.":""))}</p></section>`;
+ if(myClaimRequest?.status!=="approved"){
+  const claimNames=availableClaimNames();
+  const selectedName=myClaimRequest?.requestedName||"";
+  return `<section class="account-panel"><div class="account-user"><div><h2>Spelersprofiel aanvragen</h2><p>Ingelogd als ${escapeHtml(currentUser.email||"Google-account")}. Kies je naam uit de bestaande spelers. De beheerder controleert en keurt de koppeling aan wedstrijdscores goed.</p></div><button class="account-button" type="button" data-account-action="sign-out">Uitloggen</button></div>${claimNames.length?`<form class="account-form" data-account-form="claim"><label>Jouw speler<select name="requestedName" required><option value="">Kies je speler…</option>${claimNames.map(player=>`<option value="${escapeHtml(player.scoreName)}"${player.scoreName===selectedName?" selected":""}>${escapeHtml(player.label)}</option>`).join("")}</select></label><button type="submit">Profiel aanvragen</button></form>`:`<p class="account-message" role="status">Er zijn nog geen bestaande spelers om te kiezen.</p>`}<p class="account-message" role="status">${escapeHtml(accountMessage|| (myClaimRequest?.status==="pending"?"Je aanvraag wacht op goedkeuring.":""))}</p></section>`;
+ }
  const profile=myPlayerProfile||{displayName:myClaimRequest.approvedName,icon:"⛳",handicap:null};
  return `<section class="account-panel"><div class="account-user"><div><h2>Mijn spelersprofiel</h2><p>Ingelogd als ${escapeHtml(currentUser.email||"Google-account")}. Je competitiescores blijven gekoppeld aan de goedgekeurde naam <b>${escapeHtml(myClaimRequest.approvedName)}</b>.</p></div><button class="account-button" type="button" data-account-action="sign-out">Uitloggen</button></div><form class="account-form" data-account-form="profile"><label>Zichtbare voornaam<input name="displayName" type="text" maxlength="40" value="${escapeHtml(profile.displayName||myClaimRequest.approvedName)}" required></label><label>Golf-icoon<select name="icon">${PLAYER_ICONS.map(icon=>`<option value="${escapeHtml(icon)}"${profile.icon===icon?" selected":""}>${escapeHtml(icon)}</option>`).join("")}</select></label><label>Handicap<input name="handicap" type="number" min="0" max="54" step="0.1" value="${profile.handicap===null||profile.handicap===undefined?"":escapeHtml(profile.handicap)}"></label><button type="submit">Profiel opslaan</button></form><p class="account-message" role="status">${escapeHtml(accountMessage)}</p></section>`;
 }
@@ -530,6 +563,15 @@ function googleCalendarUrl(event){
  const params=new URLSearchParams({action:"TEMPLATE",text:event.title,dates:`${calendarTimestamp(event.start)}/${calendarTimestamp(event.end)}`,details:event.description||"",location:event.location||"",ctz:"Europe/Amsterdam"});
  return `https://calendar.google.com/calendar/render?${params}`;
 }
+function planningAttendee(name){
+ const normalized=String(name||"").trim().toLocaleLowerCase("nl-NL");
+ const profile=playerProfiles.find(item=>
+  [item.scoreName,item.name].some(value=>String(value||"").trim().toLocaleLowerCase("nl-NL")===normalized)
+ );
+ const displayName=profile?.name||String(name||"").trim();
+ const icon=profile?.icon||"⛳";
+ return `<span class="planning-attendee"><span class="planning-attendee-icon" aria-hidden="true">${escapeHtml(icon)}</span><span>${escapeHtml(displayName)}</span></span>`;
+}
 function planningCard(event){
  const start=new Date(event.start),end=new Date(event.end),canRespond=start>Date.now();
  const competition=competitionForEvent(eventCompetition(event));
@@ -545,7 +587,7 @@ function planningCard(event){
  return `<article class="planning-event">
   <div><h2>${escapeHtml(title)}</h2><div class="planning-date"><time datetime="${escapeHtml(event.start)}">${escapeHtml(formatPlanningDate(event.start))}</time> – <time datetime="${escapeHtml(event.end)}">${escapeHtml(new Intl.DateTimeFormat("nl-NL",{timeZone:"Europe/Amsterdam",hour:"2-digit",minute:"2-digit"}).format(end))}</time></div>
   ${event.location?`<div class="planning-place">${escapeHtml(event.location)}</div>`:""}${event.description?`<p>${escapeHtml(event.description)}</p>`:""}</div>
-  <div class="planning-actions"><a class="btn" href="${escapeHtml(googleCalendarUrl({...event,title}))}" target="_blank" rel="noopener noreferrer">Zet in Google Agenda</a><div class="planning-counts">${event.yesCount} erbij · ${event.noCount} verhinderd</div>${event.attendees?.length?`<div class="planning-attendees">Aanwezig: ${event.attendees.map(escapeHtml).join(", ")}</div>`:""}</div>
+  <div class="planning-actions"><a class="btn" href="${escapeHtml(googleCalendarUrl({...event,title}))}" target="_blank" rel="noopener noreferrer">Zet in Google Agenda</a><div class="planning-counts">${event.yesCount} erbij · ${event.noCount} verhinderd</div>${event.attendees?.length?`<div class="planning-attendees" aria-label="Aanwezige spelers">${event.attendees.map(planningAttendee).join("")}</div>`:""}</div>
   ${responseForm}
  </article>`;
 }
@@ -691,3 +733,10 @@ function route(){
  $("#app").innerHTML=({"":home,competities,planning:()=>planning(id),stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
  if(p==="planning")loadPlanningEvents(id);
  if(p==="stand"&&id)loadPlanningEvents(id,"competition-planning",true);
+ const notice=scoresNotice();if(notice)$("#app").insertAdjacentHTML("afterbegin",`<div class="wrap">${notice}</div>`);
+ window.scrollTo(0,0);
+}
+addEventListener("hashchange",route);route();Promise.all(COMPETITIES.filter(c=>c.sheetName).map(loadScores)).then(route);loadPlayerProfiles();
+</script>
+</body>
+</html>
