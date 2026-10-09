@@ -136,16 +136,21 @@ th,td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line);whi
 th{color:var(--mute);font-weight:500;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
 th:nth-child(-n+2),td:nth-child(-n+2){text-align:left}
 tr.first td{color:var(--gold);font-weight:600}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
-.sc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px}
-a.sc{display:block;color:var(--ink);text-decoration:none;transition:border-color .2s,transform .2s}
-a.sc:hover{border-color:var(--green);transform:translateY(-2px)}
-.sc h4{font:700 24px 'Manrope',system-ui,sans-serif;letter-spacing:-.02em;margin:0 0 12px}
-.player-avatar{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:rgba(31,163,90,.12);font-size:22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.sc{position:relative;background:linear-gradient(145deg,rgba(17,52,35,.96),rgba(10,34,23,.98));border:1px solid rgba(73,120,89,.42);border-radius:14px;padding:24px;box-shadow:0 8px 22px rgba(0,0,0,.12)}
+a.sc{display:block;color:var(--ink);text-decoration:none;transition:border-color .2s,transform .2s,box-shadow .2s,background .2s}
+a.sc:hover{border-color:rgba(76,190,120,.7);background:linear-gradient(145deg,rgba(20,61,40,.98),rgba(11,39,26,.99));box-shadow:0 12px 28px rgba(0,0,0,.2),0 0 18px rgba(31,163,90,.08);transform:translateY(-3px)}
+a.sc:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.sc h4{font:700 23px 'Manrope',system-ui,sans-serif;letter-spacing:-.025em;margin:0}
+.player-avatar{width:52px;height:52px;display:grid;place-items:center;flex:none;border:1px solid rgba(93,147,108,.45);border-radius:15px;background:linear-gradient(145deg,rgba(31,163,90,.18),rgba(6,19,12,.52));box-shadow:inset 0 1px rgba(255,255,255,.05);font-size:27px}
 .stand-player{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .stand-player-icon{font-size:20px;line-height:1}
-.player-card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.player-card-head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
 .player-card-head h4{margin:0}
+.player-card-head:after{content:"";height:1px;flex:1;margin-left:4px;background:linear-gradient(90deg,rgba(73,120,89,.4),transparent)}
+.sc dl{gap:10px 8px}
+.sc dt{font-size:14px}
+.sc dd{font-variant-numeric:tabular-nums}
 .player-profile{display:flex;align-items:center;gap:14px;margin:16px 0 24px}
 .player-profile .player-avatar{width:56px;height:56px;font-size:30px}
 .player-profile h1{margin:0;font-size:clamp(32px,5vw,46px)}
