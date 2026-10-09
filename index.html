@@ -83,38 +83,85 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .pc .num small{display:block;font-size:11px;color:var(--mute);letter-spacing:.05em;text-transform:uppercase}.pc .num b{font-weight:500;font-size:18px}
 @media(max-width:760px){.pc{grid-template-columns:44px minmax(0,1fr) minmax(0,1fr);gap:10px 12px;padding:14px}.medal{grid-row:1 / span 3;width:38px;height:38px}.medal svg{width:32px;height:32px}.pc .who{grid-column:2 / 4;grid-row:1}.pc .num{padding-left:10px}.pc .num:nth-child(3){grid-column:2;grid-row:2}.pc .num:nth-child(4){grid-column:3;grid-row:2}.pc .num:nth-child(5){grid-column:2 / 4;grid-row:3}}
 .scroll{overflow-x:auto}
-.stand-summary{margin-top:36px;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow-x:auto}
-.stand-summary table{border:0;background:transparent}
-.round-table{min-width:720px;table-layout:fixed}
+.stand-summary{margin-top:22px;border:1px solid rgba(73,120,89,.42);border-radius:14px;background:linear-gradient(150deg,rgba(13,40,27,.9),rgba(7,24,16,.96));overflow-x:auto;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.stand-summary table{min-width:550px;border:0;background:transparent}
+.stand-summary th,.stand-summary td{padding:12px 16px;border-bottom:1px solid rgba(73,120,89,.22)}
+.stand-summary thead th{background:rgba(3,15,9,.28);font-size:11px;letter-spacing:.08em}
+.stand-summary thead th:nth-child(2){text-align:left}
+.stand-summary tbody tr:last-child td{border-bottom:0}
+.stand-summary tbody tr:hover{background:rgba(255,255,255,.025)}
+.stand-summary tbody td:first-child{width:54px;color:var(--mute);font-variant-numeric:tabular-nums}
+.stand-summary tbody td:nth-child(2){text-align:left}
+.stand-summary tbody td:nth-child(n+3){font-variant-numeric:tabular-nums}
+.stand-summary tbody tr.first{background:linear-gradient(90deg,rgba(217,164,65,.09),transparent 78%)}
+.stand-summary tbody tr.first td:nth-child(2){color:var(--gold)}
+.stand-summary .rank-badge{display:inline-grid;place-items:center;width:26px;height:26px;border:1px solid rgba(157,179,165,.25);border-radius:50%;font-size:12px;font-weight:700}
+.stand-summary .rank-badge.gold{border-color:rgba(217,164,65,.55);background:rgba(217,164,65,.12);color:var(--gold)}
+.stand-summary .rank-badge.silver{border-color:rgba(195,203,209,.42);color:var(--silver)}
+.stand-summary .rank-badge.bronze{border-color:rgba(201,116,58,.45);color:var(--bronze)}
+.stableford-teaser{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.9fr);align-items:center;gap:26px;margin-top:18px;padding:22px 24px;overflow:hidden;border:1px solid rgba(128,143,135,.3);border-radius:14px;background:linear-gradient(120deg,rgba(29,37,32,.9),rgba(15,22,18,.96));box-shadow:inset 0 1px rgba(255,255,255,.025),0 8px 24px rgba(0,0,0,.14)}
+.stableford-teaser:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,rgba(139,150,144,.035),transparent 58%)}
+.stableford-copy{position:relative;z-index:2}
+.stableford-kicker{display:inline-flex;align-items:center;gap:7px;margin-bottom:9px;padding:5px 9px;border:1px solid rgba(172,181,176,.19);border-radius:99px;background:rgba(150,160,154,.07);color:#aeb8b2;font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase}
+.stableford-kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:#929d96;box-shadow:0 0 8px rgba(172,181,176,.3)}
+.stableford-copy h3{margin:0 0 6px;color:#d1d7d3;font:700 20px 'Manrope',system-ui,sans-serif}
+.stableford-copy p{max-width:440px;margin:0;color:#929e96;font-size:13px;line-height:1.55}
+.stableford-preview{position:relative;min-height:112px;overflow:hidden;border:1px solid rgba(142,153,146,.2);border-radius:10px;background:rgba(2,9,5,.38);filter:grayscale(1)}
+.stableford-preview table{width:100%;border:0;background:transparent;filter:blur(4px);opacity:.35;transform:scale(1.03)}
+.stableford-preview th,.stableford-preview td{padding:8px 10px;border-bottom:1px solid rgba(144,155,148,.23);font-size:11px;text-align:left}
+.stableford-preview td:last-child,.stableford-preview th:last-child{text-align:right}
+.stableford-preview .skeleton{display:inline-block;width:54%;height:7px;border-radius:9px;background:rgba(171,181,174,.42)}
+.stableford-preview .skeleton.short{width:26%}
+.stableford-fog{position:absolute;inset:0;display:grid;place-items:center;padding:14px;background:radial-gradient(ellipse at center,rgba(126,137,130,.19),rgba(10,16,12,.84) 78%);color:#d5dad6;text-align:center}
+.stableford-fog span{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid rgba(174,184,177,.25);border-radius:99px;background:rgba(19,26,22,.82);box-shadow:0 3px 12px rgba(0,0,0,.22);font-size:12px;font-weight:700;letter-spacing:.03em}
+@media(max-width:680px){.stableford-teaser{grid-template-columns:1fr;gap:16px;padding:18px}.stableford-preview{min-height:102px}}
+.round-table{min-width:660px;table-layout:fixed}
 .round-table{border:0;background:transparent}
-.round-table th,.round-table td{text-align:center;padding:10px 8px}
-.round-table thead tr:first-child th{background:transparent;color:var(--ink);font-size:14px;border-bottom:0}
+.round-table th,.round-table td{text-align:center;padding:7px 6px}
+.round-table thead tr:first-child th{background:rgba(3,15,9,.28);color:var(--ink);font-size:13px;border-bottom:0}
 .round-table thead tr:first-child th:not(:first-child){text-align:center}
-.round-table thead tr:nth-child(2) th{padding-top:4px;padding-bottom:12px;color:var(--mute);font-size:10px;border-bottom:1px solid var(--line)}
-.round-table thead th:first-child,.round-table tbody th{text-align:left;width:76px}
+.round-table thead tr:nth-child(2) th{padding-top:3px;padding-bottom:7px;color:var(--mute);font-size:10px;border-bottom:1px solid var(--line)}
+.round-table thead th:first-child,.round-table tbody th{text-align:left;width:58px}
+.round-table thead th:nth-child(2){width:58px}
 .round-table thead tr:first-child th:first-child{border-bottom:1px solid var(--line)}
 .round-table thead tr:first-child th:not(:first-child){border-left:1px solid var(--line)}
 .round-table thead tr:nth-child(2) th{border-left:1px solid rgba(31,74,52,.65)}
-.round-table thead tr:nth-child(2) th:nth-child(2n+1):not(:first-child){border-left:1px solid var(--line)}
-.round-table tbody th{color:var(--mute);font-weight:500}
-.round-table tbody tr:hover{background:rgba(255,255,255,.025)}
-.round-table tbody th,.round-table tbody td{border-bottom:1px solid rgba(31,74,52,.65);border-right:1px solid rgba(31,74,52,.5)}
-.round-table tbody td:nth-child(2n+1){border-left:1px solid var(--line)}
+.round-table thead tr:nth-child(2) th.group-start{border-left:1px solid var(--line)}
+.round-table tbody th{color:var(--mute);font-weight:600;font-variant-numeric:tabular-nums}
+.round-table tbody tr:hover{background:rgba(31,163,90,.055)}
+.round-table tbody th,.round-table tbody td{border-bottom:1px solid rgba(73,120,89,.34);border-right:1px solid rgba(73,120,89,.28)}
+.round-table tbody tr:nth-child(even){background:rgba(255,255,255,.022)}
+.round-table tbody td.group-start{border-left:1px solid rgba(73,120,89,.5)}
 .round-table tbody th{border-left:0}
-.round-table tfoot th,.round-table tfoot td{border-top:1px solid var(--green);border-bottom:0;font-weight:700;background:transparent}
+.round-table tfoot th,.round-table tfoot td{border-top:1px solid rgba(31,163,90,.6);border-bottom:0;font-weight:700;background:rgba(31,163,90,.055)}
 .round-table tfoot th{text-align:left;color:var(--ink)}
 .round-table tfoot td{border-right:1px solid rgba(31,74,52,.5)}
-.round-table tfoot td:nth-child(2n){border-left:1px solid var(--line)}
+.round-table tfoot td.group-start{border-left:1px solid var(--line)}
 .round-table tfoot td:last-child{border-right:0}
-.round-table tfoot td:nth-child(2n){color:var(--gold)}
+.round-table tfoot td.total-points{color:var(--gold)}
 .round-table .total-points{white-space:nowrap}
 .round-table .place-cup{display:inline-flex;vertical-align:middle;margin-left:5px}
 .round-table .place-cup svg{width:18px;height:18px}
 .round-table .place-cup.gold{color:#d9a441}.round-table .place-cup.silver{color:#c3cbd1}.round-table .place-cup.bronze{color:#c9743a}
 .round-table td.best-round{color:var(--ink);font-weight:700;white-space:nowrap}
-.round-table .best-round svg,.player-scores .best-round svg{width:15px;height:15px;vertical-align:-3px;margin-left:4px;color:#ef4444}
+.round-table .best-round svg,.player-scores .best-round svg{width:13px;height:13px;vertical-align:-2px;margin-left:3px;color:#ef4444}
 .round-table td.round-point{color:var(--gold);font-weight:700;background:transparent}
-.round-point svg{width:16px;height:16px;vertical-align:-3px;margin-left:4px}
+.round-table td.round-score-cell{font-weight:650;font-variant-numeric:tabular-nums}
+.round-table .round-score-content{position:relative;display:inline-block;min-width:3ch;padding-left:16px;text-align:center;vertical-align:middle}
+.round-table .round-score-value{display:block}
+.round-table .round-flame{position:absolute;left:0;top:50%;display:inline-flex;align-items:center;transform:translateY(-50%);line-height:0}
+.round-table .round-flame svg{display:block;width:13px;height:13px;color:#ef4444}
+.round-table td.round-point{font-variant-numeric:tabular-nums;text-align:center!important;vertical-align:middle}
+.round-table .round-award{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:38px}
+.round-table .round-place-icon{display:inline-flex;align-items:center;justify-content:center;font-size:14px;line-height:1}
+.round-table .round-place-icon.gold{color:var(--gold)}
+.round-table .round-place-icon.silver{color:var(--silver)}
+.round-table .round-place-icon.bronze{color:var(--bronze)}
+.round-table td.round-par{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}
+.round-table-wrap{margin-top:16px;border:1px solid rgba(73,120,89,.38);border-radius:14px;background:linear-gradient(150deg,rgba(13,40,27,.74),rgba(7,24,16,.9));box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.round-table-wrap .round-table{margin:0}
+.round-table-wrap .round-table tr:last-child>*{border-bottom:0}
+.round-point svg{width:13px;height:13px;vertical-align:-2px;margin-left:3px}
 .chart{background:transparent;border:0;border-top:1px solid rgba(31,74,52,.65);border-bottom:1px solid rgba(31,74,52,.65);border-radius:0;padding:16px 8px;margin:0 0 22px}
 .chart svg{display:block;width:100%;height:auto;overflow:visible}
 .chart-grid{stroke:var(--line);stroke-width:1}
@@ -130,39 +177,41 @@ th,td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line);whi
 .player-scores th,.player-scores td{white-space:normal;overflow-wrap:anywhere}
 .player-scores th:nth-child(1),.player-scores td:nth-child(1){width:32%}
 .player-scores th:nth-child(2),.player-scores td:nth-child(2){width:12%}
-.player-scores th:nth-child(3),.player-scores td:nth-child(3){width:12%}
-.player-scores th:nth-child(4),.player-scores td:nth-child(4){width:26%}
+.player-scores th:nth-child(3),.player-scores td:nth-child(3){width:18%}
+.player-scores th:nth-child(4),.player-scores td:nth-child(4){width:20%}
 .player-scores th:nth-child(5),.player-scores td:nth-child(5){width:18%}
 @media(max-width:480px){.player-scores th,.player-scores td{padding:8px 5px;font-size:12px}.player-scores th{font-size:10px;letter-spacing:.03em}.player-scores .best-round svg{width:13px;height:13px;margin-left:2px}}
 th{color:var(--mute);font-weight:500;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
 th:nth-child(-n+2),td:nth-child(-n+2){text-align:left}
-tr.first td{color:var(--gold);font-weight:600}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
-.sc{position:relative;background:linear-gradient(145deg,rgba(17,52,35,.96),rgba(10,34,23,.98));border:1px solid rgba(73,120,89,.42);border-radius:14px;padding:24px;box-shadow:0 8px 22px rgba(0,0,0,.12)}
+.sc{position:relative;background:linear-gradient(145deg,rgba(17,52,35,.96),rgba(10,34,23,.98));border:1px solid rgba(73,120,89,.42);border-radius:14px;padding:20px;box-shadow:0 8px 22px rgba(0,0,0,.12)}
 a.sc{display:block;color:var(--ink);text-decoration:none;transition:border-color .2s,transform .2s,box-shadow .2s,background .2s}
 a.sc:hover{border-color:rgba(76,190,120,.7);background:linear-gradient(145deg,rgba(20,61,40,.98),rgba(11,39,26,.99));box-shadow:0 12px 28px rgba(0,0,0,.2),0 0 18px rgba(31,163,90,.08);transform:translateY(-3px)}
 a.sc:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .sc h4{font:700 23px 'Manrope',system-ui,sans-serif;letter-spacing:-.025em;margin:0}
-.player-avatar{width:52px;height:52px;display:grid;place-items:center;flex:none;border:1px solid rgba(93,147,108,.45);border-radius:15px;background:linear-gradient(145deg,rgba(31,163,90,.18),rgba(6,19,12,.52));box-shadow:inset 0 1px rgba(255,255,255,.05);font-size:27px}
+.player-avatar{width:50px;height:50px;display:grid;place-items:center;flex:none;border:1px solid rgba(93,147,108,.45);border-radius:15px;background:linear-gradient(145deg,rgba(31,163,90,.18),rgba(6,19,12,.52));box-shadow:inset 0 1px rgba(255,255,255,.05);font-size:26px}
 .stand-player{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .stand-player-icon{font-size:20px;line-height:1}
-.player-card-head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.player-card-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .player-card-head h4{margin:0}
 .player-card-head:after{content:"";height:1px;flex:1;margin-left:4px;background:linear-gradient(90deg,rgba(73,120,89,.4),transparent)}
 .sc dl{gap:10px 8px}
 .sc dt{font-size:14px}
 .sc dd{font-variant-numeric:tabular-nums}
-.player-card-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0 4px}
-.player-card-stat{padding:11px 12px;border:1px solid rgba(73,120,89,.3);border-radius:10px;background:rgba(4,19,12,.24)}
+.player-card-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0 2px}
+.player-card-stat{padding:8px 10px;border:1px solid rgba(73,120,89,.3);border-radius:9px;background:rgba(4,19,12,.24)}
 .player-card-stat small{display:block;color:var(--mute);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
-.player-card-stat b{display:block;margin-top:3px;font-size:17px;font-variant-numeric:tabular-nums}
-.player-trend{grid-column:1/-1;padding:12px;border:1px solid rgba(73,120,89,.3);border-radius:10px;background:rgba(4,19,12,.24)}
-.player-trend-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.player-card-stat b{display:block;margin-top:2px;font-size:16px;font-variant-numeric:tabular-nums}
+.player-card-competitions small{margin-left:5px;color:var(--mute);font-size:12px;font-weight:500}
+.sc dl .player-card-rounds{color:var(--ink);font-variant-numeric:tabular-nums}
+.player-trend{grid-column:1/-1;padding:9px 10px;border:1px solid rgba(73,120,89,.3);border-radius:9px;background:rgba(4,19,12,.24)}
+.player-trend-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
 .player-trend-head small{color:var(--mute);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
 .player-trend-head b{font-size:12px;color:var(--green)}
 .player-trend-head b.worse{color:var(--gold)}
 .player-trend-head b.better{color:var(--green)}
-.player-trend svg{display:block;width:100%;height:46px;overflow:visible}
+.player-trend svg{display:block;width:100%;height:38px;overflow:visible}
+.player-trend-baseline{stroke:var(--mute);stroke-width:1;stroke-dasharray:2 3;opacity:.7}
 .player-trend-line{fill:none;stroke:var(--green);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .player-trend-point{fill:var(--gold);stroke:var(--card);stroke-width:2}
 .player-trend-labels{display:flex;justify-content:space-between;gap:4px;color:var(--mute);font-size:10px}
@@ -335,6 +384,15 @@ function loadScores(competition){
    }
   }
   if(!roundScores.length)throw new Error("Er zijn geen gespeelde rondes gevonden in de spreadsheet");
+  players.forEach(player=>{player.p=0});
+  roundScores.forEach(round=>{
+   const recordedScores=round.scores.filter(score=>Number.isFinite(score.strokes)&&score.strokes>0);
+   recordedScores.forEach(score=>{
+    score.place=1+recordedScores.filter(other=>other.strokes<score.strokes).length;
+    score.points=score.place===1?1:0;
+    players[round.scores.indexOf(score)].p+=score.points;
+   });
+  });
   competition.spelers=players;
   competition.rondes=roundScores.length;
   competition.rondeScores=roundScores;
@@ -588,27 +646,23 @@ function formatToPar(value){
  return `${value>0?"+":""}${value.toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
 }
 function playerTrendMarkup(stats){
- const recent=stats.rounds.slice(-3);
+ const recent=stats.rounds.slice(-5);
  if(!recent.length)return "";
- const hasPar=recent.every(round=>Number.isFinite(round.par));
- const values=recent.map(round=>hasPar?round.scores[stats.playerIndex].strokes-round.par:round.scores[stats.playerIndex].strokes);
- const spread=Math.max(...values)-Math.min(...values);
+ if(!recent.every(round=>Number.isFinite(round.par)))return `<div class="player-trend"><div class="player-trend-head"><small>Laatste rondes · t.o.v. par · ${escapeHtml(stats.competition?.naam||"")}</small></div><small>Trend beschikbaar zodra de PAR per ronde is ingevuld.</small></div>`;
+ const values=recent.map(round=>round.scores[stats.playerIndex].strokes-round.par);
+ const scale=Math.max(1,...values.map(Math.abs));
+ const baseline=16;
  const points=values.map((value,index)=>{
   const x=10+(recent.length===1?40:index*80/(recent.length-1));
-  const y=8+(spread===0?16:(value-Math.min(...values))/spread*28);
+  const y=baseline-value/scale*10;
   return {x,y,value};
  });
  const delta=values.length>1?values[values.length-1]-values[0]:0;
  const trend=values.length<2?"Nog geen trend":delta<0?"Score verbetert":delta>0?"Score loopt op":"Score gelijk";
  const trendClass=delta>0?"worse":delta<0?"better":"";
- const valueLabel=value=>hasPar?formatToPar(value):String(value);
- const labels=recent.map((round,index)=>`<span>R${round.number}: ${valueLabel(points[index].value)}</span>`).join("");
- const accessibleLabels=recent.map((round,index)=>`Ronde ${round.number}: ${valueLabel(points[index].value)}`).join(", ");
- return `<div class="player-trend"><div class="player-trend-head"><small>Laatste rondes · ${hasPar?"t.o.v. par":"slagen"} · ${escapeHtml(stats.competition?.naam||"")}</small><b class="${trendClass}">${trend}</b></div><svg viewBox="0 0 100 46" role="img" aria-label="Verloop laatste rondes: ${escapeHtml(accessibleLabels)}"><polyline class="player-trend-line" points="${points.map(point=>`${point.x},${point.y}`).join(" ")}"/>${points.map(point=>`<circle class="player-trend-point" cx="${point.x}" cy="${point.y}" r="3.5"><title>${escapeHtml(valueLabel(point.value))}</title></circle>`).join("")}</svg><div class="player-trend-labels">${labels}</div></div>`;
-}
-function roundScoreMarkup(strokes,par){
- if(!Number.isFinite(strokes)||!Number.isFinite(par))return `${strokes??"–"}`;
- return `${strokes}<span class="par-score">${formatToPar(strokes-par)} t.o.v. par</span>`;
+ const labels=recent.map((round,index)=>`<span>R${round.number}: ${formatToPar(points[index].value)}</span>`).join("");
+ const accessibleLabels=recent.map((round,index)=>`Ronde ${round.number}: ${formatToPar(points[index].value)}`).join(", ");
+ return `<div class="player-trend"><div class="player-trend-head"><small>Laatste rondes · afwijking van PAR · ${escapeHtml(stats.competition?.naam||"")}</small><b class="${trendClass}">${trend}</b></div><svg viewBox="0 0 100 32" role="img" aria-label="Verloop ten opzichte van PAR, nul is PAR: ${escapeHtml(accessibleLabels)}"><line class="player-trend-baseline" x1="4" y1="${baseline}" x2="96" y2="${baseline}"/><polyline class="player-trend-line" points="${points.map(point=>`${point.x},${point.y}`).join(" ")}"/>${points.map(point=>`<circle class="player-trend-point" cx="${point.x}" cy="${point.y}" r="3"><title>${escapeHtml(formatToPar(point.value))}</title></circle>`).join("")}</svg><div class="player-trend-labels">${labels}</div></div>`;
 }
 function profileAccountPanel(){
  if(!firebaseConfigured())return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p>Google-login wordt actief zodra Firebase is ingesteld. Tot die tijd beheer je profielen in het tabblad Spelers van de Google Sheet.</p></section>`;
@@ -827,6 +881,14 @@ window.addEventListener("message",event=>{
 });
 function competities(){return `<div class="wrap page"><h1>Competities</h1><p style="color:var(--mute)">Lopende, aankomende en afgelopen competities. Oude standen blijven altijd beschikbaar.</p><div class="tiles" style="margin-top:20px">${COMPETITIES.map(tile).join("")}</div></div>`}
 function cupIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5v2a4 4 0 0 0 4 4m7-6h3v2a4 4 0 0 1-4 4m-3 1v4m-4 3h8m-6-3h4"/></svg>'}
+function roundAwardMarkup(score){
+ const place=score.place;
+ const award=place===1?`<span class="round-place-icon gold" role="img" aria-label="1e plaats, goud">${cupIcon()}</span>`
+  :place===2?`<span class="round-place-icon silver" role="img" aria-label="2e plaats, zilver">${cupIcon()}</span>`
+  :place===3?`<span class="round-place-icon bronze" role="img" aria-label="3e plaats, brons">${cupIcon()}</span>`
+  :place===4?'<span class="round-place-icon" role="img" aria-label="4e plaats">🤡</span>':"";
+ return `<span class="round-award"><span>${score.points??"–"}</span>${award}</span>`;
+}
 function flameIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3-2-5.4-4.6-8.1.1 2.3-.7 3.8-1.7 4.8C12.4 7.2 10 3.6 7 2 7.6 6.6 5 8.9 5 14a7 7 0 0 0 7 8Z"/><path d="M12 22a3.5 3.5 0 0 0 3.5-3.5c0-1.5-.9-2.7-2.1-4-.1 1.2-.6 2-1.4 2.5-.2-1.7-1-2.8-2-3.5.2 2.2-1.5 3-1.5 5A3.5 3.5 0 0 0 12 22Z"/></svg>'}
 function standChoices(){
  const competitions=COMPETITIES.filter(c=>c.sheetName);
@@ -837,17 +899,20 @@ function stand(id){
  const c=COMPETITIES.find(x=>x.id===id&&x.sheetName); if(!c)return standChoices();
  const rounds=c.rondeScores||[];
  const bestStrokes=c.spelers.map((_,i)=>Math.min(...rounds.map(round=>round.scores[i]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity));
- const ranked=sorted(c), medals=["gold","silver","bronze"];
- const roundRows=rounds.map(round=>`<tr><th scope="row">${round.number}</th><td class="round-par">${round.par??"–"}</td>${round.scores.map((score,i)=>`<td${score.strokes===bestStrokes[i]?` class="best-round" title="Laagste ronde van ${escapeHtml(c.spelers[i].n)}"`:""}>${roundScoreMarkup(score.strokes,round.par)}${score.strokes===bestStrokes[i]?flameIcon():""}</td>${score.points>0?`<td class="round-point" aria-label="${score.points} ${score.points===1?"punt":"punten"} gescoord"><span>${score.points}</span>${cupIcon()}</td>`:`<td>${score.points??"–"}</td>`}`).join("")}</tr>`).join("");
- const totalCells=c.spelers.map((s,i)=>{const place=ranked.indexOf(s);const medal=medals[place];return `<td>${s.t}</td><td class="total-points">${s.p}${medal?`<span class="place-cup ${medal}" role="img" aria-label="${place+1}e plaats">${cupIcon()}</span>`:""}</td>`}).join("");
- const summary=c.scoring==="stroke-play"?"Stroke play: de speler met het laagste totaal aantal slagen wint.":"Per ronde levert de beste score een punt op.";
+ const strokeRanked=[...c.spelers].sort((a,b)=>a.t-b.t||b.p-a.p);
+ const medals=["gold","silver","bronze"];
+ const roundRows=rounds.map(round=>`<tr><th scope="row">${round.number}</th><td class="round-par">${round.par??"–"}</td>${round.scores.map((score,i)=>`<td class="round-score-cell${i===0?" group-start":""}${score.strokes===bestStrokes[i]?" best-round":""}"${score.strokes===bestStrokes[i]?` title="Laagste ronde van ${escapeHtml(c.spelers[i].n)}"`:""}><span class="round-score-content">${score.strokes===bestStrokes[i]?`<span class="round-flame">${flameIcon()}</span>`:""}<span class="round-score-value">${score.strokes??"–"}</span></span></td><td class="round-point"${Number.isFinite(score.strokes)?` aria-label="${score.points} punten${score.place?`, plaats ${score.place}`:""}"`:""}>${roundAwardMarkup(score)}</td>`).join("")}</tr>`).join("");
+ const strokeStandingRows=strokeRanked.map((player,index)=>`<tr class="${index?"":"first"}"><td><span class="rank-badge ${medals[index]||""}">${index+1}</span></td><td><a href="#/speler/${encodeURIComponent(player.n)}">${standPlayer(player.n)}</a></td><td>${player.t}</td><td>${c.rondes?f1(player.t/c.rondes):"–"}</td></tr>`).join("");
+ const totalCells=c.spelers.map((player,index)=>`<td${index===0?' class="group-start"':""}>${player.t}</td><td class="total-points">${player.p}</td>`).join("");
+ const summary="Strokeplay: het klassement wordt bepaald door het laagste totaal aantal slagen, zonder handicap.";
  return `<div class="wrap page"><a class="back-to-stand" href="#/stand"><span aria-hidden="true">←</span> Andere competitie kiezen</a><h1>${c.naam}</h1><p style="color:var(--mute)">Gebaseerd op ${c.rondes} gespeelde rondes. ${summary}</p>
  <div class="sec"><div><h3>Aankomende wedstrijden</h3><small>Wedstrijden uit de planning voor deze competitie</small></div><hr><a href="#/planning/${c.id}">Volledige planning →</a></div>
  <div id="competition-planning" data-planning-events aria-live="polite"><div class="empty planning-empty">Planning wordt geladen…</div></div>
- <div class="sec"><div><h3>Tussenstand</h3><small>Na ${c.rondes} gespeelde rondes</small></div><hr></div>
- <div class="stand-summary"><table><tr><th>#</th><th>Icoon / Naam</th><th>Punten</th><th>Totaal slagen</th><th>Gemiddeld aantal slagen</th></tr>${sorted(c).map((s,i)=>`<tr class="${i?"":"first"}"><td>${i+1}</td><td><a href="#/speler/${encodeURIComponent(s.n)}">${standPlayer(s.n)}</a></td><td>${s.p}</td><td>${s.t}</td><td>${f1(s.t/c.rondes)}</td></tr>`).join("")}</table></div>
+ <div class="sec"><div><h3>Tussenstand</h3><small>Strokeplay · zonder handicap · na ${c.rondes} gespeelde rondes</small></div><hr></div>
+ <div class="stand-summary"><table><thead><tr><th scope="col">#</th><th scope="col">Speler</th><th scope="col">Totaal slagen</th><th scope="col">Gem. slagen</th></tr></thead><tbody>${strokeStandingRows}</tbody></table></div>
+ <section class="stableford-teaser" aria-labelledby="stableford-teaser-title"><div class="stableford-copy"><span class="stableford-kicker">In ontwikkeling</span><h3 id="stableford-teaser-title">Stableford-klassement</h3><p>Straks kun je de tussenstand ook bekijken op basis van Stableford-punten. Het strokeplay-klassement hierboven blijft altijd beschikbaar.</p></div><div class="stableford-preview" aria-hidden="true"><table><thead><tr><th>#</th><th>Speler</th><th>Stableford</th></tr></thead><tbody><tr><td><span class="skeleton short"></span></td><td><span class="skeleton"></span></td><td><span class="skeleton short"></span></td></tr><tr><td><span class="skeleton short"></span></td><td><span class="skeleton"></span></td><td><span class="skeleton short"></span></td></tr><tr><td><span class="skeleton short"></span></td><td><span class="skeleton"></span></td><td><span class="skeleton short"></span></td></tr></tbody></table><div class="stableford-fog"><span>Stableford-overzicht komt eraan</span></div></div></section>
  <div class="sec"><div><h3>Speelrondes</h3><small>Slagen, baan-PAR en punten per speler per ronde</small></div><hr></div>
- <div class="scroll"><table class="round-table"><thead><tr><th rowspan="2" scope="col">Ronde</th><th rowspan="2" scope="col">Par</th>${c.spelers.map(s=>`<th colspan="2" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map(()=>'<th scope="col">Slagen</th><th scope="col">Punten</th>').join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row" colspan="2">Totaal</th>${totalCells}</tr></tfoot></table></div>
+ <div class="scroll round-table-wrap"><table class="round-table"><colgroup><col style="width:58px"><col style="width:58px">${c.spelers.map(()=>"<col><col>").join("")}</colgroup><thead><tr><th rowspan="2" scope="col">Ronde</th><th rowspan="2" scope="col">Par</th>${c.spelers.map(s=>`<th colspan="2" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map((_,i)=>`<th class="${i===0?"group-start":""}" scope="col">Slagen</th><th scope="col">Punten</th>`).join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row" colspan="2">Totaal</th>${totalCells}</tr></tfoot></table></div>
  <div class="sec"><div><h3>${c.scoring==="stroke-play"?"Punten per ronde":"Puntenverloop"}</h3><small>${c.scoring==="stroke-play"?"Punten per speler per speelronde":"Opgetelde punten per ronde"}</small></div><hr></div>
  ${pointsChart(c)}</div>`;
 }
@@ -874,7 +939,7 @@ function spelers(){
    const stats=playerRoundStats(player.scoreName);
    const averageStrokes=stats.averageStrokes===null?"–":stats.averageStrokes.toLocaleString("nl-NL",{minimumFractionDigits:1,maximumFractionDigits:1});
    const averageToPar=stats.averageToPar===null?"–":formatToPar(stats.averageToPar);
-   return `<a class="sc" href="#/speler/${encodeURIComponent(player.scoreName)}" aria-label="Bekijk het profiel van ${escapeHtml(player.name)}"><div class="player-card-head"><span class="player-avatar" aria-hidden="true">${escapeHtml(profile.icon)}</span><h4>${escapeHtml(player.name)}</h4></div><dl><dt>Handicap</dt><dd>${handicap}</dd><dt>Gespeelde competities</dt><dd>${playedCompetitions}</dd></dl><div class="player-card-stats"><div class="player-card-stat"><small>Rondes gespeeld</small><b>${stats.totalRounds}</b></div><div class="player-card-stat"><small>Gem. slagen · ${escapeHtml(stats.competition?.naam||"huidige competitie")}</small><b>${averageStrokes}</b></div><div class="player-card-stat"><small>Gem. t.o.v. par</small><b>${averageToPar}</b></div>${playerTrendMarkup(stats)}</div><span class="player-link">Bekijk profiel en scoregeschiedenis →</span></a>`;
+   return `<a class="sc" href="#/speler/${encodeURIComponent(player.scoreName)}" aria-label="Bekijk het profiel van ${escapeHtml(player.name)}"><div class="player-card-head"><span class="player-avatar" aria-hidden="true">${escapeHtml(profile.icon)}</span><h4>${escapeHtml(player.name)}</h4></div><dl><dt>Handicap</dt><dd>${handicap}</dd><dt>Gespeelde competities</dt><dd>${playedCompetitions}</dd><dt>Gespeelde rondes</dt><dd class="player-card-rounds">${stats.totalRounds}</dd></dl><div class="player-card-stats"><div class="player-card-stat"><small>Gem. slagen · ${escapeHtml(stats.competition?.naam||"huidige competitie")}</small><b>${averageStrokes}</b></div><div class="player-card-stat"><small>Gem. t.o.v. par</small><b>${averageToPar}</b></div>${playerTrendMarkup(stats)}</div><span class="player-link">Bekijk profiel en scoregeschiedenis →</span></a>`;
  }).join("")}</div></div>`;
 }
 function speler(id){
@@ -888,9 +953,9 @@ function speler(id){
  if(!playerName)return `<div class="wrap page"><h1>Speler niet gevonden</h1><div class="empty">Deze speler staat niet in de huidige competitie.</div><p><a href="#/spelers">← Terug naar spelers</a></p></div>`;
  const playerProfile=profile||playerProfileFor(scoreName);
  const competitions=COMPETITIES.map(c=>({competition:c,index:c.spelers.findIndex(s=>s.n.trim().toLocaleLowerCase("nl-NL")===(scoreName||"").trim().toLocaleLowerCase("nl-NL"))})).filter(({competition,index})=>index>=0&&(competition.rondeScores||[]).some(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null));
- const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const strokes=round.scores[index]?.strokes;const best=strokes===bestStrokes;return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td>${round.par??"–"}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${roundScoreMarkup(strokes,round.par)}${best?flameIcon():""}</td><td>${round.scores[index]?.points??"–"}</td></tr>`})}).join("");
+ const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const strokes=round.scores[index]?.strokes;const best=strokes===bestStrokes;const toPar=Number.isFinite(strokes)&&Number.isFinite(round.par)?formatToPar(strokes-round.par):"NTB";return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${strokes??"–"}${best?flameIcon():""}</td><td>${toPar}</td><td>${round.scores[index]?.points??"–"}</td></tr>`})}).join("");
  const handicap=playerProfile.handicap===null?"Handicap nog niet ingevuld":`Handicap ${playerProfile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
- return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Par</th><th>Slagen</th><th>Punten</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
+ return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>+/- PAR</th><th>Punten</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
 }
 function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><p style="color:var(--mute)">Binnenkort meer nieuws over het volgende golftoernooi.</p><div class="tiles" style="margin-top:20px">${tournamentTile()}</div></div>`}
 
