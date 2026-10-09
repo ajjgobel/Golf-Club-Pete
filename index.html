@@ -142,6 +142,8 @@ a.sc{display:block;color:var(--ink);text-decoration:none;transition:border-color
 a.sc:hover{border-color:var(--green);transform:translateY(-2px)}
 .sc h4{font:700 24px 'Manrope',system-ui,sans-serif;letter-spacing:-.02em;margin:0 0 12px}
 .player-avatar{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:rgba(31,163,90,.12);font-size:22px}
+.stand-player{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.stand-player-icon{font-size:20px;line-height:1}
 .player-card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .player-card-head h4{margin:0}
 .player-profile{display:flex;align-items:center;gap:14px;margin:16px 0 24px}
@@ -215,7 +217,7 @@ const COMPETITIES=[
 /* ================================== */
 const PLANNING_API_URL="https://script.google.com/macros/s/AKfycbxOPEifaG4wxNswdLY2AjhBS-KEzYzS9wSaOxnajMIyRSNehxdXcbwpFjRZnLgqyNJVUQ/exec";
 const FIREBASE_CONFIG={apiKey:"AIzaSyCll3Le7_ieWBtFBv2CVxS-wHTyT3B-8E0",authDomain:"golf-club-pete.firebaseapp.com",projectId:"golf-club-pete",appId:"1:75041793772:web:4f06565dc66d08b341a7c9"};
-const PLAYER_ICONS=["⛳","🏌️","🏆","🦅","🐦","🐿️"];
+const PLAYER_ICONS=["⛳","🏌️","🏆","🦅","🐦","🐿️","🦊","🐼","🦁","🐧","🐸","🐢","🐙","🦉","🦄","🐉","🦖","🤡","👻","🤖","👽","😎","🤠","🚀"];
 const $=s=>document.querySelector(s), f1=n=>n.toFixed(1).replace(".",","), escapeHtml=s=>String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const live=()=>COMPETITIES.find(c=>c.status==="live");
 const sorted=c=>[...c.spelers].sort(c.scoring==="stroke-play"?(a,b)=>a.t-b.t||b.p-a.p:(a,b)=>b.p-a.p||a.t-b.t);
@@ -357,6 +359,10 @@ function tournamentTile(){
 function podium(c){
  const medals=[["gold","gouden"],["silver","zilveren"],["bronze","bronzen"]];
  return `<div class="podium">`+sorted(c).map((s,i)=>{const [metal,color]=medals[i]||medals[2];const playerIndex=c.spelers.indexOf(s);const lowest=(c.rondeScores||[]).map(round=>round.scores[playerIndex]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0);const lowestRound=lowest.length?Math.min(...lowest):"–";return `<div class="pc r${i+1}"><div class="medal ${metal}" role="img" aria-label="${i+1}e plaats, ${color} beker"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 4h16v7a8 8 0 0 1-16 0V4Z" fill="currentColor"/><path d="M8 7H4v3a7 7 0 0 0 6 6.8M24 7h4v3a7 7 0 0 1-6 6.8M16 19v5m-6 4h12m-10-4h8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="who"><b>${escapeHtml(s.n)}</b><span>${s.p} ${s.p===1?"punt":"punten"}</span></div><div class="num"><small>Totaal slagen</small><b>${s.t}</b></div><div class="num"><small>Gem. slagen</small><b>${f1(s.t/c.rondes)}</b></div><div class="num"><small>Laagste ronde</small><b>${lowestRound}</b></div></div>`}).join("")+`</div>`;
+}
+function standPlayer(name){
+ const profile=playerProfileFor(name);
+ return `<span class="stand-player"><span class="stand-player-icon" aria-hidden="true">${escapeHtml(profile.icon||"⛳")}</span><span>${escapeHtml(profile.name||name)}</span></span>`;
 }
 
 function pointsChart(c){
@@ -720,7 +726,7 @@ function stand(id){
  <div class="sec"><div><h3>Aankomende wedstrijden</h3><small>Wedstrijden uit de planning voor deze competitie</small></div><hr><a href="#/planning/${c.id}">Volledige planning →</a></div>
  <div id="competition-planning" data-planning-events aria-live="polite"><div class="empty planning-empty">Planning wordt geladen…</div></div>
  <div class="sec"><div><h3>Tussenstand</h3><small>Na ${c.rondes} gespeelde rondes</small></div><hr></div>
- <div class="stand-summary"><table><tr><th>#</th><th>Speler</th><th>Punten</th><th>Totaal slagen</th><th>Gemiddeld aantal slagen</th></tr>${sorted(c).map((s,i)=>`<tr class="${i?"":"first"}"><td>${i+1}</td><td><a href="#/speler/${encodeURIComponent(s.n)}">${escapeHtml(s.n)}</a></td><td>${s.p}</td><td>${s.t}</td><td>${f1(s.t/c.rondes)}</td></tr>`).join("")}</table></div>
+ <div class="stand-summary"><table><tr><th>#</th><th>Icoon / Naam</th><th>Punten</th><th>Totaal slagen</th><th>Gemiddeld aantal slagen</th></tr>${sorted(c).map((s,i)=>`<tr class="${i?"":"first"}"><td>${i+1}</td><td><a href="#/speler/${encodeURIComponent(s.n)}">${standPlayer(s.n)}</a></td><td>${s.p}</td><td>${s.t}</td><td>${f1(s.t/c.rondes)}</td></tr>`).join("")}</table></div>
  <div class="sec"><div><h3>Speelrondes</h3><small>Slagen en punten per speler per ronde</small></div><hr></div>
  <div class="scroll"><table class="round-table"><thead><tr><th rowspan="2" scope="col">Ronde</th>${c.spelers.map(s=>`<th colspan="2" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map(()=>'<th scope="col">Slagen</th><th scope="col">Punten</th>').join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row">Totaal</th>${totalCells}</tr></tfoot></table></div>
  <div class="sec"><div><h3>${c.scoring==="stroke-play"?"Punten per ronde":"Puntenverloop"}</h3><small>${c.scoring==="stroke-play"?"Punten per speler per speelronde":"Opgetelde punten per ronde"}</small></div><hr></div>
