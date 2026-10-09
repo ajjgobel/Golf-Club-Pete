@@ -174,7 +174,7 @@ a.sc:hover{border-color:var(--green);transform:translateY(-2px)}
 .planning-actions .btn{margin:0;padding:10px 16px}
 .planning-rsvp{grid-column:1/-1;border-top:1px solid var(--line);padding-top:16px;display:grid;grid-template-columns:minmax(180px,1fr) auto auto;align-items:end;gap:10px}
 .planning-rsvp label{display:grid;gap:5px;color:var(--mute);font-size:13px}
-.planning-rsvp input{min-width:0;width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.planning-rsvp select{min-width:0;width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
 .planning-rsvp button{padding:11px 16px;border:1px solid var(--green);border-radius:99px;background:#0f5a32;color:#fff;font:600 13px 'Manrope',system-ui,sans-serif;cursor:pointer}
 .planning-rsvp button[data-response="nee"]{background:transparent;border-color:var(--line)}
 .planning-rsvp button:disabled{opacity:.55;cursor:wait}
@@ -589,6 +589,13 @@ function googleCalendarUrl(event){
  const params=new URLSearchParams({action:"TEMPLATE",text:event.title,dates:`${calendarTimestamp(event.start)}/${calendarTimestamp(event.end)}`,details:event.description||"",location:event.location||"",ctz:"Europe/Amsterdam"});
  return `https://calendar.google.com/calendar/render?${params}`;
 }
+function planningPlayerOptions(){
+ if(!playerProfilesLoaded)return `<option value="">Spelers worden geladen…</option>`;
+ return `<option value="">Kies een speler…</option>${sheetPlayerProfiles.map(player=>{
+  const profile=playerProfileFor(player.name);
+  return `<option value="${escapeHtml(player.name)}">${escapeHtml(profile.icon||player.icon||"⛳")} ${escapeHtml(profile.name||player.name)}</option>`;
+ }).join("")}`;
+}
 function planningAttendee(name){
  const normalized=String(name||"").trim().toLocaleLowerCase("nl-NL");
  const profile=playerProfiles.find(item=>
@@ -603,12 +610,13 @@ function planningCard(event){
  const competition=competitionForEvent(eventCompetition(event));
  const title=competition?.naam||eventCompetition(event);
  const nonce=`gcp_${Date.now()}_${++planningRequestNumber}`;
+ const canSelectPlayer=playerProfilesLoaded&&sheetPlayerProfiles.length>0;
  const responseForm=canRespond?`<form class="planning-rsvp" data-nonce="${nonce}" action="${escapeHtml(PLANNING_API_URL)}" method="post" target="planning-rsvp-frame">
   <input type="hidden" name="action" value="respond"><input type="hidden" name="eventId" value="${escapeHtml(event.id)}"><input type="hidden" name="nonce" value="${nonce}">
-  <label>Je naam<input name="name" type="text" maxlength="80" autocomplete="name" required></label>
-  <button type="submit" name="response" value="ja" data-response="ja">Ik ben erbij</button>
-  <button type="submit" name="response" value="nee" data-response="nee">Ik ben er niet bij</button>
-  <p class="planning-message" role="status"></p>
+  <label>Kies een speler<select name="name" required ${canSelectPlayer?"":"disabled"}>${planningPlayerOptions()}</select></label>
+  <button type="submit" name="response" value="ja" data-response="ja" ${canSelectPlayer?"":"disabled"}>Ik ben erbij</button>
+  <button type="submit" name="response" value="nee" data-response="nee" ${canSelectPlayer?"":"disabled"}>Ik ben er niet bij</button>
+  <p class="planning-message" role="status">${playerProfilesLoaded&&playerProfilesError?escapeHtml(playerProfilesError):playerProfilesLoaded&&!sheetPlayerProfiles.length?"Er zijn geen spelers beschikbaar om te kiezen.":""}</p>
  </form>`:`<p class="planning-message">Aan- en afmelden voor deze wedstrijd is gesloten.</p>`;
  return `<article class="planning-event">
   <div><h2>${escapeHtml(title)}</h2><div class="planning-date"><time datetime="${escapeHtml(event.start)}">${escapeHtml(formatPlanningDate(event.start))}</time> – <time datetime="${escapeHtml(event.end)}">${escapeHtml(new Intl.DateTimeFormat("nl-NL",{timeZone:"Europe/Amsterdam",hour:"2-digit",minute:"2-digit"}).format(end))}</time></div>
@@ -651,6 +659,11 @@ document.addEventListener("submit",event=>{
  event.preventDefault();
  const button=event.submitter;
  if(!(button instanceof HTMLButtonElement)||!["ja","nee"].includes(button.value))return;
+ const playerSelect=form.elements.namedItem("name");
+ if(!(playerSelect instanceof HTMLSelectElement)||!playerSelect.value){
+  form.querySelector(".planning-message").textContent="Kies eerst een speler uit de lijst.";
+  return;
+ }
  const status=form.querySelector(".planning-message");
  const nonce=form.dataset.nonce;
  const frame=$("#planning-rsvp-frame");
