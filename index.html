@@ -172,7 +172,7 @@ a.sc:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .data-notice{margin:18px auto;padding:12px 16px;border:1px solid #8d6326;border-radius:8px;background:rgba(141,99,38,.15);color:#f0d39e}
 .planning-intro{max-width:720px;color:var(--mute)}
 .planning-list{display:grid;gap:16px;margin:24px 0 36px}
-.planning-event{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 28px}
+.planning-event{background:linear-gradient(145deg,rgba(15,43,29,.98),rgba(9,31,21,.98));border:1px solid var(--line);border-radius:14px;padding:26px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 30px}
 .planning-event h2{font:700 24px/1.2 'Manrope',system-ui,sans-serif;margin:0 0 8px}
 .planning-event p{margin:8px 0;color:var(--mute)}
 .planning-date{color:var(--gold);font-weight:700}
@@ -186,12 +186,14 @@ a.sc:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .planning-rsvp button[data-response="nee"]{background:transparent;border-color:var(--line)}
 .planning-rsvp button:disabled{opacity:.55;cursor:wait}
 .planning-counts{font-size:14px;color:var(--mute)}
-.planning-attendees{display:flex;flex-wrap:wrap;gap:7px;max-width:360px;color:var(--mute);font-size:13px}
-.planning-attendee{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border:1px solid var(--line);border-radius:99px;background:rgba(31,163,90,.08)}
-.planning-attendee-icon{font-size:16px;line-height:1}
+.planning-attendee-section{grid-column:1/-1;padding:16px 18px;border:1px solid rgba(73,120,89,.38);border-radius:12px;background:rgba(4,19,12,.32)}
+.planning-attendee-heading{margin:0 0 12px;color:var(--mute);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.planning-attendees{display:flex;flex-wrap:wrap;gap:10px;color:var(--ink);font-size:15px}
+.planning-attendee{display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:7px 14px;border:1px solid rgba(73,120,89,.48);border-radius:12px;background:linear-gradient(135deg,rgba(31,163,90,.14),rgba(6,19,12,.48));box-shadow:inset 0 1px rgba(255,255,255,.04)}
+.planning-attendee-icon{font-size:22px;line-height:1}
 .planning-message{grid-column:1/-1;min-height:1.5em;margin:0;color:var(--gold);font-size:14px}
 .planning-empty{margin-top:24px}
-@media(max-width:640px){.planning-event{grid-template-columns:1fr;padding:18px}.planning-actions{flex-direction:row;align-items:center;flex-wrap:wrap}.planning-rsvp{grid-template-columns:1fr 1fr}.planning-rsvp label{grid-column:1/-1}.planning-rsvp button{width:100%}}
+@media(max-width:640px){.planning-event{grid-template-columns:1fr;padding:18px}.planning-actions{flex-direction:row;align-items:center;flex-wrap:wrap}.planning-attendee-section{padding:14px}.planning-attendees{gap:8px}.planning-attendee{min-height:44px;padding:6px 11px}.planning-rsvp{grid-template-columns:1fr 1fr}.planning-rsvp label{grid-column:1/-1}.planning-rsvp button{width:100%}}
 footer{margin:56px auto 30px;text-align:center;color:var(--mute);font:500 13px 'Manrope',system-ui,sans-serif;letter-spacing:.03em;display:flex;align-items:center;gap:20px}
 footer hr{flex:1;border:0;border-top:1px solid var(--line)}
 a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
@@ -632,7 +634,8 @@ function planningCard(event){
  return `<article class="planning-event">
   <div><h2>${escapeHtml(title)}</h2><div class="planning-date"><time datetime="${escapeHtml(event.start)}">${escapeHtml(formatPlanningDate(event.start))}</time></div>
   ${event.location?`<div class="planning-place">${escapeHtml(event.location)}</div>`:""}${event.description?`<p>${escapeHtml(event.description)}</p>`:""}</div>
-  <div class="planning-actions"><a class="btn" href="${escapeHtml(googleCalendarUrl({...event,title}))}" target="_blank" rel="noopener noreferrer">Zet in Google Agenda</a><div class="planning-counts">${event.yesCount} erbij · ${event.noCount} verhinderd</div>${event.attendees?.length?`<div class="planning-attendees" aria-label="Aanwezige spelers">${event.attendees.map(planningAttendee).join("")}</div>`:""}</div>
+  <div class="planning-actions"><a class="btn" href="${escapeHtml(googleCalendarUrl({...event,title}))}" target="_blank" rel="noopener noreferrer">Zet in Google Agenda</a><div class="planning-counts">${event.yesCount} erbij · ${event.noCount} verhinderd</div></div>
+  ${event.attendees?.length?`<section class="planning-attendee-section" aria-label="Aanwezig gemeld"><h3 class="planning-attendee-heading">Aanwezig gemeld</h3><div class="planning-attendees">${event.attendees.map(planningAttendee).join("")}</div></section>`:""}
   ${responseForm}
  </article>`;
 }
