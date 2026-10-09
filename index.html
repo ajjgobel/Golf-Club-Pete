@@ -594,7 +594,7 @@ function calendarTimestamp(value){
  return `${fields.year}${fields.month}${fields.day}T${fields.hour}${fields.minute}${fields.second}`;
 }
 function formatPlanningDate(value){
- return new Intl.DateTimeFormat("nl-NL",{timeZone:"Europe/Amsterdam",weekday:"long",day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(value));
+ return new Intl.DateTimeFormat("nl-NL",{timeZone:"Europe/Amsterdam",weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date(value));
 }
 function googleCalendarUrl(event){
  const params=new URLSearchParams({action:"TEMPLATE",text:event.title,dates:`${calendarTimestamp(event.start)}/${calendarTimestamp(event.end)}`,details:event.description||"",location:event.location||"",ctz:"Europe/Amsterdam"});
@@ -617,7 +617,7 @@ function planningAttendee(name){
  return `<span class="planning-attendee"><span class="planning-attendee-icon" aria-hidden="true">${escapeHtml(icon)}</span><span>${escapeHtml(displayName)}</span></span>`;
 }
 function planningCard(event){
- const start=new Date(event.start),end=new Date(event.end),canRespond=start>Date.now();
+ const start=new Date(event.start),canRespond=start>Date.now();
  const competition=competitionForEvent(eventCompetition(event));
  const title=competition?.naam||eventCompetition(event);
  const nonce=`gcp_${Date.now()}_${++planningRequestNumber}`;
@@ -630,7 +630,7 @@ function planningCard(event){
   <p class="planning-message" role="status">${playerProfilesLoaded&&playerProfilesError?escapeHtml(playerProfilesError):playerProfilesLoaded&&!sheetPlayerProfiles.length?"Er zijn geen spelers beschikbaar om te kiezen.":""}</p>
  </form>`:`<p class="planning-message">Aan- en afmelden voor deze wedstrijd is gesloten.</p>`;
  return `<article class="planning-event">
-  <div><h2>${escapeHtml(title)}</h2><div class="planning-date"><time datetime="${escapeHtml(event.start)}">${escapeHtml(formatPlanningDate(event.start))}</time> – <time datetime="${escapeHtml(event.end)}">${escapeHtml(new Intl.DateTimeFormat("nl-NL",{timeZone:"Europe/Amsterdam",hour:"2-digit",minute:"2-digit"}).format(end))}</time></div>
+  <div><h2>${escapeHtml(title)}</h2><div class="planning-date"><time datetime="${escapeHtml(event.start)}">${escapeHtml(formatPlanningDate(event.start))}</time></div>
   ${event.location?`<div class="planning-place">${escapeHtml(event.location)}</div>`:""}${event.description?`<p>${escapeHtml(event.description)}</p>`:""}</div>
   <div class="planning-actions"><a class="btn" href="${escapeHtml(googleCalendarUrl({...event,title}))}" target="_blank" rel="noopener noreferrer">Zet in Google Agenda</a><div class="planning-counts">${event.yesCount} erbij · ${event.noCount} verhinderd</div>${event.attendees?.length?`<div class="planning-attendees" aria-label="Aanwezige spelers">${event.attendees.map(planningAttendee).join("")}</div>`:""}</div>
   ${responseForm}
