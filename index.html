@@ -83,6 +83,8 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .pc .num small{display:block;font-size:11px;color:var(--mute);letter-spacing:.05em;text-transform:uppercase}.pc .num b{font-weight:500;font-size:18px}
 @media(max-width:760px){.pc{grid-template-columns:44px minmax(0,1fr) minmax(0,1fr);gap:10px 12px;padding:14px}.medal{grid-row:1 / span 3;width:38px;height:38px}.medal svg{width:32px;height:32px}.pc .who{grid-column:2 / 4;grid-row:1}.pc .num{padding-left:10px}.pc .num:nth-child(3){grid-column:2;grid-row:2}.pc .num:nth-child(4){grid-column:3;grid-row:2}.pc .num:nth-child(5){grid-column:2 / 4;grid-row:3}}
 .scroll{overflow-x:auto}
+.stand-summary{margin-top:36px;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow-x:auto}
+.stand-summary table{border:0;background:transparent}
 .round-table{min-width:720px;table-layout:fixed}
 .round-table{border:0;background:transparent}
 .round-table th,.round-table td{text-align:center;padding:10px 8px}
@@ -139,11 +141,48 @@ tr.first td{color:var(--gold);font-weight:600}
 a.sc{display:block;color:var(--ink);text-decoration:none;transition:border-color .2s,transform .2s}
 a.sc:hover{border-color:var(--green);transform:translateY(-2px)}
 .sc h4{font:700 24px 'Manrope',system-ui,sans-serif;letter-spacing:-.02em;margin:0 0 12px}
+.player-avatar{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:rgba(31,163,90,.12);font-size:22px}
+.player-card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.player-card-head h4{margin:0}
+.player-profile{display:flex;align-items:center;gap:14px;margin:16px 0 24px}
+.player-profile .player-avatar{width:56px;height:56px;font-size:30px}
+.player-profile h1{margin:0;font-size:clamp(32px,5vw,46px)}
+.player-profile p{margin:2px 0 0;color:var(--mute)}
+.account-panel{margin:22px 0;padding:20px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.account-panel h2{margin:0 0 8px;font:700 20px 'Manrope',system-ui,sans-serif}
+.account-panel p{margin:0 0 14px;color:var(--mute)}
+.account-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));align-items:end;gap:12px}
+.account-form label{display:grid;gap:5px;color:var(--mute);font-size:13px}
+.account-form input,.account-form select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.account-form button,.account-button{padding:11px 16px;border:1px solid var(--green);border-radius:99px;background:#0f5a32;color:#fff;font:600 13px 'Manrope',system-ui,sans-serif;cursor:pointer}
+.account-form button:disabled,.account-button:disabled{opacity:.55;cursor:wait}
+.account-message{min-height:1.5em;margin:10px 0 0!important;color:var(--gold)!important;font-size:14px}
+.account-user{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .sc dl{display:grid;grid-template-columns:1fr auto;gap:8px;margin:0}.sc dt{color:var(--mute)}.sc dd{margin:0;font-weight:600;text-align:right}
 .player-link{display:inline-block;margin-top:16px;color:var(--mute);font-size:13px}
 .bar{height:6px;border-radius:9px;background:var(--line);margin-top:16px}.bar i{display:block;height:100%;border-radius:9px;background:var(--green)}
 .empty{border:1px dashed var(--line);border-radius:12px;padding:40px;color:var(--mute);text-align:center}
 .data-notice{margin:18px auto;padding:12px 16px;border:1px solid #8d6326;border-radius:8px;background:rgba(141,99,38,.15);color:#f0d39e}
+.planning-intro{max-width:720px;color:var(--mute)}
+.planning-list{display:grid;gap:16px;margin:24px 0 36px}
+.planning-event{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 28px}
+.planning-event h2{font:700 24px/1.2 'Manrope',system-ui,sans-serif;margin:0 0 8px}
+.planning-event p{margin:8px 0;color:var(--mute)}
+.planning-date{color:var(--gold);font-weight:700}
+.planning-place{color:var(--mute);font-size:14px}
+.planning-actions{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.planning-actions .btn{margin:0;padding:10px 16px}
+.planning-rsvp{grid-column:1/-1;border-top:1px solid var(--line);padding-top:16px;display:grid;grid-template-columns:minmax(180px,1fr) auto auto;align-items:end;gap:10px}
+.planning-rsvp label{display:grid;gap:5px;color:var(--mute);font-size:13px}
+.planning-rsvp input{min-width:0;width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.planning-rsvp button{padding:11px 16px;border:1px solid var(--green);border-radius:99px;background:#0f5a32;color:#fff;font:600 13px 'Manrope',system-ui,sans-serif;cursor:pointer}
+.planning-rsvp button[data-response="nee"]{background:transparent;border-color:var(--line)}
+.planning-rsvp button:disabled{opacity:.55;cursor:wait}
+.planning-counts{font-size:14px;color:var(--mute)}
+.planning-attendees{max-width:260px;color:var(--mute);font-size:13px}
+.planning-message{grid-column:1/-1;min-height:1.5em;margin:0;color:var(--gold);font-size:14px}
+.planning-empty{margin-top:24px}
+@media(max-width:640px){.planning-event{grid-template-columns:1fr;padding:18px}.planning-actions{flex-direction:row;align-items:center;flex-wrap:wrap}.planning-rsvp{grid-template-columns:1fr 1fr}.planning-rsvp label{grid-column:1/-1}.planning-rsvp button{width:100%}}
 footer{margin:56px auto 30px;text-align:center;color:var(--mute);font:500 13px 'Manrope',system-ui,sans-serif;letter-spacing:.03em;display:flex;align-items:center;gap:20px}
 footer hr{flex:1;border:0;border-top:1px solid var(--line)}
 a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
@@ -156,22 +195,40 @@ a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
  <div class="tag" style="display:none"></div>
 </div></header>
 <main id="app"></main>
+<iframe id="planning-rsvp-frame" name="planning-rsvp-frame" title="Reactie op wedstrijd opslaan" hidden></iframe>
 <div class="wrap"><footer><hr><span>Golf Club Pete &nbsp;·&nbsp; Est. 2026</span><hr></footer></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
 /* ===== GEGEVENS: pas hier aan =====
    status: "live" | "soon" | "old"   p = punten, t = totaal aantal slagen */
 const COMPETITIES=[
- {id:"2026",naam:"2026 Par 3 Competitie",status:"live",scoring:"points",rondes:7,tekst:"De 2026 Par 3 Competitie is in volle gang! Wie pakt de meeste punten en gaat er met de winst vandoor?",csv:"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6omzKj2cV_Xmt7_iY9FQaZHFEWjZOMHNfwiYu8ZkOERmiNdChe3HRHHoJk1SvQEfRAm4wTcAIW-d_/pub?output=csv",scoreColumns:[1,3,5],roundColumn:0,
+ {id:"2026",naam:"2026 Par 3 Competitie",status:"live",scoring:"points",sheetName:"Par 3 2026",rondes:7,tekst:"De 2026 Par 3 Competitie is in volle gang! Wie pakt de meeste punten en gaat er met de winst vandoor?",scoreColumns:[1,3,5],roundColumn:0,
   spelers:[{n:"Arend",p:4,t:238},{n:"Michael",p:2,t:272},{n:"Guus",p:1,t:265}]},
- {id:"platte-piet-cup",naam:"Platte Piet Cup",status:"open",scoring:"stroke-play",holes:9,baan:"Grote baan Heemskerk",tekst:"Schrijf je nu in voor de Platte Piet Cup en laat zien wie de baas is. 9 holes stroke play, dus elke slag telt.",csv:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTG5aboxJ56CFGKBDSD5x_CDBok-yi2wtu2r4rHbce6_hiPN_8kHAWYBSNQ6gWnmi59I_p539-yjbm-/pub?output=csv",scoreColumns:[0,2,4,6],roundColumn:null,spelers:[]},
+ {id:"platte-piet-cup",naam:"Platte Piet Cup",status:"open",scoring:"stroke-play",sheetName:"Platte Piet Cup",holes:9,baan:"Grote baan Heemskerk",tekst:"Schrijf je nu in voor de Platte Piet Cup en laat zien wie de baas is. 9 holes stroke play, dus elke slag telt.",scoreColumns:[0,2,4,6],roundColumn:null,spelers:[]},
  {id:"2027",naam:"2027 Par 3 Competitie",status:"soon",rondes:7,tekst:"De 2027 editie staat alweer gepland. Zorg dat je erbij bent!",spelers:[{n:"",p:0,t:0},{n:"",p:0,t:0},{n:"",p:0,t:0}]},
 ];
 /* ================================== */
+const PLANNING_API_URL="https://script.google.com/macros/s/AKfycbxOPEifaG4wxNswdLY2AjhBS-KEzYzS9wSaOxnajMIyRSNehxdXcbwpFjRZnLgqyNJVUQ/exec";
+const FIREBASE_CONFIG={apiKey:"AIzaSyCll3Le7_iewBfBv2CVXs-wHTy3B-8E0",authDomain:"golf-club-pete.firebaseapp.com",projectId:"golf-club-pete",appId:"1:75041793772:web:4f06565dc66d08b341a7c9"};
+const PLAYER_ICONS=["⛳","🏌️","🏆","🦅","🐦","🐿️"];
 const $=s=>document.querySelector(s), f1=n=>n.toFixed(1).replace(".",","), escapeHtml=s=>String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const live=()=>COMPETITIES.find(c=>c.status==="live");
 const sorted=c=>[...c.spelers].sort(c.scoring==="stroke-play"?(a,b)=>a.t-b.t||b.p-a.p:(a,b)=>b.p-a.p||a.t-b.t);
 let scoresErrors=[];
+let planningRequestNumber=0;
+const planningPendingResponses=new Map();
+let playerProfiles=[];
+let playerProfilesLoaded=false;
+let playerProfilesError="";
+let firebaseAuth=null;
+let firestore=null;
+let currentUser=null;
+let myPlayerProfile=null;
+let myClaimRequest=null;
+let accountMessage="";
 
 function parseCsv(text){
  const rows=[];let row=[],field="",quoted=false;
@@ -188,11 +245,19 @@ function parseCsv(text){
  return rows;
 }
 
-async function loadScores(competition){
- try{
-  const response=await fetch(competition.csv,{cache:"no-store"});
-  if(!response.ok)throw new Error(`Google Sheets gaf HTTP ${response.status} terug`);
-  const rows=parseCsv(await response.text());
+function loadScores(competition){
+ return new Promise(resolve=>{
+  const callback=`gcpScoresCallback${Date.now()}_${++planningRequestNumber}`;
+  const script=document.createElement("script");
+  let timeout;
+  const cleanup=()=>{delete window[callback];script.remove();clearTimeout(timeout)};
+  const fail=error=>{competition.scoresError=error instanceof Error?error.message:String(error);cleanup();resolve()};
+  timeout=setTimeout(()=>fail(new Error(`Het scoretabblad "${competition.sheetName}" reageert niet.`)),12000);
+  window[callback]=result=>{
+   cleanup();
+   if(!result?.ok||!Array.isArray(result.rows)){fail(new Error(result?.error||"De scores konden niet worden geladen."));return}
+   try{
+  const rows=result.rows;
   const columns=competition.scoreColumns.map(i=>({name:rows[0]?.[i]?.trim(),strokes:i,points:i+1}));
   if(columns.some(c=>!c.name)||!rows[1]?.some(cell=>/slagen/i.test(cell)))throw new Error("De speler- en scorekolommen zijn niet gevonden");
   const players=columns.map(c=>({n:c.name,p:0,t:0}));
@@ -220,9 +285,13 @@ async function loadScores(competition){
   competition.rondes=roundScores.length;
   competition.rondeScores=roundScores;
   competition.scoresError="";
- }catch(error){
-  competition.scoresError=error instanceof Error?error.message:"Onbekende fout";
- }
+   }catch(error){competition.scoresError=error instanceof Error?error.message:"Onbekende fout"}
+   resolve();
+  };
+  script.onerror=()=>fail(new Error(`Het scoretabblad "${competition.sheetName}" kon niet worden geladen.`));
+  script.src=`${PLANNING_API_URL}?action=scores&competition=${encodeURIComponent(competition.id)}&callback=${callback}`;
+  document.head.append(script);
+ });
 }
 
 function scoresNotice(){
@@ -306,16 +375,253 @@ function home(){
  <div class="wrap"><div class="tiles">${COMPETITIES.filter(x=>x.status!=="old").map(tile).join("")}${tournamentTile()}</div>
  ${c?`<div class="sec"><div><h3>Huidige stand</h3><small>Gebaseerd op ${c.rondes} gespeelde rondes</small></div><hr><a href="#/stand/${c.id}">Bekijk volledige stand →</a></div>${podium(c)}`:""}</div>`;
 }
+function planning(id){
+ const competition=COMPETITIES.find(item=>item.id===id);
+ const title=competition?`${escapeHtml(competition.naam)} – Planning`:"Planning";
+ return `<div class="wrap page"><h1>${title}</h1><p class="planning-intro">Bekijk wedstrijden, laat weten of je erbij bent en voeg een wedstrijd met één klik toe aan Google Agenda.</p><div id="planning-events" data-planning-events aria-live="polite"><div class="empty planning-empty">Planning wordt geladen…</div></div></div>`;
+}
+function playerProfileFor(name){
+ const normalized=String(name||"").trim().toLocaleLowerCase("nl-NL");
+ return playerProfiles.find(profile=>(profile.scoreName||profile.name).toLocaleLowerCase("nl-NL")===normalized)||{name:name,scoreName:name,icon:"⛳",handicap:null};
+}
+function loadSheetPlayerProfiles(){
+ if(!PLANNING_API_URL)return;
+ const callback=`gcpPlayersCallback${Date.now()}_${++planningRequestNumber}`;
+ const script=document.createElement("script");
+ let timeout;
+ const cleanup=()=>{delete window[callback];script.remove();clearTimeout(timeout)};
+ timeout=setTimeout(()=>{cleanup();playerProfilesError="De spelerprofielen konden niet worden geladen.";playerProfilesLoaded=true;route()},12000);
+ window[callback]=result=>{
+  cleanup();
+  if(!result?.ok||!Array.isArray(result.players)){
+   playerProfilesError=result?.error==="Onbekende planning-actie."?"De Apps Script-versie met spelersprofielen is nog niet geïmplementeerd.":result?.error||"De spelerprofielen konden niet worden geladen.";
+   playerProfilesLoaded=true;
+   route();
+   return;
+  }
+  playerProfiles=result.players;
+  playerProfilesError="";
+  playerProfilesLoaded=true;
+  route();
+ };
+ script.onerror=()=>{cleanup();playerProfilesError="De spelerprofielen konden niet worden geladen.";playerProfilesLoaded=true;route()};
+ script.src=`${PLANNING_API_URL}${PLANNING_API_URL.includes("?")?"&":"?"}action=players&callback=${callback}`;
+ document.head.append(script);
+}
+function firebaseConfigured(){
+ return Boolean(FIREBASE_CONFIG.apiKey&&FIREBASE_CONFIG.authDomain&&FIREBASE_CONFIG.projectId&&FIREBASE_CONFIG.appId);
+}
+async function loadFirebaseProfiles(){
+ const snapshot=await firestore.collection("profiles").get();
+ playerProfiles=snapshot.docs.map(document=>{
+  const data=document.data();
+  return {uid:document.id,name:data.displayName||data.scoreName,scoreName:data.scoreName,icon:data.icon||"⛳",handicap:data.handicap??null};
+ });
+}
+function loadPlayerProfiles(){
+ if(!firebaseConfigured()){loadSheetPlayerProfiles();return}
+ if(!window.firebase){playerProfilesError="Firebase kon niet worden geladen. Controleer de Firebase-scriptverbinding.";playerProfilesLoaded=true;route();return}
+ try{
+  const app=window.firebase.apps.length?window.firebase.app():window.firebase.initializeApp(FIREBASE_CONFIG);
+  firebaseAuth=app.auth();
+  firestore=app.firestore();
+  firebaseAuth.onAuthStateChanged(async user=>{
+   currentUser=user;
+   myPlayerProfile=null;
+   myClaimRequest=null;
+   playerProfilesError="";
+   accountMessage="";
+   try{
+    if(user){
+     const request=await firestore.collection("claimRequests").doc(user.uid).get();
+     if(request.exists)myClaimRequest=request.data();
+     if(myClaimRequest?.status==="approved"){
+      const profile=await firestore.collection("profiles").doc(user.uid).get();
+      if(profile.exists)myPlayerProfile=profile.data();
+     }
+    }
+    await loadFirebaseProfiles();
+   }catch(error){playerProfilesError=error.message||"De accounts konden niet worden geladen."}
+   playerProfilesLoaded=true;
+   route();
+  },error=>{
+   playerProfilesError=error.message||"Inloggen met Google is niet gelukt.";
+   playerProfilesLoaded=true;
+   route();
+  });
+ }catch(error){playerProfilesError=error.message||"Firebase kan niet worden gestart.";playerProfilesLoaded=true;route()}
+}
+function profileAccountPanel(){
+ if(!firebaseConfigured())return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p>Google-login wordt actief zodra Firebase is ingesteld. Tot die tijd beheer je profielen in het tabblad Spelers van de Google Sheet.</p></section>`;
+ if(!firebaseAuth)return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p role="alert">${escapeHtml(playerProfilesError||"Firebase is nog niet beschikbaar.")}</p></section>`;
+ if(!currentUser)return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p>Log in met Google om je golf-icoon en handicap te beheren. De koppeling aan wedstrijdscores wordt eerst door de beheerder goedgekeurd.</p><button class="account-button" type="button" data-account-action="sign-in">Inloggen met Google</button>${accountMessage?`<p class="account-message" role="status">${escapeHtml(accountMessage)}</p>`:""}</section>`;
+ if(myClaimRequest?.status!=="approved")return `<section class="account-panel"><div class="account-user"><div><h2>Spelersprofiel aanvragen</h2><p>Ingelogd als ${escapeHtml(currentUser.email||"Google-account")}. Je naam in de competitie wordt door de beheerder goedgekeurd.</p></div><button class="account-button" type="button" data-account-action="sign-out">Uitloggen</button></div><form class="account-form" data-account-form="claim"><label>Voornaam zoals in de scorelijsten<input name="requestedName" type="text" maxlength="80" value="${escapeHtml(myClaimRequest?.requestedName||"")}" required></label><button type="submit">Profiel aanvragen</button></form><p class="account-message" role="status">${escapeHtml(accountMessage|| (myClaimRequest?.status==="pending"?"Je aanvraag wacht op goedkeuring.":""))}</p></section>`;
+ const profile=myPlayerProfile||{displayName:myClaimRequest.approvedName,icon:"⛳",handicap:null};
+ return `<section class="account-panel"><div class="account-user"><div><h2>Mijn spelersprofiel</h2><p>Ingelogd als ${escapeHtml(currentUser.email||"Google-account")}. Je competitiescores blijven gekoppeld aan de goedgekeurde naam <b>${escapeHtml(myClaimRequest.approvedName)}</b>.</p></div><button class="account-button" type="button" data-account-action="sign-out">Uitloggen</button></div><form class="account-form" data-account-form="profile"><label>Zichtbare voornaam<input name="displayName" type="text" maxlength="40" value="${escapeHtml(profile.displayName||myClaimRequest.approvedName)}" required></label><label>Golf-icoon<select name="icon">${PLAYER_ICONS.map(icon=>`<option value="${escapeHtml(icon)}"${profile.icon===icon?" selected":""}>${escapeHtml(icon)}</option>`).join("")}</select></label><label>Handicap<input name="handicap" type="number" min="0" max="54" step="0.1" value="${profile.handicap===null||profile.handicap===undefined?"":escapeHtml(profile.handicap)}"></label><button type="submit">Profiel opslaan</button></form><p class="account-message" role="status">${escapeHtml(accountMessage)}</p></section>`;
+}
+document.addEventListener("click",async event=>{
+ const button=event.target.closest("[data-account-action]");
+ if(!button)return;
+ accountMessage="";
+ try{
+  if(button.dataset.accountAction==="sign-in"){
+   const provider=new firebase.auth.GoogleAuthProvider();
+   await firebaseAuth.signInWithPopup(provider);
+  }else if(button.dataset.accountAction==="sign-out"){
+   await firebaseAuth.signOut();
+  }
+ }catch(error){accountMessage=error.message||"De accountactie is mislukt.";route()}
+});
+document.addEventListener("submit",async event=>{
+ const form=event.target;
+ if(!(form instanceof HTMLFormElement)||!form.matches("[data-account-form]"))return;
+ event.preventDefault();
+ const button=form.querySelector('button[type="submit"]');
+ button.disabled=true;
+ accountMessage="";
+ try{
+  const values=new FormData(form);
+  if(form.dataset.accountForm==="claim"){
+   const requestedName=String(values.get("requestedName")||"").trim();
+   if(!requestedName)throw new Error("Vul de voornaam in zoals die in de scorelijsten staat.");
+   await firestore.collection("claimRequests").doc(currentUser.uid).set({
+    email:currentUser.email,requestedName,status:"pending",
+    createdAt:myClaimRequest?.createdAt||firebase.firestore.FieldValue.serverTimestamp()
+   });
+   myClaimRequest={...myClaimRequest,email:currentUser.email,requestedName,status:"pending"};
+   accountMessage="Je aanvraag is verstuurd. Na goedkeuring kun je je profiel aanpassen.";
+  }else{
+   const displayName=String(values.get("displayName")||"").trim();
+   const icon=String(values.get("icon")||"");
+   const handicapText=String(values.get("handicap")||"").trim();
+   const handicap=handicapText===""?null:Number(handicapText);
+   if(!displayName||displayName.length>40)throw new Error("Vul een zichtbare voornaam van maximaal 40 tekens in.");
+   if(!PLAYER_ICONS.includes(icon))throw new Error("Kies een golf-icoon uit de lijst.");
+   if(handicap!==null&&(!Number.isFinite(handicap)||handicap<0||handicap>54))throw new Error("De handicap moet tussen 0 en 54 liggen.");
+   myPlayerProfile={scoreName:myClaimRequest.approvedName,displayName,icon,handicap};
+   await firestore.collection("profiles").doc(currentUser.uid).set({...myPlayerProfile,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+   accountMessage="Je spelersprofiel is opgeslagen.";
+   await loadFirebaseProfiles();
+  }
+ }catch(error){accountMessage=error.message||"Opslaan is niet gelukt."}
+ finally{button.disabled=false;playerProfilesLoaded=true;route()}
+});
+function competitionForEvent(value){
+ const normalized=String(value||"").trim().toLocaleLowerCase("nl-NL");
+ return COMPETITIES.find(item=>item.id.toLocaleLowerCase("nl-NL")===normalized||item.naam.toLocaleLowerCase("nl-NL")===normalized);
+}
+function eventCompetition(event){return event.competition||event.title||""}
+function calendarTimestamp(value){
+ const parts=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Amsterdam",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(new Date(value));
+ const fields=Object.fromEntries(parts.filter(part=>part.type!=="literal").map(part=>[part.type,part.value]));
+ return `${fields.year}${fields.month}${fields.day}T${fields.hour}${fields.minute}${fields.second}`;
+}
+function formatPlanningDate(value){
+ return new Intl.DateTimeFormat("nl-NL",{timeZone:"Europe/Amsterdam",weekday:"long",day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(value));
+}
+function googleCalendarUrl(event){
+ const params=new URLSearchParams({action:"TEMPLATE",text:event.title,dates:`${calendarTimestamp(event.start)}/${calendarTimestamp(event.end)}`,details:event.description||"",location:event.location||"",ctz:"Europe/Amsterdam"});
+ return `https://calendar.google.com/calendar/render?${params}`;
+}
+function planningCard(event){
+ const start=new Date(event.start),end=new Date(event.end),canRespond=start>Date.now();
+ const competition=competitionForEvent(eventCompetition(event));
+ const title=competition?.naam||eventCompetition(event);
+ const nonce=`gcp_${Date.now()}_${++planningRequestNumber}`;
+ const responseForm=canRespond?`<form class="planning-rsvp" data-nonce="${nonce}" action="${escapeHtml(PLANNING_API_URL)}" method="post" target="planning-rsvp-frame">
+  <input type="hidden" name="action" value="respond"><input type="hidden" name="eventId" value="${escapeHtml(event.id)}"><input type="hidden" name="nonce" value="${nonce}">
+  <label>Je naam<input name="name" type="text" maxlength="80" autocomplete="name" required></label>
+  <button type="submit" name="response" value="ja" data-response="ja">Ik ben erbij</button>
+  <button type="submit" name="response" value="nee" data-response="nee">Ik ben er niet bij</button>
+  <p class="planning-message" role="status"></p>
+ </form>`:`<p class="planning-message">Aan- en afmelden voor deze wedstrijd is gesloten.</p>`;
+ return `<article class="planning-event">
+  <div><h2>${escapeHtml(title)}</h2><div class="planning-date"><time datetime="${escapeHtml(event.start)}">${escapeHtml(formatPlanningDate(event.start))}</time> – <time datetime="${escapeHtml(event.end)}">${escapeHtml(new Intl.DateTimeFormat("nl-NL",{timeZone:"Europe/Amsterdam",hour:"2-digit",minute:"2-digit"}).format(end))}</time></div>
+  ${event.location?`<div class="planning-place">${escapeHtml(event.location)}</div>`:""}${event.description?`<p>${escapeHtml(event.description)}</p>`:""}</div>
+  <div class="planning-actions"><a class="btn" href="${escapeHtml(googleCalendarUrl({...event,title}))}" target="_blank" rel="noopener noreferrer">Zet in Google Agenda</a><div class="planning-counts">${event.yesCount} erbij · ${event.noCount} verhinderd</div>${event.attendees?.length?`<div class="planning-attendees">Aanwezig: ${event.attendees.map(escapeHtml).join(", ")}</div>`:""}</div>
+  ${responseForm}
+ </article>`;
+}
+function loadPlanningEvents(competitionId,containerId="planning-events",upcomingOnly=false){
+ const container=document.getElementById(containerId);
+ if(!container)return;
+ container.dataset.competitionId=competitionId||"";
+ container.dataset.upcomingOnly=String(upcomingOnly);
+ if(!PLANNING_API_URL){
+  container.innerHTML='<div class="empty planning-empty">De planning is nog niet gekoppeld. Volg PLANNING-SETUP.md om de Google Sheet en gedeelde aan-/afmeldingen in te stellen.</div>';
+  return;
+ }
+ const callback=`gcpPlanningCallback${Date.now()}${++planningRequestNumber}`;
+ const script=document.createElement("script");
+ const cleanup=()=>{delete window[callback];script.remove();clearTimeout(timeout)};
+ const timeout=setTimeout(()=>{cleanup();container.innerHTML='<div class="data-notice" role="alert">De planning reageert niet. Controleer de Apps Script-link en probeer opnieuw.</div>'},12000);
+ window[callback]=result=>{
+  cleanup();
+  if(!result?.ok||!Array.isArray(result.events)){
+   container.innerHTML=`<div class="data-notice" role="alert">${escapeHtml(result?.error||"De planning kon niet worden geladen.")}</div>`;
+   return;
+  }
+  const events=result.events.filter(item=>!competitionId||competitionForEvent(eventCompetition(item))?.id===competitionId);
+  const visibleEvents=upcomingOnly?events.filter(item=>new Date(item.start)>Date.now()):events;
+  const emptyMessage=upcomingOnly?"Er zijn nog geen aankomende wedstrijden voor deze competitie.":competitionId?"Er staan nog geen wedstrijden voor deze competitie in de planning.":"Er staan nog geen wedstrijden in de planning.";
+  container.innerHTML=visibleEvents.length?`<div class="planning-list">${visibleEvents.map(planningCard).join("")}</div>`:`<div class="empty planning-empty">${emptyMessage}</div>`;
+ };
+ script.onerror=()=>{cleanup();container.innerHTML='<div class="data-notice" role="alert">De planning kon niet worden geladen. Controleer de Apps Script-link en probeer opnieuw.</div>'};
+ script.src=`${PLANNING_API_URL}${PLANNING_API_URL.includes("?")?"&":"?"}action=list&callback=${callback}`;
+ document.head.append(script);
+}
+document.addEventListener("submit",event=>{
+ const form=event.target;
+ if(!(form instanceof HTMLFormElement)||!form.matches(".planning-rsvp"))return;
+ event.preventDefault();
+ const button=event.submitter;
+ if(!(button instanceof HTMLButtonElement)||!["ja","nee"].includes(button.value))return;
+ const status=form.querySelector(".planning-message");
+ const nonce=form.dataset.nonce;
+ const frame=$("#planning-rsvp-frame");
+ if(!nonce||!frame){status.textContent="De reactie kon niet worden voorbereid. Vernieuw de pagina en probeer opnieuw.";return}
+ let responseField=form.querySelector('input[type="hidden"][name="response"]');
+ if(!responseField){responseField=document.createElement("input");responseField.type="hidden";responseField.name="response";form.append(responseField)}
+ responseField.value=button.value;
+ const responseTimeout=setTimeout(()=>{
+  const pending=planningPendingResponses.get(nonce);
+  if(!pending)return;
+  planningPendingResponses.delete(nonce);
+  pending.form.querySelectorAll("button").forEach(item=>item.disabled=false);
+  pending.status.textContent="Er kwam geen bevestiging van Google Sheets. Controleer je verbinding en probeer opnieuw.";
+ },20000);
+ planningPendingResponses.set(nonce,{status,form,timeout:responseTimeout,containerId:form.closest("[data-planning-events]")?.id,competitionId:form.closest("[data-planning-events]")?.dataset.competitionId||"",upcomingOnly:form.closest("[data-planning-events]")?.dataset.upcomingOnly==="true"});
+ status.textContent="Je reactie wordt opgeslagen…";
+ form.querySelectorAll("button").forEach(item=>item.disabled=true);
+ frame.src="about:blank";
+ HTMLFormElement.prototype.submit.call(form);
+});
+window.addEventListener("message",event=>{
+ const frame=$("#planning-rsvp-frame");
+ if(!frame||event.source!==frame.contentWindow)return;
+ let host="";
+ try{host=new URL(event.origin).hostname}catch{return}
+ if(host!=="script.google.com"&&!host.endsWith(".googleusercontent.com"))return;
+ const result=event.data;
+ if(result?.type!=="gcp-rsvp"||typeof result.nonce!=="string")return;
+ const pending=planningPendingResponses.get(result.nonce);
+ if(!pending)return;
+ planningPendingResponses.delete(result.nonce);
+ clearTimeout(pending.timeout);
+ pending.form.querySelectorAll("button").forEach(button=>button.disabled=false);
+ pending.status.textContent=result.ok?"Je reactie is opgeslagen.":`Opslaan is niet gelukt: ${result.message||"probeer het opnieuw."}`;
+ if(result.ok&&pending.containerId)setTimeout(()=>loadPlanningEvents(pending.competitionId,pending.containerId,pending.upcomingOnly),350);
+});
 function competities(){return `<div class="wrap page"><h1>Competities</h1><p style="color:var(--mute)">Lopende, aankomende en afgelopen competities. Oude standen blijven altijd beschikbaar.</p><div class="tiles" style="margin-top:20px">${COMPETITIES.map(tile).join("")}</div></div>`}
 function cupIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5v2a4 4 0 0 0 4 4m7-6h3v2a4 4 0 0 1-4 4m-3 1v4m-4 3h8m-6-3h4"/></svg>'}
 function flameIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3-2-5.4-4.6-8.1.1 2.3-.7 3.8-1.7 4.8C12.4 7.2 10 3.6 7 2 7.6 6.6 5 8.9 5 14a7 7 0 0 0 7 8Z"/><path d="M12 22a3.5 3.5 0 0 0 3.5-3.5c0-1.5-.9-2.7-2.1-4-.1 1.2-.6 2-1.4 2.5-.2-1.7-1-2.8-2-3.5.2 2.2-1.5 3-1.5 5A3.5 3.5 0 0 0 12 22Z"/></svg>'}
 function standChoices(){
- const competitions=COMPETITIES.filter(c=>c.csv);
+ const competitions=COMPETITIES.filter(c=>c.sheetName);
  return `<div class="wrap page"><h1>Stand</h1><p style="color:var(--mute)">Kies een competitie</p><div class="stand-choices">${competitions.map(c=>`<a class="stand-choice" href="#/stand/${c.id}">${closeup(c.id)}<span>${escapeHtml(c.naam)}</span><b aria-hidden="true">→</b></a>`).join("")}</div></div>`;
 }
 function stand(id){
  if(!id)return standChoices();
- const c=COMPETITIES.find(x=>x.id===id&&x.csv); if(!c)return standChoices();
+ const c=COMPETITIES.find(x=>x.id===id&&x.sheetName); if(!c)return standChoices();
  const rounds=c.rondeScores||[];
  const bestStrokes=c.spelers.map((_,i)=>Math.min(...rounds.map(round=>round.scores[i]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity));
  const ranked=sorted(c), medals=["gold","silver","bronze"];
@@ -323,35 +629,65 @@ function stand(id){
  const totalCells=c.spelers.map((s,i)=>{const place=ranked.indexOf(s);const medal=medals[place];return `<td>${s.t}</td><td class="total-points">${s.p}${medal?`<span class="place-cup ${medal}" role="img" aria-label="${place+1}e plaats">${cupIcon()}</span>`:""}</td>`}).join("");
  const summary=c.scoring==="stroke-play"?"Stroke play: de speler met het laagste totaal aantal slagen wint.":"Per ronde levert de beste score een punt op.";
  return `<div class="wrap page"><a class="back-to-stand" href="#/stand"><span aria-hidden="true">←</span> Andere competitie kiezen</a><h1>${c.naam}</h1><p style="color:var(--mute)">Gebaseerd op ${c.rondes} gespeelde rondes. ${summary}</p>
- <div class="scroll"><table><tr><th>#</th><th>Speler</th><th>Punten</th><th>Totaal slagen</th><th>Gemiddeld aantal slagen</th></tr>${sorted(c).map((s,i)=>`<tr class="${i?"":"first"}"><td>${i+1}</td><td><a href="#/speler/${encodeURIComponent(s.n)}">${escapeHtml(s.n)}</a></td><td>${s.p}</td><td>${s.t}</td><td>${f1(s.t/c.rondes)}</td></tr>`).join("")}</table></div>
+ <div class="sec"><div><h3>Aankomende wedstrijden</h3><small>Wedstrijden uit de planning voor deze competitie</small></div><hr><a href="#/planning/${c.id}">Volledige planning →</a></div>
+ <div id="competition-planning" data-planning-events aria-live="polite"><div class="empty planning-empty">Planning wordt geladen…</div></div>
+ <div class="sec"><div><h3>Tussenstand</h3><small>Na ${c.rondes} gespeelde rondes</small></div><hr></div>
+ <div class="stand-summary"><table><tr><th>#</th><th>Speler</th><th>Punten</th><th>Totaal slagen</th><th>Gemiddeld aantal slagen</th></tr>${sorted(c).map((s,i)=>`<tr class="${i?"":"first"}"><td>${i+1}</td><td><a href="#/speler/${encodeURIComponent(s.n)}">${escapeHtml(s.n)}</a></td><td>${s.p}</td><td>${s.t}</td><td>${f1(s.t/c.rondes)}</td></tr>`).join("")}</table></div>
  <div class="sec"><div><h3>Speelrondes</h3><small>Slagen en punten per speler per ronde</small></div><hr></div>
  <div class="scroll"><table class="round-table"><thead><tr><th rowspan="2" scope="col">Ronde</th>${c.spelers.map(s=>`<th colspan="2" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map(()=>'<th scope="col">Slagen</th><th scope="col">Punten</th>').join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row">Totaal</th>${totalCells}</tr></tfoot></table></div>
  <div class="sec"><div><h3>${c.scoring==="stroke-play"?"Punten per ronde":"Puntenverloop"}</h3><small>${c.scoring==="stroke-play"?"Punten per speler per speelronde":"Opgetelde punten per ronde"}</small></div><hr></div>
  ${pointsChart(c)}</div>`;
 }
 function spelers(){
- const competitions=COMPETITIES.filter(c=>c.rondeScores?.length);
- if(!competitions.length)return `<div class="wrap page"><h1>Spelers</h1><div class="empty">Er zijn nog geen spelers.</div></div>`;
- return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Selecteer een speler om alle wedstrijdscores en competities te bekijken.</p>`+competitions.map(c=>{const max=Math.max(...c.spelers.map(s=>s.t/c.rondes));return `<div class="sec"><div><h3>${escapeHtml(c.naam)}</h3></div><hr></div><div class="cards">`+sorted(c).map(s=>{const g=s.t/c.rondes;return `<a class="sc" href="#/speler/${encodeURIComponent(s.n)}" aria-label="Bekijk de scores van ${escapeHtml(s.n)}"><h4>${escapeHtml(s.n)}</h4><dl><dt>Punten</dt><dd>${s.p}</dd><dt>Rondes gespeeld</dt><dd>${c.rondes}</dd><dt>Gemiddeld aantal slagen</dt><dd>${f1(g)}</dd><dt>Totaal slagen</dt><dd>${s.t}</dd></dl><div class="bar" title="Lager gemiddelde is beter"><i style="width:${(1-(g-25)/(max+10-25))*100}%"></i></div><span class="player-link">Bekijk scoregeschiedenis →</span></a>`}).join("")+`</div>`}).join("")+`</div>`;
+ if(!playerProfilesLoaded&&!COMPETITIES.some(competition=>competition.rondeScores?.length))return `<div class="wrap page"><h1>Spelers</h1><div class="empty">Spelers worden geladen…</div></div>`;
+ const playersByName=new Map();
+ playerProfiles.forEach(profile=>{
+  const scoreName=profile.scoreName||profile.name;
+  if(scoreName)playersByName.set(scoreName.trim().toLocaleLowerCase("nl-NL"),{name:profile.name||scoreName,scoreName,profile,competitions:[]});
+ });
+ COMPETITIES.forEach(competition=>(competition.spelers||[]).forEach(player=>{
+  const key=player.n.trim().toLocaleLowerCase("nl-NL");
+  if(!key)return;
+  if(!playersByName.has(key))playersByName.set(key,{name:player.n,scoreName:player.n,profile:playerProfileFor(player.n),competitions:[]});
+  const entry=playersByName.get(key);
+  if(entry.profile.name===entry.scoreName)entry.name=player.n;
+  if(!entry.competitions.some(item=>item.id===competition.id))entry.competitions.push(competition);
+ }));
+ const players=[...playersByName.values()].sort((a,b)=>a.name.localeCompare(b.name,"nl"));
+ if(!players.length)return `<div class="wrap page"><h1>Spelers</h1>${profileAccountPanel()}${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="empty">Er zijn nog geen spelers. De beheerder kan je aanvraag aan een bestaande score-naam koppelen.</div></div>`;
+ return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Iedere speler staat één keer in de lijst. Beheer je profiel via je Google-account.</p>${profileAccountPanel()}${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="cards">${players.map(player=>{
+  const profile=player.profile,handicap=profile.handicap===null?"Niet ingevuld":profile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1});
+  return `<a class="sc" href="#/speler/${encodeURIComponent(player.scoreName)}" aria-label="Bekijk het profiel van ${escapeHtml(player.name)}"><div class="player-card-head"><span class="player-avatar" aria-hidden="true">${escapeHtml(profile.icon)}</span><h4>${escapeHtml(player.name)}</h4></div><dl><dt>Handicap</dt><dd>${handicap}</dd><dt>Competities</dt><dd>${player.competitions.length?player.competitions.map(item=>escapeHtml(item.naam)).join(", "):"Nog geen scores"}</dd></dl><span class="player-link">Bekijk profiel en scoregeschiedenis →</span></a>`;
+ }).join("")}</div></div>`;
 }
 function speler(id){
- const playerName=COMPETITIES.flatMap(c=>c.spelers).find(s=>encodeURIComponent(s.n)===id)?.n;
+ let requestedName=id;
+ try{requestedName=decodeURIComponent(id)}catch{}
+ const normalized=requestedName.trim().toLocaleLowerCase("nl-NL");
+ const profile=playerProfiles.find(item=>(item.scoreName||item.name).toLocaleLowerCase("nl-NL")===normalized);
+ const scorePlayer=COMPETITIES.flatMap(c=>c.spelers).find(s=>s.n.trim().toLocaleLowerCase("nl-NL")===normalized);
+ const scoreName=profile?.scoreName||profile?.name||scorePlayer?.n;
+ const playerName=profile?.name||scoreName;
  if(!playerName)return `<div class="wrap page"><h1>Speler niet gevonden</h1><div class="empty">Deze speler staat niet in de huidige competitie.</div><p><a href="#/spelers">← Terug naar spelers</a></p></div>`;
- const competitions=COMPETITIES.map(c=>({competition:c,index:c.spelers.findIndex(s=>s.n===playerName)})).filter(({competition,index})=>index>=0&&(competition.rondeScores||[]).some(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null));
+ const playerProfile=profile||playerProfileFor(scoreName);
+ const competitions=COMPETITIES.map(c=>({competition:c,index:c.spelers.findIndex(s=>s.n.trim().toLocaleLowerCase("nl-NL")===(scoreName||"").trim().toLocaleLowerCase("nl-NL"))})).filter(({competition,index})=>index>=0&&(competition.rondeScores||[]).some(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null));
  const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const strokes=round.scores[index]?.strokes;const best=strokes===bestStrokes;return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${strokes??"–"}${best?flameIcon():""}</td><td>${round.scores[index]?.points??"–"}</td></tr>`})}).join("");
- return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><h1>${escapeHtml(playerName)}</h1><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>Punten</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
+ const handicap=playerProfile.handicap===null?"Handicap nog niet ingevuld":`Handicap ${playerProfile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
+ return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>Punten</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
 }
 function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><p style="color:var(--mute)">Binnenkort meer nieuws over het volgende golftoernooi.</p><div class="tiles" style="margin-top:20px">${tournamentTile()}</div></div>`}
 
-const NAV=[["","Home"],["competities","Competities"],["stand","Stand"],["spelers","Spelers"],["toernooien","Toernooien"]];
+const NAV=[["","Home"],["competities","Competities"],["planning","Planning"],["stand","Stand"],["spelers","Spelers"],["toernooien","Toernooien"]];
 function route(){
  const [,p="",id]=(location.hash||"#/").split("/");
  $("#nav").innerHTML=NAV.map(([k,t])=>`<a href="#/${k}" class="${k===p?"on":""}">${t}</a>`).join("");
- $("#app").innerHTML=({"":home,competities,stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
+ $("#app").innerHTML=({"":home,competities,planning:()=>planning(id),stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
+ if(p==="planning")loadPlanningEvents(id);
+ if(p==="stand"&&id)loadPlanningEvents(id,"competition-planning",true);
  const notice=scoresNotice();if(notice)$("#app").insertAdjacentHTML("afterbegin",`<div class="wrap">${notice}</div>`);
  window.scrollTo(0,0);
 }
-addEventListener("hashchange",route);route();Promise.all(COMPETITIES.filter(c=>c.csv).map(loadScores)).then(route);
+addEventListener("hashchange",route);route();Promise.all(COMPETITIES.filter(c=>c.sheetName).map(loadScores)).then(route);loadPlayerProfiles();
 </script>
 </body>
 </html>
