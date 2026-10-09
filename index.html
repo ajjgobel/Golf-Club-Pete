@@ -214,7 +214,7 @@ const COMPETITIES=[
 ];
 /* ================================== */
 const PLANNING_API_URL="https://script.google.com/macros/s/AKfycbxOPEifaG4wxNswdLY2AjhBS-KEzYzS9wSaOxnajMIyRSNehxdXcbwpFjRZnLgqyNJVUQ/exec";
-const FIREBASE_CONFIG={apiKey:"AIzaSyCll3Le7_iewBfBv2CVXs-wHTy3B-8E0",authDomain:"golf-club-pete.firebaseapp.com",projectId:"golf-club-pete",appId:"1:75041793772:web:4f06565dc66d08b341a7c9"};
+const FIREBASE_CONFIG={apiKey:"AIzaSyCll3Le7_ieWBtFBv2CVxS-wHTyT3B-8E0",authDomain:"golf-club-pete.firebaseapp.com",projectId:"golf-club-pete",appId:"1:75041793772:web:4f06565dc66d08b341a7c9"};
 const PLAYER_ICONS=["⛳","🏌️","🏆","🦅","🐦","🐿️"];
 const $=s=>document.querySelector(s), f1=n=>n.toFixed(1).replace(".",","), escapeHtml=s=>String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const live=()=>COMPETITIES.find(c=>c.status==="live");
@@ -223,6 +223,8 @@ let scoresErrors=[];
 let planningRequestNumber=0;
 const planningPendingResponses=new Map();
 let playerProfiles=[];
+let sheetPlayerProfiles=[];
+let firebasePlayerProfiles=[];
 let playerProfilesLoaded=false;
 let playerProfilesError="";
 let firebaseAuth=null;
@@ -408,7 +410,8 @@ function loadSheetPlayerProfiles(){
    route();
    return;
   }
-  playerProfiles=result.players;
+  sheetPlayerProfiles=result.players;
+  mergePlayerProfiles();
   playerProfilesError="";
   playerProfilesLoaded=true;
   route();
@@ -417,18 +420,37 @@ function loadSheetPlayerProfiles(){
  script.src=`${PLANNING_API_URL}${PLANNING_API_URL.includes("?")?"&":"?"}action=players&callback=${callback}`;
  document.head.append(script);
 }
+function mergePlayerProfiles(){
+ const profilesByScoreName=new Map();
+ sheetPlayerProfiles.forEach(profile=>{
+  const key=String(profile.scoreName||profile.name||"").trim().toLocaleLowerCase("nl-NL");
+  if(key)profilesByScoreName.set(key,{...profile,scoreName:profile.scoreName||profile.name});
+ });
+ firebasePlayerProfiles.forEach(profile=>{
+  const key=String(profile.scoreName||profile.name||"").trim().toLocaleLowerCase("nl-NL");
+  if(!key)return;
+  const sheetProfile=profilesByScoreName.get(key)||{};
+  profilesByScoreName.set(key,{...sheetProfile,...profile,
+   icon:profile.icon||sheetProfile.icon||"⛳",
+   handicap:profile.handicap===undefined?sheetProfile.handicap:profile.handicap
+  });
+ });
+ playerProfiles=[...profilesByScoreName.values()];
+}
 function firebaseConfigured(){
  return Boolean(FIREBASE_CONFIG.apiKey&&FIREBASE_CONFIG.authDomain&&FIREBASE_CONFIG.projectId&&FIREBASE_CONFIG.appId);
 }
 async function loadFirebaseProfiles(){
  const snapshot=await firestore.collection("profiles").get();
- playerProfiles=snapshot.docs.map(document=>{
+ firebasePlayerProfiles=snapshot.docs.map(document=>{
   const data=document.data();
   return {uid:document.id,name:data.displayName||data.scoreName,scoreName:data.scoreName,icon:data.icon||"⛳",handicap:data.handicap??null};
  });
+ mergePlayerProfiles();
 }
 function loadPlayerProfiles(){
- if(!firebaseConfigured()){loadSheetPlayerProfiles();return}
+ loadSheetPlayerProfiles();
+ if(!firebaseConfigured())return;
  if(!window.firebase){playerProfilesError="Firebase kon niet worden geladen. Controleer de Firebase-scriptverbinding.";playerProfilesLoaded=true;route();return}
  try{
   const app=window.firebase.apps.length?window.firebase.app():window.firebase.initializeApp(FIREBASE_CONFIG);
@@ -471,21 +493,25 @@ function availableClaimNames(){
   .forEach(name=>players.set(name.toLocaleLowerCase("nl-NL"),name));
  return [...players.values()].map(scoreName=>{
   const profile=playerProfileFor(scoreName);
-  const normalized=scoreName.toLocaleLowerCase("nl-NL");
-  const playedMatches=COMPETITIES.reduce((total,competition)=>{
-   const playerIndex=(competition.spelers||[]).findIndex(player=>String(player.n||"").trim().toLocaleLowerCase("nl-NL")===normalized);
-   if(playerIndex<0)return total;
-   return total+(competition.rondeScores||[]).filter(round=>{
-    const score=round.scores?.[playerIndex];
-    return score&&(score.strokes!==null&&score.strokes!==undefined||score.points!==null&&score.points!==undefined);
-   }).length;
-  },0);
+  const playedCompetitions=countPlayedCompetitions(scoreName);
   const handicap=profile.handicap===null||profile.handicap===undefined||profile.handicap===""
    ?"HCP niet ingevuld"
    :`HCP ${Number(profile.handicap).toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
-  const matchesLabel=`${playedMatches} ${playedMatches===1?"wedstrijd":"wedstrijden"}`;
-  return {scoreName,label:`${profile.name||scoreName} - ${handicap} - ${matchesLabel}`};
+  const competitionsLabel=`${playedCompetitions} ${playedCompetitions===1?"gespeelde competitie":"gespeelde competities"}`;
+  return {scoreName,label:`${profile.name||scoreName} - ${handicap} - ${competitionsLabel}`};
  }).sort((first,second)=>first.label.localeCompare(second.label,"nl"));
+}
+function countPlayedCompetitions(scoreName){
+ const normalized=String(scoreName||"").trim().toLocaleLowerCase("nl-NL");
+ return COMPETITIES.reduce((total,competition)=>{
+  const playerIndex=(competition.spelers||[]).findIndex(player=>String(player.n||"").trim().toLocaleLowerCase("nl-NL")===normalized);
+  if(playerIndex<0)return total;
+  const hasPlayed=(competition.rondeScores||[]).some(round=>{
+   const score=round.scores?.[playerIndex];
+   return score&&(score.strokes!==null&&score.strokes!==undefined||score.points!==null&&score.points!==undefined);
+  });
+  return total+(hasPlayed?1:0);
+ },0);
 }
 function profileAccountPanel(){
  if(!firebaseConfigured())return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p>Google-login wordt actief zodra Firebase is ingesteld. Tot die tijd beheer je profielen in het tabblad Spelers van de Google Sheet.</p></section>`;
@@ -706,7 +732,8 @@ function spelers(){
  if(!players.length)return `<div class="wrap page"><h1>Spelers</h1>${profileAccountPanel()}${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="empty">Er zijn nog geen spelers. De beheerder kan je aanvraag aan een bestaande score-naam koppelen.</div></div>`;
  return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Iedere speler staat één keer in de lijst. Beheer je profiel via je Google-account.</p>${profileAccountPanel()}${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="cards">${players.map(player=>{
   const profile=player.profile,handicap=profile.handicap===null?"Niet ingevuld":profile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1});
-  return `<a class="sc" href="#/speler/${encodeURIComponent(player.scoreName)}" aria-label="Bekijk het profiel van ${escapeHtml(player.name)}"><div class="player-card-head"><span class="player-avatar" aria-hidden="true">${escapeHtml(profile.icon)}</span><h4>${escapeHtml(player.name)}</h4></div><dl><dt>Handicap</dt><dd>${handicap}</dd><dt>Competities</dt><dd>${player.competitions.length?player.competitions.map(item=>escapeHtml(item.naam)).join(", "):"Nog geen scores"}</dd></dl><span class="player-link">Bekijk profiel en scoregeschiedenis →</span></a>`;
+  const playedCompetitions=countPlayedCompetitions(player.scoreName);
+  return `<a class="sc" href="#/speler/${encodeURIComponent(player.scoreName)}" aria-label="Bekijk het profiel van ${escapeHtml(player.name)}"><div class="player-card-head"><span class="player-avatar" aria-hidden="true">${escapeHtml(profile.icon)}</span><h4>${escapeHtml(player.name)}</h4></div><dl><dt>Handicap</dt><dd>${handicap}</dd><dt>Gespeelde competities</dt><dd>${playedCompetitions}</dd></dl><span class="player-link">Bekijk profiel en scoregeschiedenis →</span></a>`;
  }).join("")}</div></div>`;
 }
 function speler(id){
