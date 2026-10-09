@@ -95,11 +95,11 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .round-table thead tr:first-child th:first-child{border-bottom:1px solid var(--line)}
 .round-table thead tr:first-child th:not(:first-child){border-left:1px solid var(--line)}
 .round-table thead tr:nth-child(2) th{border-left:1px solid rgba(31,74,52,.65)}
-.round-table thead tr:nth-child(2) th:nth-child(2n){border-left:1px solid var(--line)}
+.round-table thead tr:nth-child(2) th:nth-child(2n+1):not(:first-child){border-left:1px solid var(--line)}
 .round-table tbody th{color:var(--mute);font-weight:500}
 .round-table tbody tr:hover{background:rgba(255,255,255,.025)}
 .round-table tbody th,.round-table tbody td{border-bottom:1px solid rgba(31,74,52,.65);border-right:1px solid rgba(31,74,52,.5)}
-.round-table tbody td:nth-child(2n){border-left:1px solid var(--line)}
+.round-table tbody td:nth-child(2n+1){border-left:1px solid var(--line)}
 .round-table tbody th{border-left:0}
 .round-table tfoot th,.round-table tfoot td{border-top:1px solid var(--green);border-bottom:0;font-weight:700;background:transparent}
 .round-table tfoot th{text-align:left;color:var(--ink)}
@@ -128,10 +128,11 @@ table{width:100%;border-collapse:collapse;background:var(--card);border:1px soli
 th,td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
 .player-scores table{table-layout:fixed}
 .player-scores th,.player-scores td{white-space:normal;overflow-wrap:anywhere}
-.player-scores th:nth-child(1),.player-scores td:nth-child(1){width:40%}
-.player-scores th:nth-child(2),.player-scores td:nth-child(2){width:16%}
-.player-scores th:nth-child(3),.player-scores td:nth-child(3){width:25%}
-.player-scores th:nth-child(4),.player-scores td:nth-child(4){width:19%}
+.player-scores th:nth-child(1),.player-scores td:nth-child(1){width:32%}
+.player-scores th:nth-child(2),.player-scores td:nth-child(2){width:12%}
+.player-scores th:nth-child(3),.player-scores td:nth-child(3){width:12%}
+.player-scores th:nth-child(4),.player-scores td:nth-child(4){width:26%}
+.player-scores th:nth-child(5),.player-scores td:nth-child(5){width:18%}
 @media(max-width:480px){.player-scores th,.player-scores td{padding:8px 5px;font-size:12px}.player-scores th{font-size:10px;letter-spacing:.03em}.player-scores .best-round svg{width:13px;height:13px;margin-left:2px}}
 th{color:var(--mute);font-weight:500;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
 th:nth-child(-n+2),td:nth-child(-n+2){text-align:left}
@@ -151,6 +152,23 @@ a.sc:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .sc dl{gap:10px 8px}
 .sc dt{font-size:14px}
 .sc dd{font-variant-numeric:tabular-nums}
+.player-card-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0 4px}
+.player-card-stat{padding:11px 12px;border:1px solid rgba(73,120,89,.3);border-radius:10px;background:rgba(4,19,12,.24)}
+.player-card-stat small{display:block;color:var(--mute);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.player-card-stat b{display:block;margin-top:3px;font-size:17px;font-variant-numeric:tabular-nums}
+.player-trend{grid-column:1/-1;padding:12px;border:1px solid rgba(73,120,89,.3);border-radius:10px;background:rgba(4,19,12,.24)}
+.player-trend-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.player-trend-head small{color:var(--mute);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.player-trend-head b{font-size:12px;color:var(--green)}
+.player-trend-head b.worse{color:var(--gold)}
+.player-trend-head b.better{color:var(--green)}
+.player-trend svg{display:block;width:100%;height:46px;overflow:visible}
+.player-trend-line{fill:none;stroke:var(--green);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.player-trend-point{fill:var(--gold);stroke:var(--card);stroke-width:2}
+.player-trend-labels{display:flex;justify-content:space-between;gap:4px;color:var(--mute);font-size:10px}
+.player-trend-labels span{text-align:center}
+.round-table .par-score{display:block;margin-top:2px;color:var(--mute);font-size:11px;font-weight:500}
+.round-table td.round-par{color:var(--gold);font-weight:700}
 .player-profile{display:flex;align-items:center;gap:14px;margin:16px 0 24px}
 .player-profile .player-avatar{width:56px;height:56px;font-size:30px}
 .player-profile h1{margin:0;font-size:clamp(32px,5vw,46px)}
@@ -179,6 +197,14 @@ a.sc:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .planning-place{color:var(--mute);font-size:14px}
 .planning-actions{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
 .planning-actions .btn{margin:0;padding:10px 16px}
+.planning-share{display:flex;flex-wrap:wrap;gap:8px}
+.planning-share button,.planning-share a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 12px;border:1px solid var(--line);border-radius:99px;background:rgba(6,19,12,.38);color:var(--ink);font:600 12px 'Manrope',system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.planning-share button:hover,.planning-share a:hover{border-color:var(--green);background:rgba(31,163,90,.12)}
+.planning-share button:disabled{opacity:.6;cursor:wait}
+.planning-share-message{min-height:1.3em;margin:0!important;color:var(--gold);font-size:12px!important}
+.planning-event-target{animation:planning-target 2.4s ease-out}
+@keyframes planning-target{0%,35%{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,164,65,.2)}100%{border-color:var(--line);box-shadow:none}}
+@media(prefers-reduced-motion:reduce){.planning-event-target{animation:none;border-color:var(--gold)}}
 .planning-rsvp{grid-column:1/-1;border-top:1px solid var(--line);padding-top:16px;display:grid;grid-template-columns:minmax(180px,1fr) auto auto;align-items:end;gap:10px}
 .planning-rsvp label{display:grid;gap:5px;color:var(--mute);font-size:13px}
 .planning-rsvp select{min-width:0;width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
@@ -223,12 +249,14 @@ const COMPETITIES=[
 ];
 /* ================================== */
 const PLANNING_API_URL="https://script.google.com/macros/s/AKfycbxOPEifaG4wxNswdLY2AjhBS-KEzYzS9wSaOxnajMIyRSNehxdXcbwpFjRZnLgqyNJVUQ/exec";
+const PUBLIC_SITE_URL="https://golfclubpete.nl";
 const FIREBASE_CONFIG={apiKey:"AIzaSyCll3Le7_ieWBtFBv2CVxS-wHTyT3B-8E0",authDomain:"golf-club-pete.firebaseapp.com",projectId:"golf-club-pete",appId:"1:75041793772:web:4f06565dc66d08b341a7c9"};
 const PLAYER_ICONS=["⛳","🏌️","🏆","🦅","🐦","🐿️","🦊","🐼","🦁","🐧","🐸","🐢","🐙","🦉","🦄","🐉","🦖","🤡","👻","🤖","👽","😎","🤠","🚀"];
 const $=s=>document.querySelector(s), f1=n=>n.toFixed(1).replace(".",","), escapeHtml=s=>String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const live=()=>COMPETITIES.find(c=>c.status==="live");
 const sorted=c=>[...c.spelers].sort(c.scoring==="stroke-play"?(a,b)=>a.t-b.t||b.p-a.p:(a,b)=>b.p-a.p||a.t-b.t);
 let scoresErrors=[];
+const scoreRequests=new Set();
 let planningRequestNumber=0;
 const planningPendingResponses=new Map();
 let playerProfiles=[];
@@ -271,6 +299,7 @@ function loadScores(competition){
    if(!result?.ok||!Array.isArray(result.rows)){fail(new Error(result?.error||"De scores konden niet worden geladen."));return}
    try{
   const rows=result.rows;
+  const parColumn=(rows[1]||[]).findIndex(header=>/^par$/i.test(String(header||"").trim()));
   const columns=(rows[0]||[]).flatMap((name,index)=>{
    const playerName=String(name||"").trim();
    const strokesHeader=String(rows[1]?.[index]||"").trim();
@@ -298,7 +327,12 @@ function loadScores(competition){
      played=true;
     }
    });
-   if(played)roundScores.push({number:roundNumber,scores});
+   if(played){
+    const parText=parColumn>=0?String(row[parColumn]||"").trim():"";
+    const par=parText?Number(parText.replace(",",".")):null;
+    if(parText&&(!Number.isInteger(par)||par<1||par>100))throw new Error(`Vul bij ronde ${roundNumber} een geldige baan-PAR in, bijvoorbeeld 27.`);
+    roundScores.push({number:roundNumber,par,scores});
+   }
   }
   if(!roundScores.length)throw new Error("Er zijn geen gespeelde rondes gevonden in de spreadsheet");
   competition.spelers=players;
@@ -399,10 +433,10 @@ function home(){
  <div class="wrap"><div class="tiles">${COMPETITIES.filter(x=>x.status!=="old").map(tile).join("")}${tournamentTile()}</div>
  ${c?`<div class="sec"><div><h3>Huidige stand</h3><small>Gebaseerd op ${c.rondes} gespeelde rondes</small></div><hr><a href="#/stand/${c.id}">Bekijk volledige stand →</a></div>${podium(c)}`:""}</div>`;
 }
-function planning(id){
+function planning(id,eventId=""){
  const competition=COMPETITIES.find(item=>item.id===id);
  const title=competition?`${escapeHtml(competition.naam)} – Planning`:"Planning";
- return `<div class="wrap page"><h1>${title}</h1><p class="planning-intro">Bekijk wedstrijden, laat weten of je erbij bent en voeg een wedstrijd met één klik toe aan Google Agenda.</p><div id="planning-events" data-planning-events aria-live="polite"><div class="empty planning-empty">Planning wordt geladen…</div></div></div>`;
+ return `<div class="wrap page"><h1>${title}</h1><p class="planning-intro">Bekijk wedstrijden, laat weten of je erbij bent en voeg een wedstrijd met één klik toe aan Google Agenda.</p><div id="planning-events" data-planning-events data-event-id="${escapeHtml(eventId)}" aria-live="polite"><div class="empty planning-empty">Planning wordt geladen…</div></div></div>`;
 }
 function playerProfileFor(name){
  const normalized=String(name||"").trim().toLocaleLowerCase("nl-NL");
@@ -526,6 +560,56 @@ function countPlayedCompetitions(scoreName){
   return total+(hasPlayed?1:0);
  },0);
 }
+function playerRoundStats(scoreName){
+ const normalized=String(scoreName||"").trim().toLocaleLowerCase("nl-NL");
+ const totalRounds=COMPETITIES.reduce((total,competition)=>{
+  const playerIndex=(competition.spelers||[]).findIndex(player=>String(player.n||"").trim().toLocaleLowerCase("nl-NL")===normalized);
+  return total+((competition.rondeScores||[]).filter(round=>{
+   const score=round.scores?.[playerIndex];
+   return playerIndex>=0&&score&&Number.isFinite(score.strokes)&&score.strokes>0;
+  }).length);
+ },0);
+ const competition=live()||COMPETITIES.find(item=>item.rondeScores?.length);
+ const playerIndex=(competition?.spelers||[]).findIndex(player=>String(player.n||"").trim().toLocaleLowerCase("nl-NL")===normalized);
+ const rounds=playerIndex<0?[]:(competition.rondeScores||[]).filter(round=>{
+  const strokes=round.scores?.[playerIndex]?.strokes;
+  return Number.isFinite(strokes)&&strokes>0;
+ });
+ const averageStrokes=rounds.length?rounds.reduce((sum,round)=>sum+round.scores[playerIndex].strokes,0)/rounds.length:null;
+ const roundsWithPar=rounds.filter(round=>Number.isFinite(round.par));
+ const averageToPar=roundsWithPar.length===rounds.length&&rounds.length
+  ?rounds.reduce((sum,round)=>sum+round.scores[playerIndex].strokes-round.par,0)/rounds.length
+  :null;
+ return {totalRounds,competition,playerIndex,rounds,averageStrokes,averageToPar};
+}
+function formatToPar(value){
+ if(!Number.isFinite(value))return "–";
+ if(value===0)return "E";
+ return `${value>0?"+":""}${value.toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
+}
+function playerTrendMarkup(stats){
+ const recent=stats.rounds.slice(-3);
+ if(!recent.length)return "";
+ const hasPar=recent.every(round=>Number.isFinite(round.par));
+ const values=recent.map(round=>hasPar?round.scores[stats.playerIndex].strokes-round.par:round.scores[stats.playerIndex].strokes);
+ const spread=Math.max(...values)-Math.min(...values);
+ const points=values.map((value,index)=>{
+  const x=10+(recent.length===1?40:index*80/(recent.length-1));
+  const y=8+(spread===0?16:(value-Math.min(...values))/spread*28);
+  return {x,y,value};
+ });
+ const delta=values.length>1?values[values.length-1]-values[0]:0;
+ const trend=values.length<2?"Nog geen trend":delta<0?"Score verbetert":delta>0?"Score loopt op":"Score gelijk";
+ const trendClass=delta>0?"worse":delta<0?"better":"";
+ const valueLabel=value=>hasPar?formatToPar(value):String(value);
+ const labels=recent.map((round,index)=>`<span>R${round.number}: ${valueLabel(points[index].value)}</span>`).join("");
+ const accessibleLabels=recent.map((round,index)=>`Ronde ${round.number}: ${valueLabel(points[index].value)}`).join(", ");
+ return `<div class="player-trend"><div class="player-trend-head"><small>Laatste rondes · ${hasPar?"t.o.v. par":"slagen"} · ${escapeHtml(stats.competition?.naam||"")}</small><b class="${trendClass}">${trend}</b></div><svg viewBox="0 0 100 46" role="img" aria-label="Verloop laatste rondes: ${escapeHtml(accessibleLabels)}"><polyline class="player-trend-line" points="${points.map(point=>`${point.x},${point.y}`).join(" ")}"/>${points.map(point=>`<circle class="player-trend-point" cx="${point.x}" cy="${point.y}" r="3.5"><title>${escapeHtml(valueLabel(point.value))}</title></circle>`).join("")}</svg><div class="player-trend-labels">${labels}</div></div>`;
+}
+function roundScoreMarkup(strokes,par){
+ if(!Number.isFinite(strokes)||!Number.isFinite(par))return `${strokes??"–"}`;
+ return `${strokes}<span class="par-score">${formatToPar(strokes-par)} t.o.v. par</span>`;
+}
 function profileAccountPanel(){
  if(!firebaseConfigured())return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p>Google-login wordt actief zodra Firebase is ingesteld. Tot die tijd beheer je profielen in het tabblad Spelers van de Google Sheet.</p></section>`;
  if(!firebaseAuth)return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p role="alert">${escapeHtml(playerProfilesError||"Firebase is nog niet beschikbaar.")}</p></section>`;
@@ -602,6 +686,13 @@ function googleCalendarUrl(event){
  const params=new URLSearchParams({action:"TEMPLATE",text:event.title,dates:`${calendarTimestamp(event.start)}/${calendarTimestamp(event.end)}`,details:event.description||"",location:event.location||"",ctz:"Europe/Amsterdam"});
  return `https://calendar.google.com/calendar/render?${params}`;
 }
+function planningShareUrl(event){
+ const params=new URLSearchParams({wedstrijd:event.id});
+ return `${PUBLIC_SITE_URL}/#/planning?${params}`;
+}
+function planningShareMessage(event){
+ return `Er is een wedstrijd aangemaakt op ${formatPlanningDate(event.start)}. Geef aan of je erbij bent via de link: ${planningShareUrl(event)}`;
+}
 function planningPlayerOptions(){
  if(!playerProfilesLoaded)return `<option value="">Spelers worden geladen…</option>`;
  return `<option value="">Kies een speler…</option>${sheetPlayerProfiles.map(player=>{
@@ -631,10 +722,10 @@ function planningCard(event){
   <button type="submit" name="response" value="nee" data-response="nee" ${canSelectPlayer?"":"disabled"}>Ik ben er niet bij</button>
   <p class="planning-message" role="status">${playerProfilesLoaded&&playerProfilesError?escapeHtml(playerProfilesError):playerProfilesLoaded&&!sheetPlayerProfiles.length?"Er zijn geen spelers beschikbaar om te kiezen.":""}</p>
  </form>`:`<p class="planning-message">Aan- en afmelden voor deze wedstrijd is gesloten.</p>`;
- return `<article class="planning-event">
+ return `<article class="planning-event" id="${escapeHtml(`planning-event-${event.id}`)}">
   <div><h2>${escapeHtml(title)}</h2><div class="planning-date"><time datetime="${escapeHtml(event.start)}">${escapeHtml(formatPlanningDate(event.start))}</time></div>
   ${event.location?`<div class="planning-place">${escapeHtml(event.location)}</div>`:""}${event.description?`<p>${escapeHtml(event.description)}</p>`:""}</div>
-  <div class="planning-actions"><a class="btn" href="${escapeHtml(googleCalendarUrl({...event,title}))}" target="_blank" rel="noopener noreferrer">Zet in Google Agenda</a><div class="planning-counts">${event.yesCount} erbij · ${event.noCount} verhinderd</div></div>
+  <div class="planning-actions"><a class="btn" href="${escapeHtml(googleCalendarUrl({...event,title}))}" target="_blank" rel="noopener noreferrer">Zet in Google Agenda</a><div class="planning-counts">${event.yesCount} erbij · ${event.noCount} verhinderd</div><div class="planning-share"><button type="button" data-copy-planning-link="${escapeHtml(planningShareUrl(event))}">Kopieer link</button><a href="${escapeHtml(`https://wa.me/?text=${encodeURIComponent(planningShareMessage(event))}`)}" target="_blank" rel="noopener noreferrer">Deel via WhatsApp</a></div><p class="planning-share-message" role="status"></p></div>
   ${event.attendees?.length?`<section class="planning-attendee-section" aria-label="Aanwezig gemeld"><h3 class="planning-attendee-heading">Aanwezig gemeld</h3><div class="planning-attendees">${event.attendees.map(planningAttendee).join("")}</div></section>`:""}
   ${responseForm}
  </article>`;
@@ -662,11 +753,31 @@ function loadPlanningEvents(competitionId,containerId="planning-events",upcoming
   const visibleEvents=upcomingOnly?events.filter(item=>new Date(item.start)>Date.now()):events;
   const emptyMessage=upcomingOnly?"Er zijn nog geen aankomende wedstrijden voor deze competitie.":competitionId?"Er staan nog geen wedstrijden voor deze competitie in de planning.":"Er staan nog geen wedstrijden in de planning.";
   container.innerHTML=visibleEvents.length?`<div class="planning-list">${visibleEvents.map(planningCard).join("")}</div>`:`<div class="empty planning-empty">${emptyMessage}</div>`;
+  const eventId=container.dataset.eventId;
+  if(eventId){
+   const target=document.getElementById(`planning-event-${eventId}`);
+   if(target){
+    target.classList.add("planning-event-target");
+    setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"center"}),0);
+   }
+  }
  };
  script.onerror=()=>{cleanup();container.innerHTML='<div class="data-notice" role="alert">De planning kon niet worden geladen. Controleer de Apps Script-link en probeer opnieuw.</div>'};
  script.src=`${PLANNING_API_URL}${PLANNING_API_URL.includes("?")?"&":"?"}action=list&callback=${callback}`;
  document.head.append(script);
 }
+document.addEventListener("click",async event=>{
+ const button=event.target.closest("[data-copy-planning-link]");
+ if(!button)return;
+ const status=button.closest(".planning-actions").querySelector(".planning-share-message");
+ button.disabled=true;
+ try{
+  await navigator.clipboard.writeText(button.dataset.copyPlanningLink);
+  status.textContent="Link gekopieerd. Je kunt deze nu delen.";
+ }catch(error){
+  status.textContent="Kopiëren is niet gelukt. Open ‘Deel via WhatsApp’ om de link te delen.";
+ }finally{button.disabled=false}
+});
 document.addEventListener("submit",event=>{
  const form=event.target;
  if(!(form instanceof HTMLFormElement)||!form.matches(".planning-rsvp"))return;
@@ -727,7 +838,7 @@ function stand(id){
  const rounds=c.rondeScores||[];
  const bestStrokes=c.spelers.map((_,i)=>Math.min(...rounds.map(round=>round.scores[i]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity));
  const ranked=sorted(c), medals=["gold","silver","bronze"];
- const roundRows=rounds.map(round=>`<tr><th scope="row">${round.number}</th>${round.scores.map((score,i)=>`<td${score.strokes===bestStrokes[i]?` class="best-round" title="Laagste ronde van ${escapeHtml(c.spelers[i].n)}"`:""}>${score.strokes??"–"}${score.strokes===bestStrokes[i]?flameIcon():""}</td>${score.points>0?`<td class="round-point" aria-label="${score.points} ${score.points===1?"punt":"punten"} gescoord"><span>${score.points}</span>${cupIcon()}</td>`:`<td>${score.points??"–"}</td>`}`).join("")}</tr>`).join("");
+ const roundRows=rounds.map(round=>`<tr><th scope="row">${round.number}</th><td class="round-par">${round.par??"–"}</td>${round.scores.map((score,i)=>`<td${score.strokes===bestStrokes[i]?` class="best-round" title="Laagste ronde van ${escapeHtml(c.spelers[i].n)}"`:""}>${roundScoreMarkup(score.strokes,round.par)}${score.strokes===bestStrokes[i]?flameIcon():""}</td>${score.points>0?`<td class="round-point" aria-label="${score.points} ${score.points===1?"punt":"punten"} gescoord"><span>${score.points}</span>${cupIcon()}</td>`:`<td>${score.points??"–"}</td>`}`).join("")}</tr>`).join("");
  const totalCells=c.spelers.map((s,i)=>{const place=ranked.indexOf(s);const medal=medals[place];return `<td>${s.t}</td><td class="total-points">${s.p}${medal?`<span class="place-cup ${medal}" role="img" aria-label="${place+1}e plaats">${cupIcon()}</span>`:""}</td>`}).join("");
  const summary=c.scoring==="stroke-play"?"Stroke play: de speler met het laagste totaal aantal slagen wint.":"Per ronde levert de beste score een punt op.";
  return `<div class="wrap page"><a class="back-to-stand" href="#/stand"><span aria-hidden="true">←</span> Andere competitie kiezen</a><h1>${c.naam}</h1><p style="color:var(--mute)">Gebaseerd op ${c.rondes} gespeelde rondes. ${summary}</p>
@@ -735,8 +846,8 @@ function stand(id){
  <div id="competition-planning" data-planning-events aria-live="polite"><div class="empty planning-empty">Planning wordt geladen…</div></div>
  <div class="sec"><div><h3>Tussenstand</h3><small>Na ${c.rondes} gespeelde rondes</small></div><hr></div>
  <div class="stand-summary"><table><tr><th>#</th><th>Icoon / Naam</th><th>Punten</th><th>Totaal slagen</th><th>Gemiddeld aantal slagen</th></tr>${sorted(c).map((s,i)=>`<tr class="${i?"":"first"}"><td>${i+1}</td><td><a href="#/speler/${encodeURIComponent(s.n)}">${standPlayer(s.n)}</a></td><td>${s.p}</td><td>${s.t}</td><td>${f1(s.t/c.rondes)}</td></tr>`).join("")}</table></div>
- <div class="sec"><div><h3>Speelrondes</h3><small>Slagen en punten per speler per ronde</small></div><hr></div>
- <div class="scroll"><table class="round-table"><thead><tr><th rowspan="2" scope="col">Ronde</th>${c.spelers.map(s=>`<th colspan="2" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map(()=>'<th scope="col">Slagen</th><th scope="col">Punten</th>').join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row">Totaal</th>${totalCells}</tr></tfoot></table></div>
+ <div class="sec"><div><h3>Speelrondes</h3><small>Slagen, baan-PAR en punten per speler per ronde</small></div><hr></div>
+ <div class="scroll"><table class="round-table"><thead><tr><th rowspan="2" scope="col">Ronde</th><th rowspan="2" scope="col">Par</th>${c.spelers.map(s=>`<th colspan="2" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map(()=>'<th scope="col">Slagen</th><th scope="col">Punten</th>').join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row" colspan="2">Totaal</th>${totalCells}</tr></tfoot></table></div>
  <div class="sec"><div><h3>${c.scoring==="stroke-play"?"Punten per ronde":"Puntenverloop"}</h3><small>${c.scoring==="stroke-play"?"Punten per speler per speelronde":"Opgetelde punten per ronde"}</small></div><hr></div>
  ${pointsChart(c)}</div>`;
 }
@@ -760,7 +871,10 @@ function spelers(){
  return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Iedere speler staat één keer in de lijst. Beheer je profiel via je Google-account.</p>${profileAccountPanel()}${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="cards">${players.map(player=>{
   const profile=player.profile,handicap=profile.handicap===null?"Niet ingevuld":profile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1});
   const playedCompetitions=countPlayedCompetitions(player.scoreName);
-  return `<a class="sc" href="#/speler/${encodeURIComponent(player.scoreName)}" aria-label="Bekijk het profiel van ${escapeHtml(player.name)}"><div class="player-card-head"><span class="player-avatar" aria-hidden="true">${escapeHtml(profile.icon)}</span><h4>${escapeHtml(player.name)}</h4></div><dl><dt>Handicap</dt><dd>${handicap}</dd><dt>Gespeelde competities</dt><dd>${playedCompetitions}</dd></dl><span class="player-link">Bekijk profiel en scoregeschiedenis →</span></a>`;
+   const stats=playerRoundStats(player.scoreName);
+   const averageStrokes=stats.averageStrokes===null?"–":stats.averageStrokes.toLocaleString("nl-NL",{minimumFractionDigits:1,maximumFractionDigits:1});
+   const averageToPar=stats.averageToPar===null?"–":formatToPar(stats.averageToPar);
+   return `<a class="sc" href="#/speler/${encodeURIComponent(player.scoreName)}" aria-label="Bekijk het profiel van ${escapeHtml(player.name)}"><div class="player-card-head"><span class="player-avatar" aria-hidden="true">${escapeHtml(profile.icon)}</span><h4>${escapeHtml(player.name)}</h4></div><dl><dt>Handicap</dt><dd>${handicap}</dd><dt>Gespeelde competities</dt><dd>${playedCompetitions}</dd></dl><div class="player-card-stats"><div class="player-card-stat"><small>Rondes gespeeld</small><b>${stats.totalRounds}</b></div><div class="player-card-stat"><small>Gem. slagen · ${escapeHtml(stats.competition?.naam||"huidige competitie")}</small><b>${averageStrokes}</b></div><div class="player-card-stat"><small>Gem. t.o.v. par</small><b>${averageToPar}</b></div>${playerTrendMarkup(stats)}</div><span class="player-link">Bekijk profiel en scoregeschiedenis →</span></a>`;
  }).join("")}</div></div>`;
 }
 function speler(id){
@@ -774,23 +888,40 @@ function speler(id){
  if(!playerName)return `<div class="wrap page"><h1>Speler niet gevonden</h1><div class="empty">Deze speler staat niet in de huidige competitie.</div><p><a href="#/spelers">← Terug naar spelers</a></p></div>`;
  const playerProfile=profile||playerProfileFor(scoreName);
  const competitions=COMPETITIES.map(c=>({competition:c,index:c.spelers.findIndex(s=>s.n.trim().toLocaleLowerCase("nl-NL")===(scoreName||"").trim().toLocaleLowerCase("nl-NL"))})).filter(({competition,index})=>index>=0&&(competition.rondeScores||[]).some(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null));
- const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const strokes=round.scores[index]?.strokes;const best=strokes===bestStrokes;return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${strokes??"–"}${best?flameIcon():""}</td><td>${round.scores[index]?.points??"–"}</td></tr>`})}).join("");
+ const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const strokes=round.scores[index]?.strokes;const best=strokes===bestStrokes;return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td>${round.par??"–"}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${roundScoreMarkup(strokes,round.par)}${best?flameIcon():""}</td><td>${round.scores[index]?.points??"–"}</td></tr>`})}).join("");
  const handicap=playerProfile.handicap===null?"Handicap nog niet ingevuld":`Handicap ${playerProfile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
- return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>Punten</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
+ return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Par</th><th>Slagen</th><th>Punten</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
 }
 function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><p style="color:var(--mute)">Binnenkort meer nieuws over het volgende golftoernooi.</p><div class="tiles" style="margin-top:20px">${tournamentTile()}</div></div>`}
 
 const NAV=[["","Home"],["competities","Competities"],["planning","Planning"],["stand","Stand"],["spelers","Spelers"],["toernooien","Toernooien"]];
 function route(){
- const [,p="",id]=(location.hash||"#/").split("/");
+ const [hashPath,hashQuery=""]=(location.hash||"#/").slice(1).split("?");
+ const [,p="",id]=(hashPath||"/").split("/");
+ const eventId=new URLSearchParams(hashQuery).get("wedstrijd")||"";
  $("#nav").innerHTML=NAV.map(([k,t])=>`<a href="#/${k}" class="${k===p?"on":""}">${t}</a>`).join("");
- $("#app").innerHTML=({"":home,competities,planning:()=>planning(id),stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
+ $("#app").innerHTML=({"":home,competities,planning:()=>planning(id,eventId),stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
  if(p==="planning")loadPlanningEvents(id);
  if(p==="stand"&&id)loadPlanningEvents(id,"competition-planning",true);
+ let neededScores=[];
+ if(!p){
+  const current=live();
+  if(current?.sheetName)neededScores=[current];
+ }else if(p==="competities"||p==="spelers"||p==="speler"){
+  neededScores=COMPETITIES.filter(competition=>competition.sheetName);
+ }else if(p==="stand"&&id){
+  const competition=COMPETITIES.find(item=>item.id===id);
+  if(competition?.sheetName)neededScores=[competition];
+ }
+ const pendingScores=neededScores.filter(competition=>!scoreRequests.has(competition.id));
+ if(pendingScores.length){
+  pendingScores.forEach(competition=>scoreRequests.add(competition.id));
+  Promise.all(pendingScores.map(loadScores)).then(route);
+ }
  const notice=scoresNotice();if(notice)$("#app").insertAdjacentHTML("afterbegin",`<div class="wrap">${notice}</div>`);
  window.scrollTo(0,0);
 }
-addEventListener("hashchange",route);route();Promise.all(COMPETITIES.filter(c=>c.sheetName).map(loadScores)).then(route);loadPlayerProfiles();
+addEventListener("hashchange",route);route();loadPlayerProfiles();
 </script>
 </body>
 </html>
