@@ -99,22 +99,6 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .stand-summary .rank-badge.gold{border-color:rgba(217,164,65,.55);background:rgba(217,164,65,.12);color:var(--gold)}
 .stand-summary .rank-badge.silver{border-color:rgba(195,203,209,.42);color:var(--silver)}
 .stand-summary .rank-badge.bronze{border-color:rgba(201,116,58,.45);color:var(--bronze)}
-.stableford-teaser{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.9fr);align-items:center;gap:26px;margin-top:18px;padding:22px 24px;overflow:hidden;border:1px solid rgba(128,143,135,.3);border-radius:14px;background:linear-gradient(120deg,rgba(29,37,32,.9),rgba(15,22,18,.96));box-shadow:inset 0 1px rgba(255,255,255,.025),0 8px 24px rgba(0,0,0,.14)}
-.stableford-teaser:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,rgba(139,150,144,.035),transparent 58%)}
-.stableford-copy{position:relative;z-index:2}
-.stableford-kicker{display:inline-flex;align-items:center;gap:7px;margin-bottom:9px;padding:5px 9px;border:1px solid rgba(172,181,176,.19);border-radius:99px;background:rgba(150,160,154,.07);color:#aeb8b2;font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase}
-.stableford-kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:#929d96;box-shadow:0 0 8px rgba(172,181,176,.3)}
-.stableford-copy h3{margin:0 0 6px;color:#d1d7d3;font:700 20px 'Manrope',system-ui,sans-serif}
-.stableford-copy p{max-width:440px;margin:0;color:#929e96;font-size:13px;line-height:1.55}
-.stableford-preview{position:relative;min-height:112px;overflow:hidden;border:1px solid rgba(142,153,146,.2);border-radius:10px;background:rgba(2,9,5,.38);filter:grayscale(1)}
-.stableford-preview table{width:100%;border:0;background:transparent;filter:blur(4px);opacity:.35;transform:scale(1.03)}
-.stableford-preview th,.stableford-preview td{padding:8px 10px;border-bottom:1px solid rgba(144,155,148,.23);font-size:11px;text-align:left}
-.stableford-preview td:last-child,.stableford-preview th:last-child{text-align:right}
-.stableford-preview .skeleton{display:inline-block;width:54%;height:7px;border-radius:9px;background:rgba(171,181,174,.42)}
-.stableford-preview .skeleton.short{width:26%}
-.stableford-fog{position:absolute;inset:0;display:grid;place-items:center;padding:14px;background:radial-gradient(ellipse at center,rgba(126,137,130,.19),rgba(10,16,12,.84) 78%);color:#d5dad6;text-align:center}
-.stableford-fog span{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid rgba(174,184,177,.25);border-radius:99px;background:rgba(19,26,22,.82);box-shadow:0 3px 12px rgba(0,0,0,.22);font-size:12px;font-weight:700;letter-spacing:.03em}
-@media(max-width:680px){.stableford-teaser{grid-template-columns:1fr;gap:16px;padding:18px}.stableford-preview{min-height:102px}}
 .round-table{min-width:660px;table-layout:fixed}
 .round-table{border:0;background:transparent}
 .round-table th,.round-table td{text-align:center;padding:7px 6px}
@@ -139,6 +123,9 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .round-table tfoot td.group-start{border-left:1px solid var(--line)}
 .round-table tfoot td:last-child{border-right:0}
 .round-table tfoot td.total-points{color:var(--gold)}
+.round-table tfoot td.total-stableford{color:var(--ink)}
+.round-table td.round-stableford{color:var(--green);font-weight:650;font-variant-numeric:tabular-nums}
+.round-table td.stableford-win-point{color:var(--green)}
 .round-table .total-points{white-space:nowrap}
 .round-table .place-cup{display:inline-flex;vertical-align:middle;margin-left:5px}
 .round-table .place-cup svg{width:18px;height:18px}
@@ -175,11 +162,13 @@ table{width:100%;border-collapse:collapse;background:var(--card);border:1px soli
 th,td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
 .player-scores table{table-layout:fixed}
 .player-scores th,.player-scores td{white-space:normal;overflow-wrap:anywhere}
-.player-scores th:nth-child(1),.player-scores td:nth-child(1){width:32%}
-.player-scores th:nth-child(2),.player-scores td:nth-child(2){width:12%}
-.player-scores th:nth-child(3),.player-scores td:nth-child(3){width:18%}
-.player-scores th:nth-child(4),.player-scores td:nth-child(4){width:20%}
-.player-scores th:nth-child(5),.player-scores td:nth-child(5){width:18%}
+.player-scores th:nth-child(1),.player-scores td:nth-child(1){width:23%}
+.player-scores th:nth-child(2),.player-scores td:nth-child(2){width:8%}
+.player-scores th:nth-child(3),.player-scores td:nth-child(3){width:12%}
+.player-scores th:nth-child(4),.player-scores td:nth-child(4){width:12%}
+.player-scores th:nth-child(5),.player-scores td:nth-child(5){width:15%}
+.player-scores th:nth-child(6),.player-scores td:nth-child(6){width:15%}
+.player-scores th:nth-child(7),.player-scores td:nth-child(7){width:15%}
 @media(max-width:480px){.player-scores th,.player-scores td{padding:8px 5px;font-size:12px}.player-scores th{font-size:10px;letter-spacing:.03em}.player-scores .best-round svg{width:13px;height:13px;margin-left:2px}}
 th{color:var(--mute);font-weight:500;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
 th:nth-child(-n+2),td:nth-child(-n+2){text-align:left}
@@ -289,12 +278,12 @@ a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
 /* ===== GEGEVENS: pas hier aan =====
-   status: "live" | "soon" | "old"   p = punten, t = totaal aantal slagen */
+   status: "live" | "soon" | "old"   p = Strokeplay-winpunten, t = totaal aantal slagen */
 const COMPETITIES=[
- {id:"2026",naam:"2026 Par 3 Competitie",status:"live",scoring:"points",sheetName:"Par 3 2026",rondes:7,tekst:"De 2026 Par 3 Competitie is in volle gang! Wie pakt de meeste punten en gaat er met de winst vandoor?",roundColumn:0,
-  spelers:[{n:"Arend",p:4,t:238},{n:"Michael",p:2,t:272},{n:"Guus",p:1,t:265}]},
- {id:"platte-piet-cup",naam:"Platte Piet Cup",status:"open",scoring:"stroke-play",sheetName:"Platte Piet Cup",holes:9,baan:"Grote baan Heemskerk",tekst:"Schrijf je nu in voor de Platte Piet Cup en laat zien wie de baas is. 9 holes stroke play, dus elke slag telt.",roundColumn:null,spelers:[]},
- {id:"2027",naam:"2027 Par 3 Competitie",status:"soon",rondes:7,tekst:"De 2027 editie staat alweer gepland. Zorg dat je erbij bent!",spelers:[{n:"",p:0,t:0},{n:"",p:0,t:0},{n:"",p:0,t:0}]},
+ {id:"2026",naam:"2026 Par 3 Competitie",status:"live",scoring:"points",sheetName:"Scores",rondes:7,tekst:"De 2026 Par 3 Competitie is in volle gang! Wie pakt de meeste winpunten en gaat er met de winst vandoor?",roundColumn:0,
+  spelers:[{n:"Arend",p:4,t:238,strokeRounds:7,stableford:0,stablefordRounds:0,stablefordP:0},{n:"Michael",p:2,t:272,strokeRounds:7,stableford:0,stablefordRounds:0,stablefordP:0},{n:"Guus",p:1,t:265,strokeRounds:7,stableford:0,stablefordRounds:0,stablefordP:0}]},
+ {id:"platte-piet-cup",naam:"Platte Piet Cup",status:"open",scoring:"stroke-play",sheetName:"Scores",holes:9,baan:"Grote baan Heemskerk",tekst:"Schrijf je nu in voor de Platte Piet Cup en laat zien wie de baas is. 9 holes stroke play, dus elke slag telt.",roundColumn:null,spelers:[]},
+ {id:"2027",naam:"2027 Par 3 Competitie",status:"soon",sheetName:"Scores",rondes:7,tekst:"De 2027 editie staat alweer gepland. Zorg dat je erbij bent!",spelers:[{n:"",p:0,t:0,strokeRounds:0,stableford:0,stablefordRounds:0,stablefordP:0},{n:"",p:0,t:0,strokeRounds:0,stableford:0,stablefordRounds:0,stablefordP:0},{n:"",p:0,t:0,strokeRounds:0,stableford:0,stablefordRounds:0,stablefordP:0}]},
 ];
 /* ================================== */
 const PLANNING_API_URL="https://script.google.com/macros/s/AKfycbxOPEifaG4wxNswdLY2AjhBS-KEzYzS9wSaOxnajMIyRSNehxdXcbwpFjRZnLgqyNJVUQ/exec";
@@ -348,49 +337,66 @@ function loadScores(competition){
    if(!result?.ok||!Array.isArray(result.rows)){fail(new Error(result?.error||"De scores konden niet worden geladen."));return}
    try{
   const rows=result.rows;
-  const parColumn=(rows[1]||[]).findIndex(header=>/^par$/i.test(String(header||"").trim()));
-  const columns=(rows[0]||[]).flatMap((name,index)=>{
-   const playerName=String(name||"").trim();
-   const strokesHeader=String(rows[1]?.[index]||"").trim();
-   const pointsHeader=String(rows[1]?.[index+1]||"").trim();
-   return playerName&&/^slagen$/i.test(strokesHeader)&&/^punten$/i.test(pointsHeader)
-    ?[{name:playerName,strokes:index,points:index+1}]
-    :[];
-  });
-  if(!columns.length)throw new Error("Geen spelerskolommen gevonden. Gebruik per speler een naam met daaronder de kolommen Slagen en Punten.");
-  const players=columns.map(c=>({n:c.name,p:0,t:0}));
-  const roundScores=[];
-  for(let rowIndex=2;rowIndex<rows.length;rowIndex++){
-   const row=rows[rowIndex];
-   const roundNumber=competition.roundColumn===null?rowIndex-1:Number(row[competition.roundColumn]);
-   if(!Number.isInteger(roundNumber)||roundNumber<1)continue;
-   let played=false;
-   const scores=columns.map(()=>({strokes:null,points:null}));
-   columns.forEach((column,i)=>{
-    const strokesText=row[column.strokes]?.trim(),pointsText=row[column.points]?.trim();
-    const strokes=strokesText?Number(strokesText):NaN,points=pointsText?Number(pointsText):NaN;
-    if(Number.isFinite(strokes)&&strokes>0){
-     players[i].t+=strokes;
-     if(Number.isFinite(points)){players[i].p+=points;scores[i].points=points}
-     scores[i].strokes=strokes;
-     played=true;
-    }
-   });
-   if(played){
-    const parText=parColumn>=0?String(row[parColumn]||"").trim():"";
-    const par=parText?Number(parText.replace(",",".")):null;
-    if(parText&&(!Number.isInteger(par)||par<1||par>100))throw new Error(`Vul bij ronde ${roundNumber} een geldige baan-PAR in, bijvoorbeeld 27.`);
-    roundScores.push({number:roundNumber,par,scores});
-   }
+  const expectedHeaders=["competitie","ronde","par","speler","slagen","stableford"];
+  if((rows[0]||[]).slice(0,expectedHeaders.length).map(value=>String(value||"").trim().toLocaleLowerCase("nl-NL")).join("\u0000")!==expectedHeaders.join("\u0000")){
+   throw new Error("Het tabblad Scores moet de kolommen Competitie, Ronde, Par, Speler, Slagen en Stableford bevatten.");
   }
-  if(!roundScores.length)throw new Error("Er zijn geen gespeelde rondes gevonden in de spreadsheet");
-  players.forEach(player=>{player.p=0});
+  if(rows.length===1){
+   competition.spelers=[];
+   competition.rondes=0;
+   competition.rondeScores=[];
+   competition.scoresError="";
+   resolve();
+   return;
+  }
+  const roundsByNumber=new Map(),playersByName=new Map();
+  const asScoreNumber=value=>{const text=String(value??"").trim();if(!text)return null;const number=Number(text.replace(",","."));return Number.isFinite(number)?number:NaN};
+  for(let rowIndex=1;rowIndex<rows.length;rowIndex++){
+   const row=rows[rowIndex];
+   if(row.every(value=>!String(value??"").trim()))continue;
+   const competitionId=String(row[0]||"").trim().toLocaleLowerCase("nl-NL");
+   const roundNumber=asScoreNumber(row[1]),par=asScoreNumber(row[2]),playerName=String(row[3]||"").trim();
+   const strokes=asScoreNumber(row[4]),stableford=asScoreNumber(row[5]);
+   if(competitionId!==competition.id.toLocaleLowerCase("nl-NL"))throw new Error(`Rij ${rowIndex+1}: de competitie-ID komt niet overeen met ${competition.id}.`);
+   if(!Number.isInteger(roundNumber)||roundNumber<1)throw new Error(`Rij ${rowIndex+1}: vul een geheel rondenummer in vanaf 1.`);
+   if(!playerName)throw new Error(`Rij ${rowIndex+1}: vul de spelernaam in.`);
+   if(par!==null&&(!Number.isInteger(par)||par<1||par>100))throw new Error(`Ronde ${roundNumber}: vul een gehele baan-PAR van 1 t/m 100 in.`);
+   if(strokes!==null&&(!Number.isInteger(strokes)||strokes<1))throw new Error(`Ronde ${roundNumber}, ${playerName}: slagen moet een positief geheel getal zijn.`);
+   if(stableford!==null&&(!Number.isInteger(stableford)||stableford<0))throw new Error(`Ronde ${roundNumber}, ${playerName}: Stableford moet een geheel getal van nul of hoger zijn.`);
+   if(stableford!==null&&strokes===null)throw new Error(`Ronde ${roundNumber}, ${playerName}: vul eerst het aantal slagen in bij de Stableford-score.`);
+   const playerKey=playerName.toLocaleLowerCase("nl-NL"),roundKey=`${roundNumber}`;
+   let round=roundsByNumber.get(roundKey);
+   if(!round){round={number:roundNumber,par,scores:new Map()};roundsByNumber.set(roundKey,round)}
+   else if(par!==round.par)throw new Error(`Ronde ${roundNumber}: vul voor iedere speler dezelfde baan-PAR in.`);
+   if(round.scores.has(playerKey))throw new Error(`Ronde ${roundNumber}: ${playerName} staat meer dan één keer in het tabblad Scores voor deze competitie.`);
+   if(!playersByName.has(playerKey))playersByName.set(playerKey,{n:playerName,p:0,t:0,strokeRounds:0,stableford:0,stablefordRounds:0,stablefordP:0});
+   round.scores.set(playerKey,{strokes,stableford,points:strokes===null?null:0,stablefordPoint:stableford===null?null:0});
+  }
+  const players=[...playersByName.values()];
+  const roundScores=[...roundsByNumber.values()].sort((a,b)=>a.number-b.number).map(round=>({
+   ...round,
+   scores:players.map(player=>round.scores.get(player.n.toLocaleLowerCase("nl-NL"))||{strokes:null,stableford:null,points:null,stablefordPoint:null})
+  }));
+  if(!roundScores.length)throw new Error("Er zijn nog geen scoregegevens voor deze competitie in het tabblad Scores.");
   roundScores.forEach(round=>{
-   const recordedScores=round.scores.filter(score=>Number.isFinite(score.strokes)&&score.strokes>0);
-   recordedScores.forEach(score=>{
-    score.place=1+recordedScores.filter(other=>other.strokes<score.strokes).length;
-    score.points=score.place===1?1:0;
-    players[round.scores.indexOf(score)].p+=score.points;
+   const strokeScores=round.scores.filter(score=>Number.isFinite(score.strokes));
+   const stablefordScores=round.scores.filter(score=>Number.isFinite(score.stableford));
+   const lowestStrokes=strokeScores.length?Math.min(...strokeScores.map(score=>score.strokes)):null;
+   const highestStableford=stablefordScores.length?Math.max(...stablefordScores.map(score=>score.stableford)):null;
+   round.scores.forEach((score,index)=>{
+    const player=players[index];
+    if(Number.isFinite(score.strokes)){
+     player.t+=score.strokes;
+     player.strokeRounds++;
+     score.place=1+strokeScores.filter(other=>other.strokes<score.strokes).length;
+     if(score.strokes===lowestStrokes){score.points=1;player.p++}
+    }
+    if(Number.isFinite(score.stableford)){
+     player.stableford+=score.stableford;
+     player.stablefordRounds++;
+     score.stablefordPlace=1+stablefordScores.filter(other=>other.stableford>score.stableford).length;
+     if(score.stableford===highestStableford){score.stablefordPoint=1;player.stablefordP++}
+    }
    });
   });
   competition.spelers=players;
@@ -457,31 +463,30 @@ function tournamentTile(){
 
 function podium(c){
  const medals=[["gold","gouden"],["silver","zilveren"],["bronze","bronzen"]];
- return `<div class="podium">`+sorted(c).map((s,i)=>{const [metal,color]=medals[i]||medals[2];const playerIndex=c.spelers.indexOf(s);const lowest=(c.rondeScores||[]).map(round=>round.scores[playerIndex]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0);const lowestRound=lowest.length?Math.min(...lowest):"–";return `<div class="pc r${i+1}"><div class="medal ${metal}" role="img" aria-label="${i+1}e plaats, ${color} beker"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 4h16v7a8 8 0 0 1-16 0V4Z" fill="currentColor"/><path d="M8 7H4v3a7 7 0 0 0 6 6.8M24 7h4v3a7 7 0 0 1-6 6.8M16 19v5m-6 4h12m-10-4h8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="who"><b>${escapeHtml(s.n)}</b><span>${s.p} ${s.p===1?"punt":"punten"}</span></div><div class="num"><small>Totaal slagen</small><b>${s.t}</b></div><div class="num"><small>Gem. slagen</small><b>${f1(s.t/c.rondes)}</b></div><div class="num"><small>Laagste ronde</small><b>${lowestRound}</b></div></div>`}).join("")+`</div>`;
+ return `<div class="podium">`+sorted(c).map((s,i)=>{const [metal,color]=medals[i]||medals[2];const playerIndex=c.spelers.indexOf(s);const lowest=(c.rondeScores||[]).map(round=>round.scores[playerIndex]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0);const lowestRound=lowest.length?Math.min(...lowest):"–";const averageRounds=s.strokeRounds||c.rondes;return `<div class="pc r${i+1}"><div class="medal ${metal}" role="img" aria-label="${i+1}e plaats, ${color} beker"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 4h16v7a8 8 0 0 1-16 0V4Z" fill="currentColor"/><path d="M8 7H4v3a7 7 0 0 0 6 6.8M24 7h4v3a7 7 0 0 1-6 6.8M16 19v5m-6 4h12m-10-4h8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="who"><b>${escapeHtml(s.n)}</b><span>${s.p} ${s.p===1?"winpunt":"winpunten"}</span></div><div class="num"><small>Totaal slagen</small><b>${s.t}</b></div><div class="num"><small>Gem. slagen</small><b>${averageRounds?f1(s.t/averageRounds):"–"}</b></div><div class="num"><small>Laagste ronde</small><b>${lowestRound}</b></div></div>`}).join("")+`</div>`;
 }
 function standPlayer(name){
  const profile=playerProfileFor(name);
  return `<span class="stand-player"><span class="stand-player-icon" aria-hidden="true">${escapeHtml(profile.icon||"⛳")}</span><span>${escapeHtml(profile.name||name)}</span></span>`;
 }
 
-function pointsChart(c){
+function pointsChart(c,pointKey,label){
  const playedRounds=c.rondeScores||[];
  if(!playedRounds.length)return "";
- const isStrokePlay=c.scoring==="stroke-play";
- const rounds=[{number:0,scores:c.spelers.map(()=>({points:0}))},...playedRounds];
+ const rounds=[{number:0,scores:c.spelers.map(()=>({[pointKey]:0}))},...playedRounds];
  const colors=["#55d98a","#efbd55","#7dbbe8"],width=720,height=290,left=48,right=18,top=18,bottom=38;
  const plotWidth=width-left-right,plotHeight=height-top-bottom;
  const totals=c.spelers.map(()=>0);
- const series=c.spelers.map((player,index)=>({name:player.n,color:colors[index%colors.length],values:rounds.map(round=>{const points=round.scores[index]?.points||0;if(!isStrokePlay)totals[index]+=points;return isStrokePlay?points:totals[index]})}));
+ const series=c.spelers.map((player,index)=>({name:player.n,color:colors[index%colors.length],values:rounds.map(round=>{totals[index]+=round.scores[index]?.[pointKey]||0;return totals[index]})}));
  const maximum=Math.max(1,...series.flatMap(item=>item.values));
  const step=Math.max(1,Math.ceil(maximum/5)),yMax=Math.ceil(maximum/step)*step;
  const x=i=>left+(rounds.length===1?plotWidth/2:i*plotWidth/(rounds.length-1));
  const y=value=>top+plotHeight-(value/yMax)*plotHeight;
  const grid=Array.from({length:yMax/step+1},(_,i)=>{const value=i*step,py=y(value);return `<line class="chart-grid" x1="${left}" y1="${py}" x2="${width-right}" y2="${py}"/><text class="chart-axis-label" x="${left-10}" y="${py+4}" text-anchor="end">${value}</text>`}).join("");
  const labels=rounds.map((round,i)=>`<text class="chart-axis-label" x="${x(i)}" y="${height-10}" text-anchor="middle">${round.number}</text>`).join("");
- const lines=series.map(item=>`<polyline class="chart-line" stroke="${item.color}" points="${item.values.map((value,i)=>`${x(i)},${y(value)}`).join(" ")}"/>${item.values.map((value,i)=>`<circle class="chart-point" cx="${x(i)}" cy="${y(value)}" r="5" fill="${item.color}"><title>Ronde ${rounds[i].number}: ${escapeHtml(item.name)}, ${value} punten${isStrokePlay?" in deze ronde":" totaal"}</title></circle>`).join("")}`).join("");
+ const lines=series.map(item=>`<polyline class="chart-line" stroke="${item.color}" points="${item.values.map((value,i)=>`${x(i)},${y(value)}`).join(" ")}"/>${item.values.map((value,i)=>`<circle class="chart-point" cx="${x(i)}" cy="${y(value)}" r="5" fill="${item.color}"><title>Ronde ${rounds[i].number}: ${escapeHtml(item.name)}, ${value} winpunten totaal</title></circle>`).join("")}`).join("");
  const legend=series.map(item=>`<span><i style="background:${item.color}"></i>${escapeHtml(item.name)}</span>`).join("");
- const valueDescription=isStrokePlay?"Punten per speler per ronde":"Opgetelde punten per speler na elke speelronde";
+ const valueDescription=label+" per speler na elke speelronde";
  return `<div class="chart" role="group" aria-label="${valueDescription}"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${valueDescription}">${grid}${labels}${lines}</svg><div class="chart-legend">${legend}</div></div>`;
 }
 
@@ -881,13 +886,13 @@ window.addEventListener("message",event=>{
 });
 function competities(){return `<div class="wrap page"><h1>Competities</h1><p style="color:var(--mute)">Lopende, aankomende en afgelopen competities. Oude standen blijven altijd beschikbaar.</p><div class="tiles" style="margin-top:20px">${COMPETITIES.map(tile).join("")}</div></div>`}
 function cupIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5v2a4 4 0 0 0 4 4m7-6h3v2a4 4 0 0 1-4 4m-3 1v4m-4 3h8m-6-3h4"/></svg>'}
-function roundAwardMarkup(score){
- const place=score.place;
+function roundAwardMarkup(score,pointKey="points",placeKey="place"){
+ const place=score[placeKey];
  const award=place===1?`<span class="round-place-icon gold" role="img" aria-label="1e plaats, goud">${cupIcon()}</span>`
   :place===2?`<span class="round-place-icon silver" role="img" aria-label="2e plaats, zilver">${cupIcon()}</span>`
   :place===3?`<span class="round-place-icon bronze" role="img" aria-label="3e plaats, brons">${cupIcon()}</span>`
   :place===4?'<span class="round-place-icon" role="img" aria-label="4e plaats">🤡</span>':"";
- return `<span class="round-award"><span>${score.points??"–"}</span>${award}</span>`;
+ return `<span class="round-award"><span>${score[pointKey]??"–"}</span>${award}</span>`;
 }
 function flameIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3-2-5.4-4.6-8.1.1 2.3-.7 3.8-1.7 4.8C12.4 7.2 10 3.6 7 2 7.6 6.6 5 8.9 5 14a7 7 0 0 0 7 8Z"/><path d="M12 22a3.5 3.5 0 0 0 3.5-3.5c0-1.5-.9-2.7-2.1-4-.1 1.2-.6 2-1.4 2.5-.2-1.7-1-2.8-2-3.5.2 2.2-1.5 3-1.5 5A3.5 3.5 0 0 0 12 22Z"/></svg>'}
 function standChoices(){
@@ -899,22 +904,32 @@ function stand(id){
  const c=COMPETITIES.find(x=>x.id===id&&x.sheetName); if(!c)return standChoices();
  const rounds=c.rondeScores||[];
  const bestStrokes=c.spelers.map((_,i)=>Math.min(...rounds.map(round=>round.scores[i]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity));
- const strokeRanked=[...c.spelers].sort((a,b)=>a.t-b.t||b.p-a.p);
+ const strokeTotalRanked=[...c.spelers].sort((a,b)=>a.t-b.t||b.p-a.p||a.n.localeCompare(b.n,"nl"));
+ const strokeRanked=[...c.spelers].sort((a,b)=>b.p-a.p||a.t-b.t||a.n.localeCompare(b.n,"nl"));
+ const stablefordRanked=[...c.spelers].filter(player=>player.stablefordRounds>0).sort((a,b)=>b.stablefordP-a.stablefordP||b.stableford-a.stableford||a.n.localeCompare(b.n,"nl"));
  const medals=["gold","silver","bronze"];
- const roundRows=rounds.map(round=>`<tr><th scope="row">${round.number}</th><td class="round-par">${round.par??"–"}</td>${round.scores.map((score,i)=>`<td class="round-score-cell${i===0?" group-start":""}${score.strokes===bestStrokes[i]?" best-round":""}"${score.strokes===bestStrokes[i]?` title="Laagste ronde van ${escapeHtml(c.spelers[i].n)}"`:""}><span class="round-score-content">${score.strokes===bestStrokes[i]?`<span class="round-flame">${flameIcon()}</span>`:""}<span class="round-score-value">${score.strokes??"–"}</span></span></td><td class="round-point"${Number.isFinite(score.strokes)?` aria-label="${score.points} punten${score.place?`, plaats ${score.place}`:""}"`:""}>${roundAwardMarkup(score)}</td>`).join("")}</tr>`).join("");
- const strokeStandingRows=strokeRanked.map((player,index)=>`<tr class="${index?"":"first"}"><td><span class="rank-badge ${medals[index]||""}">${index+1}</span></td><td><a href="#/speler/${encodeURIComponent(player.n)}">${standPlayer(player.n)}</a></td><td>${player.t}</td><td>${c.rondes?f1(player.t/c.rondes):"–"}</td></tr>`).join("");
- const totalCells=c.spelers.map((player,index)=>`<td${index===0?' class="group-start"':""}>${player.t}</td><td class="total-points">${player.p}</td>`).join("");
+ const roundRows=rounds.map(round=>`<tr><th scope="row">${round.number}</th><td class="round-par">${round.par??"–"}</td>${round.scores.map((score,i)=>`<td class="round-score-cell${i===0?" group-start":""}${score.strokes===bestStrokes[i]?" best-round":""}"${score.strokes===bestStrokes[i]?` title="Laagste ronde van ${escapeHtml(c.spelers[i].n)}"`:""}><span class="round-score-content">${score.strokes===bestStrokes[i]?`<span class="round-flame">${flameIcon()}</span>`:""}<span class="round-score-value">${score.strokes??"–"}</span></span></td><td class="round-point"${Number.isFinite(score.strokes)?` aria-label="${score.points} ${score.points===1?"winpunt":"winpunten"}${score.place?`, plaats ${score.place}`:""}"`:""}>${roundAwardMarkup(score)}</td><td class="round-stableford">${score.stableford??"–"}</td><td class="round-point stableford-win-point"${Number.isFinite(score.stableford)?` aria-label="${score.stablefordPoint} ${score.stablefordPoint===1?"winpunt":"winpunten"} voor Stableford"`:""}>${roundAwardMarkup(score,"stablefordPoint","stablefordPlace")}</td>`).join("")}</tr>`).join("");
+ const strokeTotalRows=strokeTotalRanked.map((player,index)=>`<tr class="${index?"":"first"}"><td><span class="rank-badge ${medals[index]||""}">${index+1}</span></td><td><a href="#/speler/${encodeURIComponent(player.n)}">${standPlayer(player.n)}</a></td><td>${player.t}</td><td>${player.strokeRounds?f1(player.t/player.strokeRounds):"–"}</td></tr>`).join("");
+ const strokeStandingRows=strokeRanked.map((player,index)=>`<tr class="${index?"":"first"}"><td><span class="rank-badge ${medals[index]||""}">${index+1}</span></td><td><a href="#/speler/${encodeURIComponent(player.n)}">${standPlayer(player.n)}</a></td><td>${player.p}</td><td>${player.t}</td><td>${player.strokeRounds?f1(player.t/player.strokeRounds):"–"}</td></tr>`).join("");
+ const stablefordStandingRows=stablefordRanked.map((player,index)=>`<tr class="${index?"":"first"}"><td><span class="rank-badge ${medals[index]||""}">${index+1}</span></td><td><a href="#/speler/${encodeURIComponent(player.n)}">${standPlayer(player.n)}</a></td><td>${player.stablefordP}</td><td>${player.stableford}</td><td>${player.stablefordRounds}</td></tr>`).join("");
+ const totalCells=c.spelers.map((player,index)=>`<td${index===0?' class="group-start"':""}>${player.t||"–"}</td><td class="total-points">${player.p}</td><td class="total-stableford">${player.stablefordRounds?player.stableford:"–"}</td><td class="total-points">${player.stablefordP}</td>`).join("");
  const summary="Strokeplay: het klassement wordt bepaald door het laagste totaal aantal slagen, zonder handicap.";
  return `<div class="wrap page"><a class="back-to-stand" href="#/stand"><span aria-hidden="true">←</span> Andere competitie kiezen</a><h1>${c.naam}</h1><p style="color:var(--mute)">Gebaseerd op ${c.rondes} gespeelde rondes. ${summary}</p>
  <div class="sec"><div><h3>Aankomende wedstrijden</h3><small>Wedstrijden uit de planning voor deze competitie</small></div><hr><a href="#/planning/${c.id}">Volledige planning →</a></div>
  <div id="competition-planning" data-planning-events aria-live="polite"><div class="empty planning-empty">Planning wordt geladen…</div></div>
- <div class="sec"><div><h3>Tussenstand</h3><small>Strokeplay · zonder handicap · na ${c.rondes} gespeelde rondes</small></div><hr></div>
- <div class="stand-summary"><table><thead><tr><th scope="col">#</th><th scope="col">Speler</th><th scope="col">Totaal slagen</th><th scope="col">Gem. slagen</th></tr></thead><tbody>${strokeStandingRows}</tbody></table></div>
- <section class="stableford-teaser" aria-labelledby="stableford-teaser-title"><div class="stableford-copy"><span class="stableford-kicker">In ontwikkeling</span><h3 id="stableford-teaser-title">Stableford-klassement</h3><p>Straks kun je de tussenstand ook bekijken op basis van Stableford-punten. Het strokeplay-klassement hierboven blijft altijd beschikbaar.</p></div><div class="stableford-preview" aria-hidden="true"><table><thead><tr><th>#</th><th>Speler</th><th>Stableford</th></tr></thead><tbody><tr><td><span class="skeleton short"></span></td><td><span class="skeleton"></span></td><td><span class="skeleton short"></span></td></tr><tr><td><span class="skeleton short"></span></td><td><span class="skeleton"></span></td><td><span class="skeleton short"></span></td></tr><tr><td><span class="skeleton short"></span></td><td><span class="skeleton"></span></td><td><span class="skeleton short"></span></td></tr></tbody></table><div class="stableford-fog"><span>Stableford-overzicht komt eraan</span></div></div></section>
- <div class="sec"><div><h3>Speelrondes</h3><small>Slagen, baan-PAR en punten per speler per ronde</small></div><hr></div>
- <div class="scroll round-table-wrap"><table class="round-table"><colgroup><col style="width:58px"><col style="width:58px">${c.spelers.map(()=>"<col><col>").join("")}</colgroup><thead><tr><th rowspan="2" scope="col">Ronde</th><th rowspan="2" scope="col">Par</th>${c.spelers.map(s=>`<th colspan="2" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map((_,i)=>`<th class="${i===0?"group-start":""}" scope="col">Slagen</th><th scope="col">Punten</th>`).join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row" colspan="2">Totaal</th>${totalCells}</tr></tfoot></table></div>
- <div class="sec"><div><h3>${c.scoring==="stroke-play"?"Punten per ronde":"Puntenverloop"}</h3><small>${c.scoring==="stroke-play"?"Punten per speler per speelronde":"Opgetelde punten per ronde"}</small></div><hr></div>
- ${pointsChart(c)}</div>`;
+ ${rounds.length?"":'<div class="empty">Er zijn nog geen score-rijen voor deze competitie in het tabblad Scores.</div>'}
+ <div class="sec"><div><h3>Strokeplay · totaal slagen</h3><small>Laagste totaal aantal slagen staat bovenaan</small></div><hr></div>
+ <div class="stand-summary"><table><thead><tr><th scope="col">#</th><th scope="col">Speler</th><th scope="col">Totaal slagen</th><th scope="col">Gem. slagen</th></tr></thead><tbody>${strokeTotalRows}</tbody></table></div>
+ <div class="sec"><div><h3>Strokeplay-klassement</h3><small>Iedereen met de minste slagen in een ronde krijgt 1 winpunt; gelijkspel telt voor alle winnaars.</small></div><hr></div>
+ <div class="stand-summary"><table><thead><tr><th scope="col">#</th><th scope="col">Speler</th><th scope="col">Strokeplay-winpunten</th><th scope="col">Totaal slagen</th><th scope="col">Gem. slagen</th></tr></thead><tbody>${strokeStandingRows}</tbody></table></div>
+ <div class="sec"><div><h3>Stableford-klassement</h3><small>Iedereen met de meeste Stableford-punten in een ronde krijgt 1 winpunt; gelijkspel telt voor alle winnaars.</small></div><hr></div>
+ ${stablefordRanked.length?`<div class="stand-summary"><table><thead><tr><th scope="col">#</th><th scope="col">Speler</th><th scope="col">Stableford-winpunten</th><th scope="col">Totaal Stableford</th><th scope="col">Ingevulde rondes</th></tr></thead><tbody>${stablefordStandingRows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen Stableford-punten ingevuld in het tabblad Scores.</div>`}
+ <div class="sec"><div><h3>Speelrondes</h3><small>Ronde-PAR, slagen, strokeplay-winpunten, Stableford-score en Stableford-winpunten</small></div><hr></div>
+ <div class="scroll round-table-wrap"><table class="round-table"><colgroup><col style="width:58px"><col style="width:58px">${c.spelers.map(()=>"<col><col><col><col>").join("")}</colgroup><thead><tr><th rowspan="2" scope="col">Ronde</th><th rowspan="2" scope="col">Par</th>${c.spelers.map(s=>`<th colspan="4" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map((_,i)=>`<th class="${i===0?"group-start":""}" scope="col">Slagen</th><th scope="col">Strokeplay-punt</th><th scope="col">Stableford</th><th scope="col">Stableford-punt</th>`).join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row" colspan="2">Totaal</th>${totalCells}</tr></tfoot></table></div>
+ <div class="sec"><div><h3>Strokeplay-winstpunten per ronde</h3><small>Opgetelde winpunten na elke speelronde</small></div><hr></div>
+ ${pointsChart(c,"points","Opgetelde Strokeplay-winpunten")}
+ <div class="sec"><div><h3>Stableford-winstpunten per ronde</h3><small>Opgetelde winpunten na elke speelronde</small></div><hr></div>
+ ${pointsChart(c,"stablefordPoint","Opgetelde Stableford-winpunten")}</div>`;
 }
 function spelers(){
  if(!playerProfilesLoaded&&!COMPETITIES.some(competition=>competition.rondeScores?.length))return `<div class="wrap page"><h1>Spelers</h1><div class="empty">Spelers worden geladen…</div></div>`;
@@ -953,9 +968,9 @@ function speler(id){
  if(!playerName)return `<div class="wrap page"><h1>Speler niet gevonden</h1><div class="empty">Deze speler staat niet in de huidige competitie.</div><p><a href="#/spelers">← Terug naar spelers</a></p></div>`;
  const playerProfile=profile||playerProfileFor(scoreName);
  const competitions=COMPETITIES.map(c=>({competition:c,index:c.spelers.findIndex(s=>s.n.trim().toLocaleLowerCase("nl-NL")===(scoreName||"").trim().toLocaleLowerCase("nl-NL"))})).filter(({competition,index})=>index>=0&&(competition.rondeScores||[]).some(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null));
- const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const strokes=round.scores[index]?.strokes;const best=strokes===bestStrokes;const toPar=Number.isFinite(strokes)&&Number.isFinite(round.par)?formatToPar(strokes-round.par):"NTB";return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${strokes??"–"}${best?flameIcon():""}</td><td>${toPar}</td><td>${round.scores[index]?.points??"–"}</td></tr>`})}).join("");
+ const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.stableford!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const score=round.scores[index],strokes=score.strokes,best=strokes===bestStrokes;const toPar=Number.isFinite(strokes)&&Number.isFinite(round.par)?formatToPar(strokes-round.par):"NTB";return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${strokes??"–"}${best?flameIcon():""}</td><td>${toPar}</td><td>${score.points??"–"}</td><td>${score.stableford??"–"}</td><td>${score.stablefordPoint??"–"}</td></tr>`})}).join("");
  const handicap=playerProfile.handicap===null?"Handicap nog niet ingevuld":`Handicap ${playerProfile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
- return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>+/- PAR</th><th>Punten</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
+ return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>+/- PAR</th><th>Strokeplay-punt</th><th>Stableford</th><th>Stableford-punt</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
 }
 function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><p style="color:var(--mute)">Binnenkort meer nieuws over het volgende golftoernooi.</p><div class="tiles" style="margin-top:20px">${tournamentTile()}</div></div>`}
 
@@ -968,25 +983,3 @@ function route(){
  $("#app").innerHTML=({"":home,competities,planning:()=>planning(id,eventId),stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
  if(p==="planning")loadPlanningEvents(id);
  if(p==="stand"&&id)loadPlanningEvents(id,"competition-planning",true);
- let neededScores=[];
- if(!p){
-  const current=live();
-  if(current?.sheetName)neededScores=[current];
- }else if(p==="competities"||p==="spelers"||p==="speler"){
-  neededScores=COMPETITIES.filter(competition=>competition.sheetName);
- }else if(p==="stand"&&id){
-  const competition=COMPETITIES.find(item=>item.id===id);
-  if(competition?.sheetName)neededScores=[competition];
- }
- const pendingScores=neededScores.filter(competition=>!scoreRequests.has(competition.id));
- if(pendingScores.length){
-  pendingScores.forEach(competition=>scoreRequests.add(competition.id));
-  Promise.all(pendingScores.map(loadScores)).then(route);
- }
- const notice=scoresNotice();if(notice)$("#app").insertAdjacentHTML("afterbegin",`<div class="wrap">${notice}</div>`);
- window.scrollTo(0,0);
-}
-addEventListener("hashchange",route);route();loadPlayerProfiles();
-</script>
-</body>
-</html>
