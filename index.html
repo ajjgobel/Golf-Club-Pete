@@ -275,7 +275,23 @@ a.sc:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .planning-attendee-icon{font-size:22px;line-height:1}
 .planning-message{grid-column:1/-1;min-height:1.5em;margin:0;color:var(--gold);font-size:14px}
 .planning-empty{margin-top:24px}
+.score-entry-form{display:grid;gap:18px;max-width:760px;margin:24px 0 36px;padding:22px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,rgba(15,43,29,.98),rgba(9,31,21,.98))}
+.score-entry-fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,.45fr);gap:14px}
+.score-entry-form label{display:grid;gap:6px;color:var(--mute);font-size:13px;font-weight:600}
+.score-entry-form input,.score-entry-form select{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.score-entry-round{padding:12px 14px;border:1px solid var(--line);border-radius:9px;background:rgba(6,19,12,.4);font-size:14px}
+.score-entry-round small{display:block;color:var(--mute);font-size:11px}
+.score-entry-players{display:grid;gap:10px}
+.score-entry-player{display:grid;grid-template-columns:minmax(0,1fr) minmax(82px,.55fr) minmax(105px,.7fr);align-items:center;gap:10px;padding:10px;border:1px solid rgba(73,120,89,.38);border-radius:9px;background:rgba(6,19,12,.3)}
+.score-entry-player-name{display:flex;align-items:center;gap:8px;min-width:0;color:var(--ink);font-size:14px}
+.score-entry-player-name span:last-child{overflow:hidden;text-overflow:ellipsis}
+.score-entry-player input{min-width:0;min-height:42px}
+.score-entry-code{max-width:340px}
+.score-entry-message{min-height:1.4em;margin:0;color:var(--gold);font-size:13px}
+.score-entry-message[data-error="true"]{color:#ffb4a8}
+.score-entry-form .btn{margin:0;cursor:pointer}
 @media(max-width:640px){.planning-event{grid-template-columns:1fr;padding:18px}.planning-actions{flex-direction:row;align-items:center;flex-wrap:wrap}.planning-attendee-section{padding:14px}.planning-attendees{gap:8px}.planning-attendee{min-height:44px;padding:6px 11px}.planning-rsvp{grid-template-columns:1fr 1fr}.planning-rsvp label{grid-column:1/-1}.planning-rsvp button{width:100%}}
+@media(max-width:520px){.score-entry-form{padding:16px}.score-entry-fields{grid-template-columns:1fr}.score-entry-player{grid-template-columns:minmax(0,1fr) 78px 100px;gap:7px;padding:8px}.score-entry-player-name{font-size:12px}.score-entry-player input{padding:8px}}
 footer{margin:56px auto 30px;text-align:center;color:var(--mute);font:500 13px 'Manrope',system-ui,sans-serif;letter-spacing:.03em;display:flex;align-items:center;gap:20px}
 footer hr{flex:1;border:0;border-top:1px solid var(--line)}
 a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
@@ -288,7 +304,7 @@ a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
  <div class="tag" style="display:none"></div>
 </div></header>
 <main id="app"></main>
-<iframe id="planning-rsvp-frame" name="planning-rsvp-frame" title="Reactie op wedstrijd opslaan" hidden></iframe>
+<iframe id="planning-rsvp-frame" name="planning-rsvp-frame" title="Formulier opslaan" hidden></iframe>
 <div class="wrap"><footer><hr><span>Golf Club Pete &nbsp;·&nbsp; Est. 2018</span><hr></footer></div>
 
 <script>
@@ -310,6 +326,7 @@ let scoresErrors=[];
 const scoreRequests=new Set();
 let planningRequestNumber=0;
 const planningPendingResponses=new Map();
+const scoreEntryPendingResponses=new Map();
 let playerProfiles=[];
 let sheetPlayerProfiles=[];
 let playerProfilesLoaded=false;
@@ -735,6 +752,11 @@ document.addEventListener("click",async event=>{
 });
 document.addEventListener("submit",event=>{
  const form=event.target;
+ if(form instanceof HTMLFormElement&&form.matches(".score-entry-form")){
+  event.preventDefault();
+  submitScoreEntry(form);
+  return;
+ }
  if(!(form instanceof HTMLFormElement)||!form.matches(".planning-rsvp"))return;
  event.preventDefault();
  const button=event.submitter;
@@ -771,6 +793,25 @@ window.addEventListener("message",event=>{
  try{host=new URL(event.origin).hostname}catch{return}
  if(host!=="script.google.com"&&!host.endsWith(".googleusercontent.com"))return;
  const result=event.data;
+ if(result?.type==="gcp-score-entry"&&typeof result.nonce==="string"){
+  const pending=scoreEntryPendingResponses.get(result.nonce);
+  if(!pending)return;
+  scoreEntryPendingResponses.delete(result.nonce);
+  clearTimeout(pending.timeout);
+  pending.form.querySelectorAll("button").forEach(button=>button.disabled=false);
+  pending.status.dataset.error=String(!result.ok);
+  pending.status.textContent=result.ok?result.message||"De scores zijn opgeslagen.":`Opslaan is niet gelukt: ${result.message||"probeer het opnieuw."}`;
+  if(result.ok){
+   const competition=COMPETITIES.find(item=>item.id===pending.competitionId);
+   if(competition){
+    scoreRequests.delete(competition.id);
+    competition.scoresLoaded=false;
+    scoreRequests.add(competition.id);
+    loadScores(competition).then(route);
+   }
+  }
+  return;
+ }
  if(result?.type!=="gcp-rsvp"||typeof result.nonce!=="string")return;
  const pending=planningPendingResponses.get(result.nonce);
  if(!pending)return;
@@ -869,14 +910,85 @@ function speler(id){
  return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>+/- PAR</th><th>Strokeplay-punt</th><th>Stableford</th><th>Stableford-punt</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
 }
 function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><p style="color:var(--mute)">Binnenkort meer nieuws over het volgende golftoernooi.</p><div class="tiles" style="margin-top:20px">${tournamentTile()}</div></div>`}
+function nextRoundNumber(competition){
+ return Math.max(0,...(competition.rondeScores||[]).map(round=>round.number||0))+1;
+}
+function scoreEntry(){
+ const competitions=COMPETITIES.filter(competition=>competition.sheetName);
+ if(!PLANNING_API_URL)return `<div class="wrap page"><h1>Scores invoeren</h1><div class="data-notice">De Google Sheets-koppeling is niet ingesteld.</div></div>`;
+ if(!playerProfilesLoaded)return `<div class="wrap page"><h1>Scores invoeren</h1><div class="empty">Spelers worden geladen…</div></div>`;
+ if(playerProfilesError)return `<div class="wrap page"><h1>Scores invoeren</h1><div class="data-notice">${escapeHtml(playerProfilesError)}</div></div>`;
+ const initialCompetition=competitions.find(competition=>competition.status==="live")||competitions[0];
+ if(!initialCompetition?.scoresLoaded)return `<div class="wrap page"><h1>Scores invoeren</h1><div class="empty">De volgende speelronde wordt geladen…</div></div>`;
+ if(initialCompetition.scoresError)return `<div class="wrap page"><h1>Scores invoeren</h1><div class="data-notice">${escapeHtml(initialCompetition.scoresError)}</div></div>`;
+ if(!playerProfiles.length)return `<div class="wrap page"><h1>Scores invoeren</h1><div class="empty">Voeg eerst spelers toe aan het tabblad Spelers in Google Sheets.</div></div>`;
+ const nonce=`gcp_score_${Date.now()}_${++planningRequestNumber}`;
+ const competitionOptions=competitions.map(competition=>`<option value="${escapeHtml(competition.id)}"${competition.id===initialCompetition.id?" selected":""}>${escapeHtml(competition.naam)}</option>`).join("");
+ const players=playerProfiles.map(player=>`<div class="score-entry-player" data-player-name="${escapeHtml(player.scoreName||player.name)}"><div class="score-entry-player-name"><span aria-hidden="true">${escapeHtml(player.icon||"⛳")}</span><span>${escapeHtml(player.name)}</span></div><label><span>Slagen</span><input type="number" inputmode="numeric" min="1" step="1" data-score-strokes aria-label="Slagen voor ${escapeHtml(player.name)}"></label><label><span>Stableford</span><input type="number" inputmode="numeric" min="0" step="1" data-score-stableford aria-label="Stableford voor ${escapeHtml(player.name)}"></label></div>`).join("");
+ return `<div class="wrap page"><h1>Scores invoeren</h1><p class="planning-intro">Vul de scores na een ronde direct op je telefoon in. De winpunten worden automatisch door de website berekend.</p>
+ <form class="score-entry-form" data-nonce="${nonce}" action="${escapeHtml(PLANNING_API_URL)}" method="post" target="planning-rsvp-frame">
+  <input type="hidden" name="action" value="saveScores"><input type="hidden" name="nonce" value="${nonce}"><input type="hidden" name="round" value="${nextRoundNumber(initialCompetition)}" data-score-entry-round>
+  <div class="score-entry-fields"><label>Competitie<select name="competition" data-score-entry-competition>${competitionOptions}</select></label><label>Baan-PAR<input type="number" name="par" inputmode="numeric" min="1" max="100" step="1" required placeholder="Bijv. 27"></label></div>
+  <div class="score-entry-round" data-score-entry-round-label><small>Nieuwe ronde</small>Ronde ${nextRoundNumber(initialCompetition)}</div>
+  <div class="score-entry-players">${players}</div>
+  <label class="score-entry-code">Toegangscode<input type="password" name="code" autocomplete="current-password" minlength="1" required></label>
+  <p class="score-entry-message" role="status" aria-live="polite"></p>
+  <button class="btn" type="submit">Scores opslaan</button>
+ </form>
+ <p style="color:var(--mute);font-size:12px">Laat spelers die niet hebben meegespeeld leeg. Stableford is optioneel.</p></div>`;
+}
+function updateScoreEntryRound(form){
+ const competitionId=form.elements.namedItem("competition").value;
+ const competition=COMPETITIES.find(item=>item.id===competitionId);
+ if(!competition)return;
+ const round=nextRoundNumber(competition);
+ form.elements.namedItem("round").value=String(round);
+ form.querySelector("[data-score-entry-round-label]").innerHTML=`<small>Nieuwe ronde</small>Ronde ${round}`;
+}
+function submitScoreEntry(form){
+ const status=form.querySelector(".score-entry-message");
+ const scoreRows=[];
+ for(const playerRow of form.querySelectorAll(".score-entry-player")){
+  const strokes=playerRow.querySelector("[data-score-strokes]").value.trim();
+  const stableford=playerRow.querySelector("[data-score-stableford]").value.trim();
+  if(!strokes&&stableford){status.dataset.error="true";status.textContent=`Vul eerst de slagen in voor ${playerRow.dataset.playerName}.`;return}
+  if(strokes)scoreRows.push({name:playerRow.dataset.playerName,strokes,stableford});
+ }
+ if(!scoreRows.length){status.dataset.error="true";status.textContent="Vul voor minimaal één speler het aantal slagen in.";return}
+ const nonce=form.dataset.nonce;
+ const frame=$("#planning-rsvp-frame");
+ if(!nonce||!frame){status.dataset.error="true";status.textContent="De invoer kon niet worden voorbereid. Vernieuw de pagina en probeer opnieuw.";return}
+ let scoresField=form.querySelector('input[type="hidden"][name="scores"]');
+ if(!scoresField){scoresField=document.createElement("input");scoresField.type="hidden";scoresField.name="scores";form.append(scoresField)}
+ scoresField.value=JSON.stringify(scoreRows);
+ const competitionId=form.elements.namedItem("competition").value;
+ const responseTimeout=setTimeout(()=>{
+  const pending=scoreEntryPendingResponses.get(nonce);
+  if(!pending)return;
+  scoreEntryPendingResponses.delete(nonce);
+  pending.form.querySelectorAll("button").forEach(button=>button.disabled=false);
+  pending.status.dataset.error="true";
+  pending.status.textContent="Er kwam geen bevestiging van Google Sheets. Vernieuw de pagina en controleer de stand voordat je opnieuw opslaat.";
+ },30000);
+ scoreEntryPendingResponses.set(nonce,{status,form,timeout:responseTimeout,competitionId});
+ status.dataset.error="false";
+ status.textContent="Scores worden opgeslagen…";
+ form.querySelectorAll("button").forEach(button=>button.disabled=true);
+ frame.src="about:blank";
+ HTMLFormElement.prototype.submit.call(form);
+}
+document.addEventListener("change",event=>{
+ const form=event.target.closest(".score-entry-form");
+ if(form&&event.target.matches("[data-score-entry-competition]"))updateScoreEntryRound(form);
+});
 
-const NAV=[["","Home"],["competities","Competities"],["planning","Planning"],["stand","Stand"],["spelers","Spelers"],["toernooien","Toernooien"]];
+const NAV=[["","Home"],["competities","Competities"],["planning","Planning"],["stand","Stand"],["invoer","Scores"],["spelers","Spelers"],["toernooien","Toernooien"]];
 function route(){
  const [hashPath,hashQuery=""]=(location.hash||"#/").slice(1).split("?");
  const [,p="",id]=(hashPath||"/").split("/");
  const eventId=new URLSearchParams(hashQuery).get("wedstrijd")||"";
  $("#nav").innerHTML=NAV.map(([k,t])=>`<a href="#/${k}" class="${k===p?"on":""}">${t}</a>`).join("");
- $("#app").innerHTML=({"":home,competities,planning:()=>planning(id,eventId),stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
+ $("#app").innerHTML=({"":home,competities,planning:()=>planning(id,eventId),stand:()=>stand(id),invoer:scoreEntry,spelers,speler:()=>speler(id),toernooien}[p]||home)();
  if(p==="planning")loadPlanningEvents(id);
  if(p==="stand"&&id)loadPlanningEvents(id,"competition-planning",true);
  let neededScores=[];
@@ -887,6 +999,8 @@ function route(){
  }else if(p==="stand"&&id){
   const competition=COMPETITIES.find(item=>item.id===id);
   if(competition?.sheetName)neededScores=[competition];
+ }else if(p==="invoer"){
+  neededScores=COMPETITIES.filter(competition=>competition.sheetName);
  }
  const pendingScores=neededScores.filter(competition=>!scoreRequests.has(competition.id));
  if(pendingScores.length){
