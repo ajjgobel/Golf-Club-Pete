@@ -540,8 +540,8 @@ function homeCompetitionStanding(competition){
  const playerRows=(players,stats)=>players.length
   ?`<ol>${players.map((player,index)=>`<li><span class="rank">${index+1}</span>${standPlayer(player.n)}<span class="home-standing-stats">${stats(player)}</span></li>`).join("")}</ol>`
   :`<p class="home-standing-empty">Nog geen scores</p>`;
- const strokeGroup=`<div class="home-standing-group"><h4>Strokeplay-punten · gem. slagen</h4>${playerRows(strokePlayers,player=>`<span class="home-standing-stat"><small>Punten</small><b>${player.p}</b></span><span class="home-standing-stat"><small>Gem. slagen</small><b>${f1(player.t/player.strokeRounds)}</b></span>`)}</div>`;
- const stablefordGroup=stablefordPlayers.length?`<div class="home-standing-group"><h4>Stableford-punten · gem. Stableford</h4>${playerRows(stablefordPlayers,player=>`<span class="home-standing-stat"><small>Gem. Stableford</small><b>${f1(player.stableford/player.stablefordRounds)}</b></span><span class="home-standing-stat"><small>Punten</small><b>${player.stablefordP}</b></span>`)}</div>`:"";
+ const strokeGroup=`<div class="home-standing-group"><h4>Strokeplay · gem. slagen / punten</h4>${playerRows(strokePlayers,player=>`<span class="home-standing-stat"><small>Gem. slagen</small><b>${f1(player.t/player.strokeRounds)}</b></span><span class="home-standing-stat"><small>Punten</small><b>${player.p}</b></span>`)}</div>`;
+ const stablefordGroup=stablefordPlayers.length?`<div class="home-standing-group"><h4>Stableford · gem. Stableford / punten</h4>${playerRows(stablefordPlayers,player=>`<span class="home-standing-stat"><small>Gem. Stableford</small><b>${f1(player.stableford/player.stablefordRounds)}</b></span><span class="home-standing-stat"><small>Punten</small><b>${player.stablefordP}</b></span>`)}</div>`:"";
  return `<article class="home-standing">${title}<div class="home-standing-columns">${strokeGroup}${stablefordGroup}</div></article>`;
 }
 function planning(id,eventId=""){
@@ -883,7 +883,9 @@ function spelers(){
   if(entry.profile.name===entry.scoreName)entry.name=player.n;
   if(!entry.competitions.some(item=>item.id===competition.id))entry.competitions.push(competition);
  }));
- const players=[...playersByName.values()].sort((a,b)=>a.name.localeCompare(b.name,"nl"));
+ const players=[...playersByName.values()]
+  .map(player=>({...player,playedRounds:playerRoundStats(player.scoreName).totalRounds}))
+  .sort((a,b)=>b.playedRounds-a.playedRounds||a.name.localeCompare(b.name,"nl"));
  if(!players.length)return `<div class="wrap page"><h1>Spelers</h1>${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="empty">Er zijn nog geen spelers beschikbaar. Voeg spelers toe aan het tabblad Spelers in de Google Sheet.</div></div>`;
  return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Spelernamen, golf-iconen en handicaps worden beheerd in het tabblad Spelers van de Google Sheet.</p>${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="cards">${players.map(player=>{
   const profile=player.profile,handicap=profile.handicap===null?"Niet ingevuld":profile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1});
@@ -1012,3 +1014,5 @@ function route(){
 }
 addEventListener("hashchange",route);route();loadSheetPlayerProfiles();
 </script>
+</body>
+</html>
