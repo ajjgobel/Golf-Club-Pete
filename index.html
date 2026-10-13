@@ -62,6 +62,29 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .tile h2{font:700 clamp(32px,5vw,42px)/1.12 'Manrope',system-ui,sans-serif;letter-spacing:-.035em;margin:26px 0 12px;max-width:14ch}
 .meta{font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
 .tile p{max-width:34ch;margin:0 0 22px}
+.home-section{padding-top:30px}
+.home-section:first-of-type{padding-top:12px}
+.home-section-title{display:flex;align-items:center;gap:16px;margin:0 0 20px}
+.home-section-title h2{margin:0;font:700 20px 'Manrope',system-ui,sans-serif;letter-spacing:.01em;text-transform:uppercase}
+.home-section-title hr{flex:1;border:0;border-top:1px solid var(--line)}
+.home-standings{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px;margin:0 0 24px}
+.home-standing{min-width:0;padding:18px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,rgba(18,39,27,.9),rgba(7,20,13,.94))}
+.home-standing-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.home-standing-title h3{margin:0;font:700 17px 'Manrope',system-ui,sans-serif}
+.home-standing-title a{color:var(--mute);font-size:12px;text-decoration:none;white-space:nowrap}
+.home-standing-title a:hover{color:var(--ink)}
+.home-standing-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:16px}
+.home-standing-group h4{margin:0 0 8px;color:var(--mute);font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
+.home-standing-group ol{display:grid;gap:7px;margin:0;padding:0;list-style:none}
+.home-standing-group li{display:grid;grid-template-columns:18px minmax(0,1fr) auto;align-items:center;gap:7px;font-size:12px}
+.home-standing-group .rank{color:var(--mute);font-size:11px;font-variant-numeric:tabular-nums}
+.home-standing-group li:first-child .rank{color:var(--gold);font-weight:800}
+.home-standing-group .stand-player{min-width:0;gap:6px;overflow:hidden;text-overflow:ellipsis}
+.home-standing-group .stand-player-icon{font-size:16px}
+.home-standing-score{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.home-standing-empty{grid-column:1/-1;margin:0;color:var(--mute);font-size:13px}
+.home-standing-loading{color:var(--mute);font-size:13px}
+@media(max-width:520px){.home-standing{padding:15px}.home-standing-columns{gap:12px}.home-standing-group li{font-size:11px}}
 .btn{margin-top:auto;align-self:flex-start;display:inline-flex;gap:12px;padding:14px 26px;border-radius:99px;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:#fff;background:#0f5a32;border:1px solid var(--green)}
 .btn.off{background:rgba(120,125,122,.55);border-color:#999;color:#e8e8e8;cursor:default}
 .back-to-stand{display:inline-flex;align-items:center;gap:9px;margin:0 0 18px;padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font-size:14px;font-weight:600;text-decoration:none;transition:border-color .2s,background .2s}
@@ -280,10 +303,10 @@ a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 /* ===== GEGEVENS: pas hier aan =====
    status: "live" | "soon" | "old"   p = Strokeplay-winpunten, t = totaal aantal slagen */
 const COMPETITIES=[
- {id:"2026",naam:"2026 Par 3 Competitie",status:"live",scoring:"points",sheetName:"Scores",rondes:7,tekst:"De 2026 Par 3 Competitie is in volle gang! Wie pakt de meeste winpunten en gaat er met de winst vandoor?",roundColumn:0,
-  spelers:[{n:"Arend",p:4,t:238,strokeRounds:7,stableford:0,stablefordRounds:0,stablefordP:0},{n:"Michael",p:2,t:272,strokeRounds:7,stableford:0,stablefordRounds:0,stablefordP:0},{n:"Guus",p:1,t:265,strokeRounds:7,stableford:0,stablefordRounds:0,stablefordP:0}]},
- {id:"platte-piet-cup",naam:"Platte Piet Cup",status:"open",scoring:"stroke-play",sheetName:"Scores",holes:9,baan:"Grote baan Heemskerk",tekst:"Schrijf je nu in voor de Platte Piet Cup en laat zien wie de baas is. 9 holes stroke play, dus elke slag telt.",roundColumn:null,spelers:[]},
- {id:"2027",naam:"2027 Par 3 Competitie",status:"soon",sheetName:"Scores",rondes:7,tekst:"De 2027 editie staat alweer gepland. Zorg dat je erbij bent!",spelers:[{n:"",p:0,t:0,strokeRounds:0,stableford:0,stablefordRounds:0,stablefordP:0},{n:"",p:0,t:0,strokeRounds:0,stableford:0,stablefordRounds:0,stablefordP:0},{n:"",p:0,t:0,strokeRounds:0,stableford:0,stablefordRounds:0,stablefordP:0}]},
+ {id:"par-3-2026",naam:"Par 3 2026",status:"live",scoring:"points",sheetName:"Scores",rondes:7,tekst:"De Par 3 2026 is in volle gang! Wie pakt de meeste winpunten en gaat er met de winst vandoor?",roundColumn:0,spelers:[],scoresLoaded:false},
+ {id:"par-3-2027",naam:"Par 3 2027",status:"soon",scoring:"points",sheetName:"Scores",rondes:7,tekst:"De Par 3 2027 staat gepland voor volgend jaar. Binnenkort meer informatie.",spelers:[],scoresLoaded:false},
+ {id:"platte-piet-cup-2026",naam:"Platte Piet Cup 2026",status:"live",scoring:"stroke-play",sheetName:"Scores",holes:9,baan:"Grote baan Heemskerk",tekst:"De Platte Piet Cup 2026 is in volle gang. Bekijk de live stand en volg de strijd om de winst.",roundColumn:null,spelers:[],scoresLoaded:false},
+ {id:"platte-piet-cup-2027",naam:"Platte Piet Cup 2027",status:"soon",scoring:"stroke-play",sheetName:"Scores",holes:9,baan:"Grote baan Heemskerk",tekst:"De Platte Piet Cup 2027 staat gepland voor volgend jaar. Binnenkort meer informatie.",roundColumn:null,spelers:[],scoresLoaded:false},
 ];
 /* ================================== */
 const PLANNING_API_URL="https://script.google.com/macros/s/AKfycbxOPEifaG4wxNswdLY2AjhBS-KEzYzS9wSaOxnajMIyRSNehxdXcbwpFjRZnLgqyNJVUQ/exec";
@@ -330,7 +353,7 @@ function loadScores(competition){
   const script=document.createElement("script");
   let timeout;
   const cleanup=()=>{delete window[callback];script.remove();clearTimeout(timeout)};
-  const fail=error=>{competition.scoresError=error instanceof Error?error.message:String(error);cleanup();resolve()};
+  const fail=error=>{competition.scoresError=error instanceof Error?error.message:String(error);competition.scoresLoaded=true;cleanup();resolve()};
   timeout=setTimeout(()=>fail(new Error(`Het scoretabblad "${competition.sheetName}" reageert niet.`)),12000);
   window[callback]=result=>{
    cleanup();
@@ -339,13 +362,14 @@ function loadScores(competition){
   const rows=result.rows;
   const expectedHeaders=["competitie","ronde","par","speler","slagen","stableford"];
   if((rows[0]||[]).slice(0,expectedHeaders.length).map(value=>String(value||"").trim().toLocaleLowerCase("nl-NL")).join("\u0000")!==expectedHeaders.join("\u0000")){
-   throw new Error("Het tabblad Scores moet de kolommen Competitie, Ronde, Par, Speler, Slagen en Stableford bevatten.");
+   throw new Error("De scoreservice gebruikt nog de oude indeling. Implementeer de nieuwste Apps Script-webappversie via Apps Script → Implementeren → Implementaties beheren → Bewerken → Nieuwe versie.");
   }
   if(rows.length===1){
    competition.spelers=[];
    competition.rondes=0;
    competition.rondeScores=[];
    competition.scoresError="";
+   competition.scoresLoaded=true;
    resolve();
    return;
   }
@@ -403,7 +427,8 @@ function loadScores(competition){
   competition.rondes=roundScores.length;
   competition.rondeScores=roundScores;
   competition.scoresError="";
-   }catch(error){competition.scoresError=error instanceof Error?error.message:"Onbekende fout"}
+   competition.scoresLoaded=true;
+   }catch(error){competition.scoresError=error instanceof Error?error.message:"Onbekende fout";competition.scoresLoaded=true}
    resolve();
   };
   script.onerror=()=>fail(new Error(`Het scoretabblad "${competition.sheetName}" kon niet worden geladen.`));
@@ -418,8 +443,8 @@ function scoresNotice(){
 }
 
 function closeup(id){
- if(id==="platte-piet-cup")return '<img class="bg" src="golf-club-pete-logo.png" alt="Golf Club Pete-logo voor de Platte Piet Cup">';
- if(id==="2026"||id==="2027")return '<img class="bg" src="heemskerkse-par3-golfbaan.jpg" alt="">';
+ if(id.startsWith("platte-piet-cup"))return '<img class="bg" src="golf-club-pete-logo.png" alt="Golf Club Pete-logo voor de Platte Piet Cup">';
+ if(id==="par-3-2026"||id==="par-3-2027")return '<img class="bg" src="heemskerkse-par3-golfbaan.jpg" alt="">';
  return `<svg class="bg" viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
 <linearGradient id="a${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c3a3a"/><stop offset=".5" stop-color="#d79a4e"/></linearGradient>
 <linearGradient id="g${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f7a24"/><stop offset="1" stop-color="#0c3015"/></linearGradient>
@@ -434,9 +459,9 @@ function closeup(id){
 
 function tile(c){
  const L=c.status==="live", S=c.status==="soon", O=c.status==="old";
- const pills=L?`<span class="pill l"><span class="dot"></span>Live</span><span class="pill w">Huidige competitie</span>`:c.status==="open"?`<span class="pill l">Inschrijving geopend</span>`:S?`<span class="pill o">Komt eraan</span><span class="pill w">Inschrijving opent binnenkort</span>`:`<span class="pill o">Archief</span>`;
- const btn=c.status==="open"?`<a class="btn off" href="#/stand/${c.id}">Inschrijven bij Arend →</a>`:S?`<span class="btn off">Inschrijven binnenkort →</span>`:`<a class="btn" href="#/stand/${c.id}">Bekijk stand →</a>`;
- const meta=c.status==="open"?`${c.holes} holes &nbsp;·&nbsp; ${c.baan}`:`${c.rondes} rondes &nbsp;·&nbsp; ${c.spelers.length} spelers`;
+ const pills=L?`<span class="pill l"><span class="dot"></span>Live</span>`:S?`<span class="pill o">Komt eraan</span><span class="pill w">Inschrijving opent binnenkort</span>`:`<span class="pill o">Archief</span>`;
+ const btn=S?`<span class="btn off">Inschrijven binnenkort →</span>`:`<a class="btn" href="#/stand/${c.id}">Bekijk stand →</a>`;
+ const meta=c.scoring==="stroke-play"?`${c.holes} holes &nbsp;·&nbsp; ${c.baan}`:`${c.rondes} rondes &nbsp;·&nbsp; ${c.spelers.filter(player=>player.n).length} spelers`;
  return `<div class="tile ${c.status}">${closeup(c.id)}<div class="row">${pills}</div><h2>${c.naam}</h2><div class="meta">${meta}</div><p>${c.tekst}</p>${btn}</div>`;
 }
 
@@ -491,10 +516,33 @@ function pointsChart(c,pointKey,label){
 }
 
 function home(){
- const c=live();
+ const liveCompetitions=COMPETITIES.filter(competition=>competition.status==="live");
+ const upcomingCompetitions=COMPETITIES.filter(competition=>competition.status==="soon");
  return `<div class="hero"><img class="hero-photo" src="golf-club-pete-cover.jpg" alt=""><div class="wrap"><small>Welkom bij</small><h1>Golf Club Pete</h1><p></p></div></div>
- <div class="wrap"><div class="tiles">${COMPETITIES.filter(x=>x.status!=="old").map(tile).join("")}${tournamentTile()}</div>
- ${c?`<div class="sec"><div><h3>Huidige stand</h3><small>Gebaseerd op ${c.rondes} gespeelde rondes</small></div><hr><a href="#/stand/${c.id}">Bekijk volledige stand →</a></div>${podium(c)}`:""}</div>`;
+ <div class="wrap">
+  ${liveCompetitions.length?`<section class="home-section"><div class="home-section-title"><h2>Live competities</h2><hr></div><div class="tiles">${liveCompetitions.map(tile).join("")}</div></section>`:""}
+  ${liveCompetitions.length?`<section class="home-section"><div class="home-section-title"><h2>Tussenstand</h2><hr></div><div class="home-standings">${liveCompetitions.map(homeCompetitionStanding).join("")}</div></section>`:""}
+  ${upcomingCompetitions.length?`<section class="home-section"><div class="home-section-title"><h2>Opkomende competities</h2><hr></div><div class="tiles">${upcomingCompetitions.map(tile).join("")}${tournamentTile()}</div></section>`:""}
+ </div>`;
+}
+function homeCompetitionStanding(competition){
+ const title=`<div class="home-standing-title"><h3>${escapeHtml(competition.naam)}</h3><a href="#/stand/${competition.id}">Volledige stand →</a></div>`;
+ if(!competition.scoresLoaded)return `<article class="home-standing">${title}<div class="home-standing-loading">Tussenstand wordt geladen…</div></article>`;
+ if(competition.scoresError)return `<article class="home-standing">${title}<p class="home-standing-empty">De tussenstand is nu niet beschikbaar.</p></article>`;
+ const strokePlayers=[...competition.spelers]
+  .filter(player=>player.strokeRounds>0)
+  .sort((a,b)=>a.t-b.t||b.p-a.p||a.n.localeCompare(b.n,"nl"))
+  .slice(0,3);
+ const stablefordPlayers=[...competition.spelers]
+  .filter(player=>player.stablefordRounds>0)
+  .sort((a,b)=>b.stablefordP-a.stablefordP||b.stableford-a.stableford||a.n.localeCompare(b.n,"nl"))
+  .slice(0,3);
+ const playerRows=(players,score)=>players.length
+  ?`<ol>${players.map((player,index)=>`<li><span class="rank">${index+1}</span>${standPlayer(player.n)}<span class="home-standing-score">${score(player)}</span></li>`).join("")}</ol>`
+  :`<p class="home-standing-empty">Nog geen scores</p>`;
+ const strokeGroup=`<div class="home-standing-group"><h4>Strokeplay · slagen</h4>${playerRows(strokePlayers,player=>player.t)}</div>`;
+ const stablefordGroup=stablefordPlayers.length?`<div class="home-standing-group"><h4>Stableford · winpunten</h4>${playerRows(stablefordPlayers,player=>player.stablefordP)}</div>`:"";
+ return `<article class="home-standing">${title}<div class="home-standing-columns">${strokeGroup}${stablefordGroup}</div></article>`;
 }
 function planning(id,eventId=""){
  const competition=COMPETITIES.find(item=>item.id===id);
@@ -730,7 +778,9 @@ document.addEventListener("submit",async event=>{
 });
 function competitionForEvent(value){
  const normalized=String(value||"").trim().toLocaleLowerCase("nl-NL");
- return COMPETITIES.find(item=>item.id.toLocaleLowerCase("nl-NL")===normalized||item.naam.toLocaleLowerCase("nl-NL")===normalized);
+ const aliases={"2026":"par-3-2026","2026 par 3 competitie":"par-3-2026","2027":"par-3-2027","2027 par 3 competitie":"par-3-2027","platte piet cup":"platte-piet-cup-2026"};
+ const competitionId=aliases[normalized]||normalized.replace(/[\s_]+/g,"-");
+ return COMPETITIES.find(item=>item.id.toLocaleLowerCase("nl-NL")===competitionId||item.naam.toLocaleLowerCase("nl-NL")===normalized);
 }
 function eventCompetition(event){return event.competition||event.title||""}
 function calendarTimestamp(value){
@@ -958,28 +1008,3 @@ function spelers(){
  }).join("")}</div></div>`;
 }
 function speler(id){
- let requestedName=id;
- try{requestedName=decodeURIComponent(id)}catch{}
- const normalized=requestedName.trim().toLocaleLowerCase("nl-NL");
- const profile=playerProfiles.find(item=>(item.scoreName||item.name).toLocaleLowerCase("nl-NL")===normalized);
- const scorePlayer=COMPETITIES.flatMap(c=>c.spelers).find(s=>s.n.trim().toLocaleLowerCase("nl-NL")===normalized);
- const scoreName=profile?.scoreName||profile?.name||scorePlayer?.n;
- const playerName=profile?.name||scoreName;
- if(!playerName)return `<div class="wrap page"><h1>Speler niet gevonden</h1><div class="empty">Deze speler staat niet in de huidige competitie.</div><p><a href="#/spelers">← Terug naar spelers</a></p></div>`;
- const playerProfile=profile||playerProfileFor(scoreName);
- const competitions=COMPETITIES.map(c=>({competition:c,index:c.spelers.findIndex(s=>s.n.trim().toLocaleLowerCase("nl-NL")===(scoreName||"").trim().toLocaleLowerCase("nl-NL"))})).filter(({competition,index})=>index>=0&&(competition.rondeScores||[]).some(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null));
- const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.stableford!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const score=round.scores[index],strokes=score.strokes,best=strokes===bestStrokes;const toPar=Number.isFinite(strokes)&&Number.isFinite(round.par)?formatToPar(strokes-round.par):"NTB";return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${strokes??"–"}${best?flameIcon():""}</td><td>${toPar}</td><td>${score.points??"–"}</td><td>${score.stableford??"–"}</td><td>${score.stablefordPoint??"–"}</td></tr>`})}).join("");
- const handicap=playerProfile.handicap===null?"Handicap nog niet ingevuld":`Handicap ${playerProfile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
- return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>+/- PAR</th><th>Strokeplay-punt</th><th>Stableford</th><th>Stableford-punt</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
-}
-function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><p style="color:var(--mute)">Binnenkort meer nieuws over het volgende golftoernooi.</p><div class="tiles" style="margin-top:20px">${tournamentTile()}</div></div>`}
-
-const NAV=[["","Home"],["competities","Competities"],["planning","Planning"],["stand","Stand"],["spelers","Spelers"],["toernooien","Toernooien"]];
-function route(){
- const [hashPath,hashQuery=""]=(location.hash||"#/").slice(1).split("?");
- const [,p="",id]=(hashPath||"/").split("/");
- const eventId=new URLSearchParams(hashQuery).get("wedstrijd")||"";
- $("#nav").innerHTML=NAV.map(([k,t])=>`<a href="#/${k}" class="${k===p?"on":""}">${t}</a>`).join("");
- $("#app").innerHTML=({"":home,competities,planning:()=>planning(id,eventId),stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
- if(p==="planning")loadPlanningEvents(id);
- if(p==="stand"&&id)loadPlanningEvents(id,"competition-planning",true);
