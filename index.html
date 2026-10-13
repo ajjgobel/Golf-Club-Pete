@@ -40,7 +40,7 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .stand-choice>.bg{position:absolute;inset:0;width:100%;height:100%;z-index:-1;object-fit:cover;filter:brightness(.68) saturate(.82)}
 .stand-choice span{position:relative;z-index:1;font:700 22px/1.2 'Manrope',system-ui,sans-serif;letter-spacing:-.02em}
 .stand-choice b{margin-left:auto;font-size:22px}
-.tile{position:relative;border-radius:14px;overflow:hidden;min-height:400px;border:1px solid var(--line);padding:26px 28px;display:flex;flex-direction:column}
+.tile{position:relative;border-radius:14px;overflow:hidden;min-height:292px;border:1px solid var(--line);padding:20px 22px;display:flex;flex-direction:column}
 .tile.live{border:2px solid var(--green);box-shadow:0 0 34px rgba(31,163,90,.28)}
 .tile.open{border:2px solid var(--green);box-shadow:0 0 34px rgba(31,163,90,.28)}
 .tile.soon{border-color:#555d58}
@@ -59,9 +59,9 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .dot{width:10px;height:10px;border-radius:50%;background:#fff;animation:p 1.8s infinite}
 @keyframes p{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7)}70%,100%{box-shadow:0 0 0 9px transparent}}
 @media(prefers-reduced-motion:reduce){.dot{animation:none}}
-.tile h2{font:700 clamp(32px,5vw,42px)/1.12 'Manrope',system-ui,sans-serif;letter-spacing:-.035em;margin:26px 0 12px;max-width:14ch}
-.meta{font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
-.tile p{max-width:34ch;margin:0 0 22px}
+.tile h2{font:700 clamp(27px,4vw,34px)/1.12 'Manrope',system-ui,sans-serif;letter-spacing:-.035em;margin:18px 0 8px;max-width:18ch}
+.meta{font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.tile p{max-width:40ch;margin:0 0 14px;font-size:14px}
 .home-section{padding-top:30px}
 .home-section:first-of-type{padding-top:12px}
 .home-section-title{display:flex;align-items:center;gap:16px;margin:0 0 20px}
@@ -81,11 +81,15 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .home-standing-group li:first-child .rank{color:var(--gold);font-weight:800}
 .home-standing-group .stand-player{min-width:0;gap:6px;overflow:hidden;text-overflow:ellipsis}
 .home-standing-group .stand-player-icon{font-size:16px}
-.home-standing-score{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.home-standing-stats{display:flex;align-items:baseline;justify-content:flex-end;gap:10px}
+.home-standing-stat{display:inline-flex;align-items:baseline;gap:3px;white-space:nowrap}
+.home-standing-stat small{color:var(--mute);font-size:9px}
+.home-standing-stat b{font-size:11px;font-variant-numeric:tabular-nums}
 .home-standing-empty{grid-column:1/-1;margin:0;color:var(--mute);font-size:13px}
 .home-standing-loading{color:var(--mute);font-size:13px}
 @media(max-width:520px){.home-standing{padding:15px}.home-standing-columns{gap:12px}.home-standing-group li{font-size:11px}}
 .btn{margin-top:auto;align-self:flex-start;display:inline-flex;gap:12px;padding:14px 26px;border-radius:99px;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:#fff;background:#0f5a32;border:1px solid var(--green)}
+.tile .btn{padding:10px 19px;font-size:12px}
 .btn.off{background:rgba(120,125,122,.55);border-color:#999;color:#e8e8e8;cursor:default}
 .back-to-stand{display:inline-flex;align-items:center;gap:9px;margin:0 0 18px;padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font-size:14px;font-weight:600;text-decoration:none;transition:border-color .2s,background .2s}
 .back-to-stand:hover{border-color:var(--green);background:#123523}
@@ -122,14 +126,14 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .stand-summary .rank-badge.gold{border-color:rgba(217,164,65,.55);background:rgba(217,164,65,.12);color:var(--gold)}
 .stand-summary .rank-badge.silver{border-color:rgba(195,203,209,.42);color:var(--silver)}
 .stand-summary .rank-badge.bronze{border-color:rgba(201,116,58,.45);color:var(--bronze)}
-.round-table{min-width:660px;table-layout:fixed}
+.round-table{width:max-content;min-width:100%;table-layout:fixed}
 .round-table{border:0;background:transparent}
 .round-table th,.round-table td{text-align:center;padding:7px 6px}
 .round-table thead tr:first-child th{background:rgba(3,15,9,.28);color:var(--ink);font-size:13px;border-bottom:0}
 .round-table thead tr:first-child th:not(:first-child){text-align:center}
-.round-table thead tr:nth-child(2) th{padding-top:3px;padding-bottom:7px;color:var(--mute);font-size:10px;border-bottom:1px solid var(--line)}
-.round-table thead th:first-child,.round-table tbody th{text-align:left;width:58px}
-.round-table thead th:nth-child(2){width:58px}
+.round-table thead tr:nth-child(2) th{padding:7px 5px;color:var(--mute);font-size:10px;line-height:1.2;white-space:normal;border-bottom:1px solid var(--line)}
+.round-table thead th:first-child,.round-table tbody th{text-align:left;width:54px}
+.round-table thead th:nth-child(2){width:54px}
 .round-table thead tr:first-child th:first-child{border-bottom:1px solid var(--line)}
 .round-table thead tr:first-child th:not(:first-child){border-left:1px solid var(--line)}
 .round-table thead tr:nth-child(2) th{border-left:1px solid rgba(31,74,52,.65)}
@@ -168,7 +172,8 @@ h1{font:800 clamp(46px,9vw,84px)/1.05 'Manrope',system-ui,sans-serif;letter-spac
 .round-table .round-place-icon.silver{color:var(--silver)}
 .round-table .round-place-icon.bronze{color:var(--bronze)}
 .round-table td.round-par{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}
-.round-table-wrap{margin-top:16px;border:1px solid rgba(73,120,89,.38);border-radius:14px;background:linear-gradient(150deg,rgba(13,40,27,.74),rgba(7,24,16,.9));box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.round-table-wrap{margin-top:16px;max-width:100%;border:1px solid rgba(73,120,89,.38);border-radius:14px;background:linear-gradient(150deg,rgba(13,40,27,.74),rgba(7,24,16,.9));box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.round-table-wrap{overflow-x:auto;overscroll-behavior-inline:contain}
 .round-table-wrap .round-table{margin:0}
 .round-table-wrap .round-table tr:last-child>*{border-bottom:0}
 .round-point svg{width:13px;height:13px;vertical-align:-2px;margin-left:3px}
@@ -234,16 +239,6 @@ a.sc:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .player-profile .player-avatar{width:56px;height:56px;font-size:30px}
 .player-profile h1{margin:0;font-size:clamp(32px,5vw,46px)}
 .player-profile p{margin:2px 0 0;color:var(--mute)}
-.account-panel{margin:22px 0;padding:20px;background:var(--card);border:1px solid var(--line);border-radius:12px}
-.account-panel h2{margin:0 0 8px;font:700 20px 'Manrope',system-ui,sans-serif}
-.account-panel p{margin:0 0 14px;color:var(--mute)}
-.account-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));align-items:end;gap:12px}
-.account-form label{display:grid;gap:5px;color:var(--mute);font-size:13px}
-.account-form input,.account-form select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
-.account-form button,.account-button{padding:11px 16px;border:1px solid var(--green);border-radius:99px;background:#0f5a32;color:#fff;font:600 13px 'Manrope',system-ui,sans-serif;cursor:pointer}
-.account-form button:disabled,.account-button:disabled{opacity:.55;cursor:wait}
-.account-message{min-height:1.5em;margin:10px 0 0!important;color:var(--gold)!important;font-size:14px}
-.account-user{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .sc dl{display:grid;grid-template-columns:1fr auto;gap:8px;margin:0}.sc dt{color:var(--mute)}.sc dd{margin:0;font-weight:600;text-align:right}
 .player-link{display:inline-block;margin-top:16px;color:var(--mute);font-size:13px}
 .bar{height:6px;border-radius:9px;background:var(--line);margin-top:16px}.bar i{display:block;height:100%;border-radius:9px;background:var(--green)}
@@ -296,9 +291,6 @@ a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 <iframe id="planning-rsvp-frame" name="planning-rsvp-frame" title="Reactie op wedstrijd opslaan" hidden></iframe>
 <div class="wrap"><footer><hr><span>Golf Club Pete &nbsp;·&nbsp; Est. 2018</span><hr></footer></div>
 
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
 /* ===== GEGEVENS: pas hier aan =====
    status: "live" | "soon" | "old"   p = Strokeplay-winpunten, t = totaal aantal slagen */
@@ -311,8 +303,6 @@ const COMPETITIES=[
 /* ================================== */
 const PLANNING_API_URL="https://script.google.com/macros/s/AKfycbxOPEifaG4wxNswdLY2AjhBS-KEzYzS9wSaOxnajMIyRSNehxdXcbwpFjRZnLgqyNJVUQ/exec";
 const PUBLIC_SITE_URL="https://golfclubpete.nl";
-const FIREBASE_CONFIG={apiKey:"AIzaSyCll3Le7_ieWBtFBv2CVxS-wHTyT3B-8E0",authDomain:"golf-club-pete.firebaseapp.com",projectId:"golf-club-pete",appId:"1:75041793772:web:4f06565dc66d08b341a7c9"};
-const PLAYER_ICONS=["⛳","🏌️","🏆","🦅","🐦","🐿️","🦊","🐼","🦁","🐧","🐸","🐢","🐙","🦉","🦄","🐉","🦖","🤡","👻","🤖","👽","😎","🤠","🚀"];
 const $=s=>document.querySelector(s), f1=n=>n.toFixed(1).replace(".",","), escapeHtml=s=>String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const live=()=>COMPETITIES.find(c=>c.status==="live");
 const sorted=c=>[...c.spelers].sort(c.scoring==="stroke-play"?(a,b)=>a.t-b.t||b.p-a.p:(a,b)=>b.p-a.p||a.t-b.t);
@@ -322,15 +312,8 @@ let planningRequestNumber=0;
 const planningPendingResponses=new Map();
 let playerProfiles=[];
 let sheetPlayerProfiles=[];
-let firebasePlayerProfiles=[];
 let playerProfilesLoaded=false;
 let playerProfilesError="";
-let firebaseAuth=null;
-let firestore=null;
-let currentUser=null;
-let myPlayerProfile=null;
-let myClaimRequest=null;
-let accountMessage="";
 
 function parseCsv(text){
  const rows=[];let row=[],field="",quoted=false;
@@ -531,17 +514,17 @@ function homeCompetitionStanding(competition){
  if(competition.scoresError)return `<article class="home-standing">${title}<p class="home-standing-empty">De tussenstand is nu niet beschikbaar.</p></article>`;
  const strokePlayers=[...competition.spelers]
   .filter(player=>player.strokeRounds>0)
-  .sort((a,b)=>a.t-b.t||b.p-a.p||a.n.localeCompare(b.n,"nl"))
+  .sort((a,b)=>b.p-a.p||a.t/a.strokeRounds-b.t/b.strokeRounds||a.n.localeCompare(b.n,"nl"))
   .slice(0,3);
  const stablefordPlayers=[...competition.spelers]
   .filter(player=>player.stablefordRounds>0)
-  .sort((a,b)=>b.stablefordP-a.stablefordP||b.stableford-a.stableford||a.n.localeCompare(b.n,"nl"))
+  .sort((a,b)=>b.stablefordP-a.stablefordP||b.stableford/b.stablefordRounds-a.stableford/a.stablefordRounds||a.n.localeCompare(b.n,"nl"))
   .slice(0,3);
- const playerRows=(players,score)=>players.length
-  ?`<ol>${players.map((player,index)=>`<li><span class="rank">${index+1}</span>${standPlayer(player.n)}<span class="home-standing-score">${score(player)}</span></li>`).join("")}</ol>`
+ const playerRows=(players,stats)=>players.length
+  ?`<ol>${players.map((player,index)=>`<li><span class="rank">${index+1}</span>${standPlayer(player.n)}<span class="home-standing-stats">${stats(player)}</span></li>`).join("")}</ol>`
   :`<p class="home-standing-empty">Nog geen scores</p>`;
- const strokeGroup=`<div class="home-standing-group"><h4>Strokeplay · slagen</h4>${playerRows(strokePlayers,player=>player.t)}</div>`;
- const stablefordGroup=stablefordPlayers.length?`<div class="home-standing-group"><h4>Stableford · winpunten</h4>${playerRows(stablefordPlayers,player=>player.stablefordP)}</div>`:"";
+ const strokeGroup=`<div class="home-standing-group"><h4>Strokeplay</h4>${playerRows(strokePlayers,player=>`<span class="home-standing-stat"><small>Punten</small><b>${player.p}</b></span><span class="home-standing-stat"><small>Gem. slagen</small><b>${f1(player.t/player.strokeRounds)}</b></span>`)}</div>`;
+ const stablefordGroup=stablefordPlayers.length?`<div class="home-standing-group"><h4>Stableford</h4>${playerRows(stablefordPlayers,player=>`<span class="home-standing-stat"><small>Gem. Stableford</small><b>${f1(player.stableford/player.stablefordRounds)}</b></span><span class="home-standing-stat"><small>Winpunten</small><b>${player.stablefordP}</b></span>`)}</div>`:"";
  return `<article class="home-standing">${title}<div class="home-standing-columns">${strokeGroup}${stablefordGroup}</div></article>`;
 }
 function planning(id,eventId=""){
@@ -579,85 +562,7 @@ function loadSheetPlayerProfiles(){
  document.head.append(script);
 }
 function mergePlayerProfiles(){
- const profilesByScoreName=new Map();
- sheetPlayerProfiles.forEach(profile=>{
-  const key=String(profile.scoreName||profile.name||"").trim().toLocaleLowerCase("nl-NL");
-  if(key)profilesByScoreName.set(key,{...profile,scoreName:profile.scoreName||profile.name});
- });
- firebasePlayerProfiles.forEach(profile=>{
-  const key=String(profile.scoreName||profile.name||"").trim().toLocaleLowerCase("nl-NL");
-  if(!key)return;
-  const sheetProfile=profilesByScoreName.get(key)||{};
-  profilesByScoreName.set(key,{...sheetProfile,...profile,
-   icon:profile.icon||sheetProfile.icon||"⛳",
-   handicap:profile.handicap===undefined?sheetProfile.handicap:profile.handicap
-  });
- });
- playerProfiles=[...profilesByScoreName.values()];
-}
-function firebaseConfigured(){
- return Boolean(FIREBASE_CONFIG.apiKey&&FIREBASE_CONFIG.authDomain&&FIREBASE_CONFIG.projectId&&FIREBASE_CONFIG.appId);
-}
-async function loadFirebaseProfiles(){
- const snapshot=await firestore.collection("profiles").get();
- firebasePlayerProfiles=snapshot.docs.map(document=>{
-  const data=document.data();
-  return {uid:document.id,name:data.displayName||data.scoreName,scoreName:data.scoreName,icon:data.icon||"⛳",handicap:data.handicap??null};
- });
- mergePlayerProfiles();
-}
-function loadPlayerProfiles(){
- loadSheetPlayerProfiles();
- if(!firebaseConfigured())return;
- if(!window.firebase){playerProfilesError="Firebase kon niet worden geladen. Controleer de Firebase-scriptverbinding.";playerProfilesLoaded=true;route();return}
- try{
-  const app=window.firebase.apps.length?window.firebase.app():window.firebase.initializeApp(FIREBASE_CONFIG);
-  firebaseAuth=app.auth();
-  firestore=app.firestore();
-  firebaseAuth.onAuthStateChanged(async user=>{
-   currentUser=user;
-   myPlayerProfile=null;
-   myClaimRequest=null;
-   playerProfilesError="";
-   accountMessage="";
-   try{
-    if(user){
-     const request=await firestore.collection("claimRequests").doc(user.uid).get();
-     if(request.exists)myClaimRequest=request.data();
-     if(myClaimRequest?.status==="approved"){
-      const profile=await firestore.collection("profiles").doc(user.uid).get();
-      if(profile.exists)myPlayerProfile=profile.data();
-     }
-    }
-    await loadFirebaseProfiles();
-   }catch(error){playerProfilesError=error.message||"De accounts konden niet worden geladen."}
-   playerProfilesLoaded=true;
-   route();
-  },error=>{
-   playerProfilesError=error.message||"Inloggen met Google is niet gelukt.";
-   playerProfilesLoaded=true;
-   route();
-  });
- }catch(error){playerProfilesError=error.message||"Firebase kan niet worden gestart.";playerProfilesLoaded=true;route()}
-}
-function availableClaimNames(){
- const usedNames=new Set(playerProfiles
-  .filter(profile=>profile.uid&&profile.uid!==currentUser?.uid)
-  .map(profile=>String(profile.scoreName||profile.name||"").trim().toLocaleLowerCase("nl-NL")));
- const players=new Map();
- [...playerProfiles.map(profile=>profile.scoreName||profile.name),...COMPETITIES.flatMap(competition=>(competition.spelers||[]).map(player=>player.n))]
-  .map(name=>String(name||"").trim())
-  .filter(name=>name&&!usedNames.has(name.toLocaleLowerCase("nl-NL")))
-  .forEach(name=>players.set(name.toLocaleLowerCase("nl-NL"),name));
- return [...players.values()].map(scoreName=>{
-  const profile=playerProfileFor(scoreName);
-  const playedCompetitions=countPlayedCompetitions(scoreName);
-  const handicap=profile.handicap===null||profile.handicap===undefined||profile.handicap===""
-   ?"HCP niet ingevuld"
-   :`HCP ${Number(profile.handicap).toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
-  const competitionsLabel=`${playedCompetitions} ${playedCompetitions===1?"gespeelde competitie":"gespeelde competities"}`;
-  return {scoreName,label:`${profile.name||scoreName} - ${handicap} - ${competitionsLabel}`};
- }).sort((first,second)=>first.label.localeCompare(second.label,"nl"));
+ playerProfiles=sheetPlayerProfiles.map(profile=>({...profile,scoreName:profile.scoreName||profile.name}));
 }
 function countPlayedCompetitions(scoreName){
  const normalized=String(scoreName||"").trim().toLocaleLowerCase("nl-NL");
@@ -717,65 +622,6 @@ function playerTrendMarkup(stats){
  const accessibleLabels=recent.map((round,index)=>`Ronde ${round.number}: ${formatToPar(points[index].value)}`).join(", ");
  return `<div class="player-trend"><div class="player-trend-head"><small>Laatste rondes · afwijking van PAR · ${escapeHtml(stats.competition?.naam||"")}</small><b class="${trendClass}">${trend}</b></div><svg viewBox="0 0 100 32" role="img" aria-label="Verloop ten opzichte van PAR, nul is PAR: ${escapeHtml(accessibleLabels)}"><line class="player-trend-baseline" x1="4" y1="${baseline}" x2="96" y2="${baseline}"/><polyline class="player-trend-line" points="${points.map(point=>`${point.x},${point.y}`).join(" ")}"/>${points.map(point=>`<circle class="player-trend-point" cx="${point.x}" cy="${point.y}" r="3"><title>${escapeHtml(formatToPar(point.value))}</title></circle>`).join("")}</svg><div class="player-trend-labels">${labels}</div></div>`;
 }
-function profileAccountPanel(){
- if(!firebaseConfigured())return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p>Google-login wordt actief zodra Firebase is ingesteld. Tot die tijd beheer je profielen in het tabblad Spelers van de Google Sheet.</p></section>`;
- if(!firebaseAuth)return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p role="alert">${escapeHtml(playerProfilesError||"Firebase is nog niet beschikbaar.")}</p></section>`;
- if(!currentUser)return `<section class="account-panel"><h2>Mijn spelersprofiel</h2><p>Log in met Google om je golf-icoon en handicap te beheren. De koppeling aan wedstrijdscores wordt eerst door de beheerder goedgekeurd.</p><button class="account-button" type="button" data-account-action="sign-in">Inloggen met Google</button>${accountMessage?`<p class="account-message" role="status">${escapeHtml(accountMessage)}</p>`:""}</section>`;
- if(myClaimRequest?.status!=="approved"){
-  const claimNames=availableClaimNames();
-  const selectedName=myClaimRequest?.requestedName||"";
-  return `<section class="account-panel"><div class="account-user"><div><h2>Spelersprofiel aanvragen</h2><p>Ingelogd als ${escapeHtml(currentUser.email||"Google-account")}. Kies je naam uit de bestaande spelers. De beheerder controleert en keurt de koppeling aan wedstrijdscores goed.</p></div><button class="account-button" type="button" data-account-action="sign-out">Uitloggen</button></div>${claimNames.length?`<form class="account-form" data-account-form="claim"><label>Jouw speler<select name="requestedName" required><option value="">Kies je speler…</option>${claimNames.map(player=>`<option value="${escapeHtml(player.scoreName)}"${player.scoreName===selectedName?" selected":""}>${escapeHtml(player.label)}</option>`).join("")}</select></label><button type="submit">Profiel aanvragen</button></form>`:`<p class="account-message" role="status">Er zijn nog geen bestaande spelers om te kiezen.</p>`}<p class="account-message" role="status">${escapeHtml(accountMessage|| (myClaimRequest?.status==="pending"?"Je aanvraag wacht op goedkeuring.":""))}</p></section>`;
- }
- const profile=myPlayerProfile||{displayName:myClaimRequest.approvedName,icon:"⛳",handicap:null};
- return `<section class="account-panel"><div class="account-user"><div><h2>Mijn spelersprofiel</h2><p>Ingelogd als ${escapeHtml(currentUser.email||"Google-account")}. Je competitiescores blijven gekoppeld aan de goedgekeurde naam <b>${escapeHtml(myClaimRequest.approvedName)}</b>.</p></div><button class="account-button" type="button" data-account-action="sign-out">Uitloggen</button></div><form class="account-form" data-account-form="profile"><label>Zichtbare voornaam<input name="displayName" type="text" maxlength="40" value="${escapeHtml(profile.displayName||myClaimRequest.approvedName)}" required></label><label>Golf-icoon<select name="icon">${PLAYER_ICONS.map(icon=>`<option value="${escapeHtml(icon)}"${profile.icon===icon?" selected":""}>${escapeHtml(icon)}</option>`).join("")}</select></label><label>Handicap<input name="handicap" type="number" min="0" max="54" step="0.1" value="${profile.handicap===null||profile.handicap===undefined?"":escapeHtml(profile.handicap)}"></label><button type="submit">Profiel opslaan</button></form><p class="account-message" role="status">${escapeHtml(accountMessage)}</p></section>`;
-}
-document.addEventListener("click",async event=>{
- const button=event.target.closest("[data-account-action]");
- if(!button)return;
- accountMessage="";
- try{
-  if(button.dataset.accountAction==="sign-in"){
-   const provider=new firebase.auth.GoogleAuthProvider();
-   await firebaseAuth.signInWithPopup(provider);
-  }else if(button.dataset.accountAction==="sign-out"){
-   await firebaseAuth.signOut();
-  }
- }catch(error){accountMessage=error.message||"De accountactie is mislukt.";route()}
-});
-document.addEventListener("submit",async event=>{
- const form=event.target;
- if(!(form instanceof HTMLFormElement)||!form.matches("[data-account-form]"))return;
- event.preventDefault();
- const button=form.querySelector('button[type="submit"]');
- button.disabled=true;
- accountMessage="";
- try{
-  const values=new FormData(form);
-  if(form.dataset.accountForm==="claim"){
-   const requestedName=String(values.get("requestedName")||"").trim();
-   if(!requestedName)throw new Error("Vul de voornaam in zoals die in de scorelijsten staat.");
-   await firestore.collection("claimRequests").doc(currentUser.uid).set({
-    email:currentUser.email,requestedName,status:"pending",
-    createdAt:myClaimRequest?.createdAt||firebase.firestore.FieldValue.serverTimestamp()
-   });
-   myClaimRequest={...myClaimRequest,email:currentUser.email,requestedName,status:"pending"};
-   accountMessage="Je aanvraag is verstuurd. Na goedkeuring kun je je profiel aanpassen.";
-  }else{
-   const displayName=String(values.get("displayName")||"").trim();
-   const icon=String(values.get("icon")||"");
-   const handicapText=String(values.get("handicap")||"").trim();
-   const handicap=handicapText===""?null:Number(handicapText);
-   if(!displayName||displayName.length>40)throw new Error("Vul een zichtbare voornaam van maximaal 40 tekens in.");
-   if(!PLAYER_ICONS.includes(icon))throw new Error("Kies een golf-icoon uit de lijst.");
-   if(handicap!==null&&(!Number.isFinite(handicap)||handicap<0||handicap>54))throw new Error("De handicap moet tussen 0 en 54 liggen.");
-   myPlayerProfile={scoreName:myClaimRequest.approvedName,displayName,icon,handicap};
-   await firestore.collection("profiles").doc(currentUser.uid).set({...myPlayerProfile,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-   accountMessage="Je spelersprofiel is opgeslagen.";
-   await loadFirebaseProfiles();
-  }
- }catch(error){accountMessage=error.message||"Opslaan is niet gelukt."}
- finally{button.disabled=false;playerProfilesLoaded=true;route()}
-});
 function competitionForEvent(value){
  const normalized=String(value||"").trim().toLocaleLowerCase("nl-NL");
  const aliases={"2026":"par-3-2026","2026 par 3 competitie":"par-3-2026","2027":"par-3-2027","2027 par 3 competitie":"par-3-2027","platte piet cup":"platte-piet-cup-2026"};
@@ -858,9 +704,9 @@ function loadPlanningEvents(competitionId,containerId="planning-events",upcoming
    container.innerHTML=`<div class="data-notice" role="alert">${escapeHtml(result?.error||"De planning kon niet worden geladen.")}</div>`;
    return;
   }
-  const events=result.events.filter(item=>!competitionId||competitionForEvent(eventCompetition(item))?.id===competitionId);
-  const visibleEvents=upcomingOnly?events.filter(item=>new Date(item.start)>Date.now()):events;
-  const emptyMessage=upcomingOnly?"Er zijn nog geen aankomende wedstrijden voor deze competitie.":competitionId?"Er staan nog geen wedstrijden voor deze competitie in de planning.":"Er staan nog geen wedstrijden in de planning.";
+  const events=result.events.filter(item=>new Date(item.start)>Date.now()&&(!competitionId||competitionForEvent(eventCompetition(item))?.id===competitionId));
+  const visibleEvents=events;
+  const emptyMessage=competitionId?"Er zijn geen aankomende wedstrijden voor deze competitie.":"Er zijn geen aankomende wedstrijden in de planning.";
   container.innerHTML=visibleEvents.length?`<div class="planning-list">${visibleEvents.map(planningCard).join("")}</div>`:`<div class="empty planning-empty">${emptyMessage}</div>`;
   const eventId=container.dataset.eventId;
   if(eventId){
@@ -965,7 +811,7 @@ function stand(id){
  const totalCells=c.spelers.map((player,index)=>`<td${index===0?' class="group-start"':""}>${player.t||"–"}</td><td class="total-points">${player.p}</td><td class="total-stableford">${player.stablefordRounds?player.stableford:"–"}</td><td class="total-points">${player.stablefordP}</td>`).join("");
  const summary="Strokeplay: het klassement wordt bepaald door het laagste totaal aantal slagen, zonder handicap.";
  return `<div class="wrap page"><a class="back-to-stand" href="#/stand"><span aria-hidden="true">←</span> Andere competitie kiezen</a><h1>${c.naam}</h1><p style="color:var(--mute)">Gebaseerd op ${c.rondes} gespeelde rondes. ${summary}</p>
- <div class="sec"><div><h3>Aankomende wedstrijden</h3><small>Wedstrijden uit de planning voor deze competitie</small></div><hr><a href="#/planning/${c.id}">Volledige planning →</a></div>
+ <div class="sec"><div><h3>Aankomende wedstrijden</h3><small>Wedstrijden uit de planning voor deze competitie</small></div><hr><a href="#/planning/${c.id}">Planning →</a></div>
  <div id="competition-planning" data-planning-events aria-live="polite"><div class="empty planning-empty">Planning wordt geladen…</div></div>
  ${rounds.length?"":'<div class="empty">Er zijn nog geen score-rijen voor deze competitie in het tabblad Scores.</div>'}
  <div class="sec"><div><h3>Strokeplay · totaal slagen</h3><small>Laagste totaal aantal slagen staat bovenaan</small></div><hr></div>
@@ -975,7 +821,7 @@ function stand(id){
  <div class="sec"><div><h3>Stableford-klassement</h3><small>Iedereen met de meeste Stableford-punten in een ronde krijgt 1 winpunt; gelijkspel telt voor alle winnaars.</small></div><hr></div>
  ${stablefordRanked.length?`<div class="stand-summary"><table><thead><tr><th scope="col">#</th><th scope="col">Speler</th><th scope="col">Stableford-winpunten</th><th scope="col">Totaal Stableford</th><th scope="col">Ingevulde rondes</th></tr></thead><tbody>${stablefordStandingRows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen Stableford-punten ingevuld in het tabblad Scores.</div>`}
  <div class="sec"><div><h3>Speelrondes</h3><small>Ronde-PAR, slagen, strokeplay-winpunten, Stableford-score en Stableford-winpunten</small></div><hr></div>
- <div class="scroll round-table-wrap"><table class="round-table"><colgroup><col style="width:58px"><col style="width:58px">${c.spelers.map(()=>"<col><col><col><col>").join("")}</colgroup><thead><tr><th rowspan="2" scope="col">Ronde</th><th rowspan="2" scope="col">Par</th>${c.spelers.map(s=>`<th colspan="4" scope="colgroup">${escapeHtml(s.n)}</th>`).join("")}</tr><tr>${c.spelers.map((_,i)=>`<th class="${i===0?"group-start":""}" scope="col">Slagen</th><th scope="col">Strokeplay-punt</th><th scope="col">Stableford</th><th scope="col">Stableford-punt</th>`).join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row" colspan="2">Totaal</th>${totalCells}</tr></tfoot></table></div>
+ <div class="round-table-wrap"><table class="round-table"><colgroup><col style="width:58px"><col style="width:58px">${c.spelers.map(()=>'<col style="width:76px"><col style="width:56px"><col style="width:92px"><col style="width:56px">').join("")}</colgroup><thead><tr><th rowspan="2" scope="col">Ronde</th><th rowspan="2" scope="col">Par</th>${c.spelers.map(s=>`<th colspan="4" scope="colgroup">${escapeHtml(playerProfileFor(s.n).icon||"⛳")} ${escapeHtml(playerProfileFor(s.n).name||s.n)}</th>`).join("")}</tr><tr>${c.spelers.map((_,i)=>`<th class="${i===0?"group-start":""}" scope="col">Slagen</th><th scope="col" title="Strokeplay-punt" aria-label="Strokeplay-punt">SP</th><th scope="col">Stableford</th><th scope="col" title="Stableford-punt" aria-label="Stableford-punt">SF</th>`).join("")}</tr></thead><tbody>${roundRows}</tbody><tfoot><tr><th scope="row" colspan="2">Totaal</th>${totalCells}</tr></tfoot></table></div>
  <div class="sec"><div><h3>Strokeplay-winstpunten per ronde</h3><small>Opgetelde winpunten na elke speelronde</small></div><hr></div>
  ${pointsChart(c,"points","Opgetelde Strokeplay-winpunten")}
  <div class="sec"><div><h3>Stableford-winstpunten per ronde</h3><small>Opgetelde winpunten na elke speelronde</small></div><hr></div>
@@ -997,8 +843,8 @@ function spelers(){
   if(!entry.competitions.some(item=>item.id===competition.id))entry.competitions.push(competition);
  }));
  const players=[...playersByName.values()].sort((a,b)=>a.name.localeCompare(b.name,"nl"));
- if(!players.length)return `<div class="wrap page"><h1>Spelers</h1>${profileAccountPanel()}${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="empty">Er zijn nog geen spelers. De beheerder kan je aanvraag aan een bestaande score-naam koppelen.</div></div>`;
- return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Iedere speler staat één keer in de lijst. Beheer je profiel via je Google-account.</p>${profileAccountPanel()}${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="cards">${players.map(player=>{
+ if(!players.length)return `<div class="wrap page"><h1>Spelers</h1>${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="empty">Er zijn nog geen spelers beschikbaar. Voeg spelers toe aan het tabblad Spelers in de Google Sheet.</div></div>`;
+ return `<div class="wrap page"><h1>Spelers</h1><p style="color:var(--mute)">Spelernamen, golf-iconen en handicaps worden beheerd in het tabblad Spelers van de Google Sheet.</p>${playerProfilesError?`<div class="data-notice" role="alert">${escapeHtml(playerProfilesError)}</div>`:""}<div class="cards">${players.map(player=>{
   const profile=player.profile,handicap=profile.handicap===null?"Niet ingevuld":profile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1});
   const playedCompetitions=countPlayedCompetitions(player.scoreName);
    const stats=playerRoundStats(player.scoreName);
@@ -1008,3 +854,47 @@ function spelers(){
  }).join("")}</div></div>`;
 }
 function speler(id){
+ let requestedName=id;
+ try{requestedName=decodeURIComponent(id)}catch{}
+ const normalized=requestedName.trim().toLocaleLowerCase("nl-NL");
+ const profile=playerProfiles.find(item=>(item.scoreName||item.name).toLocaleLowerCase("nl-NL")===normalized);
+ const scorePlayer=COMPETITIES.flatMap(c=>c.spelers).find(s=>s.n.trim().toLocaleLowerCase("nl-NL")===normalized);
+ const scoreName=profile?.scoreName||profile?.name||scorePlayer?.n;
+ const playerName=profile?.name||scoreName;
+ if(!playerName)return `<div class="wrap page"><h1>Speler niet gevonden</h1><div class="empty">Deze speler staat niet in de huidige competitie.</div><p><a href="#/spelers">← Terug naar spelers</a></p></div>`;
+ const playerProfile=profile||playerProfileFor(scoreName);
+ const competitions=COMPETITIES.map(c=>({competition:c,index:c.spelers.findIndex(s=>s.n.trim().toLocaleLowerCase("nl-NL")===(scoreName||"").trim().toLocaleLowerCase("nl-NL"))})).filter(({competition,index})=>index>=0&&(competition.rondeScores||[]).some(round=>round.scores[index]?.strokes!=null||round.scores[index]?.points!=null));
+ const rows=competitions.flatMap(({competition,index})=>{const played=(competition.rondeScores||[]).filter(round=>round.scores[index]?.strokes!=null||round.scores[index]?.stableford!=null);const bestStrokes=Math.min(...played.map(round=>round.scores[index]?.strokes).filter(strokes=>Number.isFinite(strokes)&&strokes>0),Infinity);return played.map(round=>{const score=round.scores[index],strokes=score.strokes,best=strokes===bestStrokes;const toPar=Number.isFinite(strokes)&&Number.isFinite(round.par)?formatToPar(strokes-round.par):"NTB";return `<tr><td><a href="#/stand/${competition.id}">${escapeHtml(competition.naam)}</a></td><td>${round.number}</td><td${best?' class="best-round" title="Beste ronde van deze competitie"':""}>${strokes??"–"}${best?flameIcon():""}</td><td>${toPar}</td><td>${score.points??"–"}</td><td>${score.stableford??"–"}</td><td>${score.stablefordPoint??"–"}</td></tr>`})}).join("");
+ const handicap=playerProfile.handicap===null?"Handicap nog niet ingevuld":`Handicap ${playerProfile.handicap.toLocaleString("nl-NL",{maximumFractionDigits:1})}`;
+ return `<div class="wrap page"><p><a href="#/spelers">← Terug naar spelers</a></p><div class="player-profile"><span class="player-avatar" aria-hidden="true">${escapeHtml(playerProfile.icon)}</span><div><h1>${escapeHtml(playerName)}</h1><p>${handicap}</p></div></div><p style="color:var(--mute)">Alle geregistreerde wedstrijdscores en de bijbehorende competities.</p>${rows?`<div class="scroll player-scores"><table><thead><tr><th>Competitie</th><th>Ronde</th><th>Slagen</th><th>+/- PAR</th><th>Strokeplay-punt</th><th>Stableford</th><th>Stableford-punt</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Er zijn nog geen ronde-uitslagen beschikbaar voor deze speler.</div>`}</div>`;
+}
+function toernooien(){return `<div class="wrap page"><h1>Toernooien</h1><p style="color:var(--mute)">Binnenkort meer nieuws over het volgende golftoernooi.</p><div class="tiles" style="margin-top:20px">${tournamentTile()}</div></div>`}
+
+const NAV=[["","Home"],["competities","Competities"],["planning","Planning"],["stand","Stand"],["spelers","Spelers"],["toernooien","Toernooien"]];
+function route(){
+ const [hashPath,hashQuery=""]=(location.hash||"#/").slice(1).split("?");
+ const [,p="",id]=(hashPath||"/").split("/");
+ const eventId=new URLSearchParams(hashQuery).get("wedstrijd")||"";
+ $("#nav").innerHTML=NAV.map(([k,t])=>`<a href="#/${k}" class="${k===p?"on":""}">${t}</a>`).join("");
+ $("#app").innerHTML=({"":home,competities,planning:()=>planning(id,eventId),stand:()=>stand(id),spelers,speler:()=>speler(id),toernooien}[p]||home)();
+ if(p==="planning")loadPlanningEvents(id);
+ if(p==="stand"&&id)loadPlanningEvents(id,"competition-planning",true);
+ let neededScores=[];
+ if(!p){
+  neededScores=COMPETITIES.filter(competition=>competition.status==="live"&&competition.sheetName);
+ }else if(p==="competities"||p==="spelers"||p==="speler"){
+  neededScores=COMPETITIES.filter(competition=>competition.sheetName);
+ }else if(p==="stand"&&id){
+  const competition=COMPETITIES.find(item=>item.id===id);
+  if(competition?.sheetName)neededScores=[competition];
+ }
+ const pendingScores=neededScores.filter(competition=>!scoreRequests.has(competition.id));
+ if(pendingScores.length){
+  pendingScores.forEach(competition=>scoreRequests.add(competition.id));
+  Promise.all(pendingScores.map(loadScores)).then(route);
+ }
+ const notice=scoresNotice();if(notice)$("#app").insertAdjacentHTML("afterbegin",`<div class="wrap">${notice}</div>`);
+ window.scrollTo(0,0);
+}
+addEventListener("hashchange",route);route();loadSheetPlayerProfiles();
+</script>
