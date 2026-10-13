@@ -523,8 +523,8 @@ function homeCompetitionStanding(competition){
  const playerRows=(players,stats)=>players.length
   ?`<ol>${players.map((player,index)=>`<li><span class="rank">${index+1}</span>${standPlayer(player.n)}<span class="home-standing-stats">${stats(player)}</span></li>`).join("")}</ol>`
   :`<p class="home-standing-empty">Nog geen scores</p>`;
- const strokeGroup=`<div class="home-standing-group"><h4>Strokeplay</h4>${playerRows(strokePlayers,player=>`<span class="home-standing-stat"><small>Punten</small><b>${player.p}</b></span><span class="home-standing-stat"><small>Gem. slagen</small><b>${f1(player.t/player.strokeRounds)}</b></span>`)}</div>`;
- const stablefordGroup=stablefordPlayers.length?`<div class="home-standing-group"><h4>Stableford</h4>${playerRows(stablefordPlayers,player=>`<span class="home-standing-stat"><small>Gem. Stableford</small><b>${f1(player.stableford/player.stablefordRounds)}</b></span><span class="home-standing-stat"><small>Winpunten</small><b>${player.stablefordP}</b></span>`)}</div>`:"";
+ const strokeGroup=`<div class="home-standing-group"><h4>Strokeplay-punten · gem. slagen</h4>${playerRows(strokePlayers,player=>`<span class="home-standing-stat"><small>Punten</small><b>${player.p}</b></span><span class="home-standing-stat"><small>Gem. slagen</small><b>${f1(player.t/player.strokeRounds)}</b></span>`)}</div>`;
+ const stablefordGroup=stablefordPlayers.length?`<div class="home-standing-group"><h4>Stableford-punten · gem. Stableford</h4>${playerRows(stablefordPlayers,player=>`<span class="home-standing-stat"><small>Gem. Stableford</small><b>${f1(player.stableford/player.stablefordRounds)}</b></span><span class="home-standing-stat"><small>Punten</small><b>${player.stablefordP}</b></span>`)}</div>`:"";
  return `<article class="home-standing">${title}<div class="home-standing-columns">${strokeGroup}${stablefordGroup}</div></article>`;
 }
 function planning(id,eventId=""){
